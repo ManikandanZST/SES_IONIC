@@ -7,7 +7,7 @@ if($currentFile=="banner.php"){ $banner ='class="active"'; } else{$banner='';}
 if($currentFile=="gallery.php"){ $gallery ='class="active"'; } else{$gallery='';}
 if($currentFile=="content.php"){ $content ='class="active"'; } else{$content='';}
 if($currentFile=="setting.php"){ $setting ='class="active"'; } else{$setting='';}
-if(($currentFile=="contact_form.php")|| ($currentFile=="book_form.php")){ $form ='active'; } else{$form='';}
+if(($currentFile=="content.php")|| ($currentFile=="book_form.php")|| ($currentFile=="contact_form.php")){ $form ='active'; } else{$form='';}
 if($currentFile=="book_form.php"){ $book_form ='class="active"'; } else{$book_form='';}
 if($currentFile=="contact_form.php"){ $contact_form ='class="active"'; } else{$contact_form='';}
 
@@ -43,7 +43,7 @@ if($currentFile=="contact_form.php"){ $contact_form ='class="active"'; } else{$c
           </a>         
         </li> 
 
-        <li class="treeview <?=$content?>">        
+        <li class="treeview <?=$form?>">        
            <a href="#">
             <i class="fa fa-rss-square"></i> <span>Content Management</span>
             <span class="pull-right-container">
@@ -51,7 +51,7 @@ if($currentFile=="contact_form.php"){ $contact_form ='class="active"'; } else{$c
             </span>
           </a> 
           <ul class="treeview-menu">
-          <li <?=$book_form?>><a href="content.php"><i class="fa  fa-tags"></i>Latest News</a></li>
+          <li <?=$content?>><a href="content.php"><i class="fa  fa-tags"></i>Latest News</a></li>
             <li <?=$book_form?>><a href="book_form.php"><i class="fa  fa-rss"></i>Latest Post</a></li>
             <li <?=$contact_form?>><a href="contact_form.php"><i class="fa fa-tags"></i>Forum</a></li>
           </ul>   
@@ -66,19 +66,10 @@ if($currentFile=="contact_form.php"){ $contact_form ='class="active"'; } else{$c
           </a>         
         </li>
 
-        <li <?=$gallery?>>
-          <a href="gallery.php">
-            <i class="fa fa-caret-square-o-right"></i>
-            <span>Gallery Management</span>
-            <span class="pull-right-container">
-            </span>
-          </a>         
-        </li>
-
         <li <?=$setting?>>
           <a href="setting.php">
             <i class="fa fa-cog"></i>
-            <span>Site Settings Management</span>
+            <span>Site Setting Management</span>
             <span class="pull-right-container">
             </span></a>         
         </li> 

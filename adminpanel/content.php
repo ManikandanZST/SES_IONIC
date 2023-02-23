@@ -81,7 +81,7 @@ $sid = $_REQUEST["mid"];
 <!DOCTYPE html>
 <html>
 <head>
-<title>Content Management | <?=$pagetitle?></title>
+<title>Localad Admin | <?=$pagetitle?></title>
 <? include_once('header.php');?>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

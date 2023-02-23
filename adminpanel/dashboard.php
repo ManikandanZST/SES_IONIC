@@ -11,7 +11,7 @@ header('Location:index.php');exit();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Admin Dashboard | <?=$pagetitle?></title>
+	<title>Localad Admin | <?=$pagetitle?></title>
 	<? include_once('header.php');?>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
