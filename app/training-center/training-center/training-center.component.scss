@@ -1,0 +1,119 @@
+
+// .horizontal-align {
+// 	display: inline-block;
+// 	vertical-align: top;
+	
+	
+	
+	
+// 	.item {
+// 		display: inline-block;
+// 		vertical-align: top;
+// 	margin-top: 18px;
+// 		padding: 36px;
+// 		color: #0f700b;
+// 		padding-bottom: 0px;
+//     padding-top: 0px;
+	
+// 	}
+	
+// 	.item1 {
+// 		display: inline-block;
+// 		vertical-align: top;
+// 	margin-top: 18px;
+// 		color: #0f700b;
+	
+// 	}
+// 	p{
+// 		margin-left:10px;
+// 	}
+// }
+
+
+.bodybg{
+    --background: url('../../../assets/images/background/bg-group-1.jpg') no-repeat center fixed;
+    background-size: cover;
+
+}
+ion-card{
+    --background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 1px 3px #020200;
+    padding-right: 10px;
+    margin-top: 20px;
+	padding: 15px !important;
+    background-color: rgba(255, 255, 255, 0.2784313725490196);
+}
+ion-menu-button{
+    color:#fff !important
+}
+ion-label a{
+    font-size: 16px !important;
+    font-weight: normal !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+}
+// h2{
+//     color: #00BCD4 !important;
+// 	margin: 0 0 2px 0 !important;
+//     font-size: 16px !important;
+//     font-weight: normal !important;
+// 	white-space: nowrap !important;
+//     // font-size: 14px !important;
+//     // text-align: center !important;
+// 	font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+//     line-height: 1.2 !important;
+//     width: 100% !important;
+//     // margin: 0 !important;
+//     // padding: 0 !important;
+//     // line-height: 30px !important;
+// }
+.center_h{
+	color: #fff !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    width: 100% !important;
+    // margin: 0 !important;
+    padding: 0 !important;
+    line-height: 30px !important;
+    font-weight: 500 !important;
+}
+// p{
+//     color: #c74b42 !important;
+// }
+// span{
+// 	float: right !important;
+//     color: #aaa !important; 
+//     font-size: 14px !important;
+// 	white-space: nowrap !important;
+// 	margin-left: 51px !important;
+
+// }
+.flx{
+    display: flex;
+}
+.ct1{
+    width: 80%;
+}
+.ct2{
+    width: 20%;
+    padding: 5px 0px;
+    color: #aaa;
+    font-size: 14px;
+}
+.title{
+    overflow: hidden;
+    text-overflow: ellipsis;    
+    color: #00BCD4;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    line-height: 1.2;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0px;
+}
+.icn{
+    color: #fff !important;
+    font-size: 20px !important; 
+}
+.bar-header{
+    background: url('../../../assets/images/background/bg-group-1.jpg') no-repeat center fixed;
+}

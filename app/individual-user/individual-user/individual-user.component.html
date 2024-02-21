@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-buttons>
+    <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['']">        
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="has-subheader pad2" ng-init="contentInfo('3')"> 
+<div *ngIf="!form">
+  <div class="student-ack">
+    <h3>SES HAZWOPER/INDUSTRIAL HYGIENE STUDENT ACKNOWLEDGEMENT OF TRAINING</h3>
+    <p>
+SES, INC. student acknowledges that to be fully trained, the student must get Forty-Hour HAZWOPER
+
+physical with employer prior to work in a HAZWOPER Area. The student must also be provided by employer site specific information as well as hands on training with PPE equipment as per OSHA HAZWOPER Standards. I understand that a student must take a physical prior to dressout in any confining
+
+Personal Protective Equipment (PPE). Any dressout without a physical violates OSHA; see reference</p>
+
+<p>below:</p>
+
+                                 
+
+<p>January 15, 1999</p>
+
+                                 
+
+<p>Mr. Paul C. Bucknam</p>
+
+<p>Amerada Hess Corporation</p>
+
+<p>1 Hess Plaza</p>
+
+<p>Woodbridge, NJ 07095-0961</p>
+
+                                 
+
+<p>Dear Mr. Bucknam:</p>
+
+                                 
+
+<p>This is in response to your letter dated August 28, 1998, addressed to the Occupational Safety and Health Administration's (OSHA's) Directorate of Compliance Programs (DCP). In your fax, you have requested an interpretation of OSHA's Respiratory Protection Standard, 29 CFR 1910.134. We apologize for the long delay in getting this response to you.</p>
+
+                                 
+
+<p>The first question regards the medical examination under the Hazardous Waste Operations and Emergency Response standard (HAZWOPER), 29 CFR 1910.120. Specifically, you asked if an employee who has received an initial medical examination to meet the HAZWOPER requirement for medical surveillance may follow the medical questionnaire allowed by 29 CFR 1910.134 to satisfy the subsequent annual/biannual medical examinations under HAZWOPER.</p>
+
+                                 
+
+<p>The answer to your question is no. The medical questionnaire for 1910.134 will not satisfy the HAZWOPER requirement for medical surveillance. The intent and the requirements for medical surveillance under HAZWOPER are much different than those required by the respiratory protection standard. The intent of the HAZWOPER medical surveillance requirements is two-fold: (1) to determine fitness-for-duty, including the ability to work while wearing PPE (e.g. respirators), and (2) to establish baseline data for comparison with future medical data. The respiratory protection standard, however, requires a medical evaluation for the sole purpose of establishing an employee's ability to use a respirator.</p>
+
+                                 
+
+                                 
+
+<p>In the second question you ask if an employee who has received an initial medical examination to meet the fire brigade requirement</p>
+
+<p>(1910.156(b)(2)) in order to assess that personnel be physically capable of performing duties assigned to them, can the questionnaire approach allowed in the respirator standard be followed to satisfy subsequent evaluation?</p>
+
+                                 
+
+<p>The answer is again no, for similar reasons as stated above. The Fire Brigade standard has provisions in 1910.156 (b)(2) which are meant to ensure the employee is physically capable of performing the functions and duties that may be assigned to them. However the Respiratory Standard is much more specific for evaluating an employee's ability to wear a respirator, therefore employees who wear respirators must also be evaluated in accordance with 1910.134(e).</p>
+
+                                 
+
+<p>Thank you for your interest in safety and health. If you have any questions, please feel free to call OSHA's Office of Health
+
+Compliance Assistance at (202) 693-2190.</p>
+
+                                 
+
+<p>Sincerely,</p>
+
+                                 
+
+<p>Richard E. Fairfax</p>
+
+<p>Director</p>
+
+<p>Directorate of Compliance Programs</p>
+  </div>  
+  <div class="empty_height2"></div>
+
+  <ion-button color="dark" expand="block" class="loginbutton" (click)="submit()">Continue to Submit</ion-button>
+</div>
+<div *ngIf="form">
+  <h2 class="ion-text-center">Acknowledgement Form</h2>
+  <ion-list lines="none" class="ion-text-left" >
+    <!-- <ion-item *ngFor="let option of question.options">
+      <ion-label>{{option}}</ion-label>
+      <ion-checkbox color="secondary" value="option" (click)="onChange(option)" name="option"></ion-checkbox>
+   </ion-item> -->
+    <p>
+      <ion-input type="text" placeholder="Student ID" [(ngModel)]="usign.studentid"></ion-input>
+    </p>
+    <p>
+      <ion-input type="text" placeholder="Last four digit of Student SSN" [(ngModel)]="usign.studentssn"></ion-input>
+    </p>
+    <p>
+      <ion-input type="text" placeholder="Print name exactly for Certificate" [(ngModel)]="usign.studentname"></ion-input>
+    </p>
+    <p>
+      <ion-input type="text" placeholder="Student Email Address" [(ngModel)]="usign.email"></ion-input>
+    </p>
+  
+   
+    <!-- <p>
+      <ion-select interface="popover"  [(ngModel)]="usign.question" name="usign.question" placeholder="Select fruit">
+        <ion-select-option value="" selected>-- Please select a hint question --</ion-select-option>
+        <ion-select-option value="What is your pet's name?">What is your pet's name?</ion-select-option>
+        <ion-select-option value="What is your favorite sports team?">What is your favorite sports team?</ion-select-option>
+      </ion-select>
+    </p> -->
+    <p>
+      <ion-input type="text" placeholder="Student Phone" [(ngModel)]="usign.phone"></ion-input>
+    </p> 
+    <p>
+      <ion-input type="text" placeholder="Student Mailing Address"  [(ngModel)]="usign.mailing"></ion-input>
+    </p> 
+  
+    <p>
+      <ion-button expand="block" class="loginbutton" (click)="studentFormSubmission(usign,courses)">Submit Now</ion-button>
+    </p> 
+  </ion-list>
+</div>
+</ion-content>

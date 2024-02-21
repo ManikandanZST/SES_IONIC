@@ -1,0 +1,84 @@
+.bodybg{
+    --background: url('../../assets/images/background/bg-training-sets.jpg') no-repeat  center fixed;
+    background-size: cover;
+
+}
+ion-item{
+    --background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 1px 3px #020200;
+    padding-right: 10px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+ion-menu-button{
+    color:#fff !important
+}
+ion-label a{
+    font-size: 16px !important;
+    font-weight: normal !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+}
+h2{
+    color: #fff !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    width: 100% !important;
+    // margin: 0 !important;
+    padding: 0 !important;
+    // line-height: 30px !important;
+}
+p{
+    color: #c74b42 !important;
+}
+//my-custom-class 
+::ng-deep .my-custom-class .alert-head.sc-ion-alert-md{
+    padding: 10px !important;
+}
+::ng-deep .my-custom-class h2.alert-title.sc-ion-alert-md{
+    padding: 15px 0px !important;
+    border-bottom: 1px solid #4c7101 !important;    
+    font-size: 15px !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    color: #4c7101 !important;
+}
+::ng-deep .my-custom-class .alert-message.sc-ion-alert-md{
+    font-size: 15px !important;
+    font-family: Helvetica, Arial, Sans-Serif;
+    color: #000000 !important;
+    padding: 10px 20px 10px 20px !important;
+}
+::ng-deep .my-custom-class .alert-button-group.sc-ion-alert-md{
+    justify-content: space-around !important;
+}
+::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-cancel{
+    border-color: transparent !important;
+    background-color: #444 !important;
+    color: #fff !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    padding: 10px 20px !important; 
+}
+::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-cancel:hover{
+    border-color: transparent !important;
+    background-color: #444 !important;
+    color: #fff !important;    
+}
+::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-confirm{
+    border-color: transparent !important;
+    background-color: #886aea !important;
+    color: #fff !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    padding: 10px 20px !important; 
+}
+::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-confirm:hover{
+    border-color: transparent !important;
+    background-color: #444 !important;
+    color: #6b46e5 !important;    
+}
+::ng-deep .my-custom-class .alert-wrapper.sc-ion-alert-md{
+    background: #fff !important;
+}
+//end my-custom-class 
+.bar-header{
+    background: url('../../assets/images/background/bg-training-sets.jpg') no-repeat  center fixed;
+}

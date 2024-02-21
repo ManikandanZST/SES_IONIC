@@ -1,0 +1,71 @@
+.bodybg{
+    --background: url('../../assets/images/background/bg-training-sets.jpg') no-repeat center fixed;
+    // background-size: cover;
+
+}
+ion-item{
+    --background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 1px 3px #020200;
+    padding-right: 10px;
+    margin-top: 32px;
+
+}
+ion-content p {
+    padding: 10px ;
+    color: #ccc ;
+    border: 0;
+    vertical-align: baseline ;
+    font: inherit ;
+    font-size: 15px ;
+    text-align: justify;
+    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif; 
+    // font-size: 14px;
+    // line-height: 24px;  
+    // // color: #4e4e4e;
+    // color:#fff;
+
+    // font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;  
+    // // font-family: open sans;  
+    // margin: 0;
+    // font-weight: 400;
+    // padding-bottom: 10px;
+  }
+ion-menu-button{
+    color:#fff !important
+}
+ion-label a{
+    font-size: 16px !important;
+    font-weight: normal !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+}
+h2,h1{
+    color: #fff !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    // line-height: 30px !important;
+}
+p{
+    padding: 10px !important;
+    color: #ccc !important;
+    border: 0 !important;
+    vertical-align: baseline !important;
+    font: inherit !important;
+    font-size: 15px !important;
+    text-align: justify !important;
+}
+#desc{
+    padding: 10px !important;
+    color: #ccc !important;
+    border: 0 !important;
+    vertical-align: baseline !important;
+    font: inherit !important;
+    font-size: 15px !important;
+    text-align: justify !important;
+}
+.bar-header{
+    background: url('../../assets/images/background/bg-training-sets.jpg') no-repeat center fixed;
+}

@@ -1,0 +1,33 @@
+<ion-header class="bar-stable bg-trans bar bar-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-buttons slot="start">
+        <!-- <ion-menu-button></ion-menu-button> -->
+        <ion-icon name="arrow-back-outline" (click)="close()"></ion-icon>
+      </ion-buttons>
+    </ion-buttons>
+    <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['']">        
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bodybg">
+  <h1 class="">About Us</h1>
+  <p><img alt="" src="assets/images/about.jpg"></p>
+  <p class="text_white" [innerHTML]="about.sh_content"></p>
+  <!-- <p>Shawnee Environmental Services, Inc. is a company that was started to aid individuals who were casualties of corporate company downsizing. By helping the individuals use their educational and unemployment benefits, we guide them in preparing for a new job and a new way of life and independence.  We at SES, Inc. believe that if" </p>
+  <p>Training Sets The Precedence" all other things will follow in proper order and time.</p> -->
+  <h3>TV interview of graduates from Radiation Control Training (RCT) </h3>
+  <iframe width="100%" height="200" src="https://www.youtube.com/embed/h7Aq43gE41A?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <h3>TV Interview of SES Owner about Radiation Control Training (RCT)</h3>
+  <iframe width="100%" height="200" src="https://www.youtube.com/embed/bFrHdonhstY?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  
+  <p class="copy-right">Copyright © 2002 Shawnee Environmental Services, Inc.</p>
+
+  <!-- <p><a href="mailto:admin@shawneerct.com" class="link">Contact Us</a></p> -->
+  <a href="go_adv.asp" target="_blank"><img name="banner" src="https://www.shawneerct.com/banner.asp?param=1228" border="0" height="66" width="474"></a>
+  
+</ion-content>

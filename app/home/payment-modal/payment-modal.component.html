@@ -1,0 +1,60 @@
+<ion-header class="bar-stable bg-trans bar bar-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-buttons slot="start">
+        <!-- <ion-menu-button></ion-menu-button> -->
+        <ion-icon name="arrow-back-outline" (click)="close()"></ion-icon>
+
+      </ion-buttons>
+    </ion-buttons>
+    <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
+    <ion-buttons slot="end">
+      <!-- <ion-button  (click)="close()">   back        </ion-button> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bodybg">
+  <h2>Payment Using Credit/Debit Card</h2>
+  <h4 *ngIf="total && total != '0'">Amount to Paid <span>$ {{total}}</span></h4>
+  <h4 *ngIf="amount">Amount to Paid <span>$ {{amount}}</span></h4>
+  <h4 *ngIf="payInfoamount">Amount to Paid <span>$ {{payInfoamount}}</span></h4>
+  <h4 *ngIf="ValueAmount">Amount to Paid <span>$ {{ValueAmount}}</span></h4>
+  <h4 *ngIf="coursePrice">Amount to Paid <span>$ {{coursePrice}}</span></h4>
+
+  
+  <div  class="ion-text-center">
+      <div class="ion-text-left">
+    <div style="margin-bottom:10px;">
+      <ion-input type="text" placeholder="Card Holder" [(ngModel)]="usign.cardholder_name" >      <ion-icon name="person-outline"></ion-icon>
+      </ion-input>
+    </div>
+    <div style="margin-bottom:10px;">
+      <ion-input type="text" placeholder="Card Number" [(ngModel)]="usign.ccNumber" ><ion-icon name="card-outline"></ion-icon></ion-input>
+    </div>
+    <div style="margin-bottom:10px;">
+      <ion-input type="text" placeholder="MM" [(ngModel)]="usign.ccExpMonth"><ion-icon name="calendar-outline"></ion-icon></ion-input>
+    </div><div style="margin-bottom:10px;">
+      <ion-input type="text" placeholder="yyyy" [(ngModel)]="usign.ccExpYear"><ion-icon name="calendar-clear-outline"></ion-icon></ion-input>
+    </div><div style="margin-bottom:10px;">
+      <ion-input type="text" placeholder="CVC" [(ngModel)]="usign.ccCvc"><ion-icon name="lock-closed-outline"></ion-icon></ion-input>
+    </div>
+
+    <ion-button color="white" *ngIf="total && total != '0'" expand="block" class="create" (click)="purchaseModule(total,usign,groupuser_NAMEs)">Proceed to Pay</ion-button>
+    <ion-button color="white" *ngIf="amount" expand="block" class="create" (click)="singlePurchase(amount,usign,valueS,'-1','-1',nid)">Proceed to Pay</ion-button>
+    <ion-button color="white" *ngIf="coursePrice" expand="block" class="create" (click)="singlePurchase(coursePrice,usign,valueS,'','-1',-1)">Proceed to Pay</ion-button>
+    <ion-button color="white" *ngIf="payInfoamount" expand="block" class="create" (click)="singlePurchase(payInfoamount,usign,valueS,'','-1',-1)">Proceed to Pay</ion-button>
+    <ion-button color="white" *ngIf="ValueAmount && !total" expand="block" class="create" (click)="purchaseModule_trainingcenter(ValueAmount,usign,ValueId)">Proceed to Pay</ion-button>
+
+    
+    <!-- coursePrice,card,type,valInfo,sectionId,'-1','-1' -->
+
+  <div class="center">
+   <p> For Your Transaction will be Secure&Safe by Payzeey Payment </p>
+   <img src="assets/images/payzeey.png">
+   <p> Payzeey <span (click)="getlink('https://developer.payeezy.com/privacy-policy')">Privacy Policy</span></p>
+  </div>
+  </div>
+</div>
+
+</ion-content>

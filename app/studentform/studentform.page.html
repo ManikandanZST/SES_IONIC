@@ -1,0 +1,119 @@
+<ion-header class="bar-stable bg-trans bar bar-header">
+    <ion-toolbar>        
+        <ion-buttons slot="start">
+            <ion-icon name="arrow-back-outline" (click)="close()"></ion-icon>
+        </ion-buttons>        
+        <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
+        <ion-buttons slot="end">
+          <ion-button></ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bodybg">
+    <h1 class="text_title">Acknowledgement Form</h1>    
+    
+    <ion-item class="pd-0">
+        <div class="flx" position="floating">
+            <ion-icon class="gcol" name="copy-sharp"></ion-icon>            
+            <ion-label class="ltxt">Completed Courses</ion-label>     
+        </div>  
+    </ion-item>
+    
+    <p class="sel-coruse" *ngIf="totalselected != 0">{{totalselected}} Courses Selected</p>
+    
+    <ion-item lines="none">
+        <ion-select [interfaceOptions]="customOptions" placeholder="Choose Student completed Courses" (ionChange)="handleChange($event)" [multiple]="true">
+            <ion-select-option *ngFor="let course of completedcourseinfo"  [value]="course">{{ course.ModuleName }}</ion-select-option>
+        </ion-select>
+    </ion-item>        
+    
+
+    <ion-item class="pd-0">
+        <div class="flx" position="floating">
+            <ion-icon class="gcol" name="copy-sharp"></ion-icon>            
+            <ion-label class="ltxt">Student ID</ion-label>     
+        </div>  
+    </ion-item>
+    <ion-input type="tel" placeholder="Student ID" name="studentid" value="" [(ngModel)]="StudentForm.studentid"></ion-input>
+
+    <ion-item class="pd-0">
+        <div class="flx">
+            <ion-icon class="gcol" name="copy-sharp"></ion-icon>            
+            <ion-label class="ltxt">Last four digit of Student SSN</ion-label>     
+        </div>  
+    </ion-item>
+    <ion-input type="tel" maxlength="4" placeholder="Last four digit of Student SSN" name="studentssn" value="" [(ngModel)]="StudentForm.studentssn"></ion-input>
+
+    <ion-item class="pd-0">
+        <div class="flx">
+            <ion-icon class="gcol" name="copy-sharp"></ion-icon>            
+            <ion-label class="ltxt">Print name exactly for Certificate</ion-label>     
+        </div>  
+    </ion-item>
+    <ion-input type="text" placeholder="Print name exactly for Certificate" name="certificate" value="" [(ngModel)]="StudentForm.certificate"></ion-input>
+
+    <ion-item class="pd-0">
+        <div class="flx">
+            <ion-icon class="gcol" name="copy-sharp"></ion-icon>            
+            <ion-label class="ltxt">Student Email Address</ion-label>     
+        </div>  
+    </ion-item>
+    <ion-input type="email" placeholder="Student Email Address" name="email" value="" [(ngModel)]="StudentForm.email"></ion-input>
+
+    <ion-item class="pd-0">
+        <div class="flx">
+            <ion-icon class="gcol" name="copy-sharp"></ion-icon>            
+            <ion-label class="ltxt">Student Phone</ion-label>     
+        </div>  
+    </ion-item>
+    <ion-input type="text" placeholder="Student Phone" name="phone" value="" [(ngModel)]="StudentForm.phone"></ion-input>
+
+    <ion-item class="pd-0">
+        <div class="flx">
+            <ion-icon class="gcol" name="copy-sharp"></ion-icon>            
+            <ion-label class="ltxt">Student Mailing Address</ion-label>     
+        </div>  
+    </ion-item>
+    <ion-input type="email" placeholder="Student Mailing Address" name="mailing" value="" [(ngModel)]="StudentForm.mailing"></ion-input> 
+  
+</ion-content>
+
+<ion-footer class="footer-bg">    
+    <ion-button color="medium" expand="block" (click)="studentformsubmit(StudentForm,selectedcourse)" class="stdfrmbutton">Submit Now</ion-button>  
+</ion-footer>
+
+<!-- #region Issue Certificate Popocer page -->
+    <ion-modal [isOpen]="isModalOpen" (ionModalDidDismiss)="onModalDismiss()">
+        <ng-template>
+            <ion-header class="bar-stable bg-trans bar bar-header">
+                <ion-toolbar>            
+                    <ion-buttons slot="start">
+                        <ion-icon name="arrow-back-outline" (click)="openPageForm(false);"></ion-icon>
+                    </ion-buttons>
+                    <ion-title class="md-title">Issue Certificate</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button></ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            
+            <ion-content class="ion-padding bodybg">            
+
+                <div *ngFor="let course of selectedcourse">
+                    <ion-card class="md-card mb-20">
+                        <ion-item lines="none">
+                            <ion-checkbox slot="start" (ionChange)="addSelectedCourse($event,course)"></ion-checkbox>
+                            <ion-label *ngIf="course.ModuleName" class="md-list">{{course.ModuleName}}</ion-label>
+                        </ion-item>
+                    </ion-card>
+                </div>
+
+            </ion-content>
+
+            <ion-footer class="footer-bg">                
+                <ion-button color="medium" expand="block" (click)="issuecertficate(courseslists,StudentForm.email,StudentForm.mailing,StudentForm.certificate)" class="stdfrmbutton">Continue to Submit</ion-button>  
+            </ion-footer>
+        </ng-template>
+    </ion-modal>
+<!-- #endregion -->

@@ -1,0 +1,46 @@
+.bodybg{
+    --background: url('../../assets/images/background/bg-contact.jpg') no-repeat center fixed;
+    // background-size: cover;
+
+}
+h2{
+    color: #fff!important;
+    text-align: center!important;
+    margin: 0 auto;
+    left: 0px!important;
+    right: 0px!important;
+    font-size: 16px!important;
+    // /* text-transform: uppercase;
+    // font-family: Helvetica, Arial, Sans-Serif !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+
+
+
+}
+ion-button{
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;  
+}
+ion-content p{
+    padding: 20px;
+    text-align: center !important;
+    color: #fff ;
+    font-family: Helvetica, Arial, Sans-Serif !important;
+    margin: 0 0 10px;
+    font-size: 15px;
+    line-height: 1.5rem;
+}
+.copy-right {
+    padding: 12px;
+    color: rgba(255, 255, 255, 0.59) !important;
+    text-align: center;
+}
+
+ion-button{
+    --ion-color-base: rgba(0, 0, 0, 0.67)!important;
+    --ion-color-contrast: none !important;
+    text-transform: none !important;
+}
+
+.bar-header{
+    background: url('../../assets/images/background/bg-contact.jpg') no-repeat center fixed;
+}

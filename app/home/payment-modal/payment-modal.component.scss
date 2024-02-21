@@ -1,0 +1,58 @@
+ion-icon{
+    //margin-left: 17px;
+}
+.bodybg{
+    --background: url('../../../assets/images/background/bg-money.jpg') no-repeat center fixed;
+    background-size: cover;
+
+}
+ion-item{
+    --background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 1px 3px #020200;
+    padding-right: 10px;
+    margin-top: 32px;
+
+}
+ion-input{
+    --color: #ffffff !important;
+}
+ion-menu-button{
+    color:#fff !important
+}
+ion-label a{
+    font-size: 16px !important;
+    font-weight: normal !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+}
+h2{
+    font-size: 18px !important;
+    text-align: center !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+    
+    line-height: 1.2 !important;
+}
+h4{
+    font-size: 16px !important;
+    text-align: center !important;
+    color: #fff !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+h2,h4{
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+}
+span{
+    color: #ffc900 !important;
+    font-weight: bold !important;
+}
+p{
+    padding: 20px !important;
+    text-align: center !important;
+    color: #f8f8f8 !important;
+    font-size: 15px !important;
+}
+.bar-header{
+    background: url('../../../assets/images/background/bg-money.jpg') no-repeat center fixed;
+}

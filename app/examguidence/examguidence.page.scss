@@ -1,0 +1,52 @@
+.bodybg{
+    --background: url('../../assets/images/background/bg-exam-guide.jpg') no-repeat  center fixed;
+    background-size: cover;
+}
+.bar-header {
+    background: rgba(6,2,1,255) !important;
+    border: rgba(6,2,1,255) !important;
+}
+.text_title{
+    font-size: 16px !important;
+    padding: 0px 0px 10px 0px !important;
+    text-align: center;
+    color: #ffffff;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    font-weight: 500 !important;
+
+}
+#text_list>ol>li {
+    list-style: none !important;    
+}
+.text_white{
+    color: #ffffff;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    vertical-align: baseline !important;      
+    font-size: 15px !important;
+    text-align: justify !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;    
+}
+.copy-right {
+    padding: 10px;
+    color: rgba(255, 255, 255, 0.59);
+    text-align: center;
+    font-size: 15px;
+    font-family: Helvetica, Arial, Sans-Serif;
+}
+.footer-bg{
+    // background: rgba(6,2,1,255) !important;
+    // border: rgba(6,2,1,255) !important;
+    background: rgba(32,19,10,255) !important;
+    border: rgba(32,19,10,255) !important;
+    padding: 0px 10px 25px 10px;
+}
+.train-button{
+    //--ion-color-base: rgba(0, 0, 0, 0.67)!important;
+    --ion-color-base: #306d17 !important;
+    --ion-color-contrast: none !important;
+    color: #ffffff;
+    text-transform: none;
+}
