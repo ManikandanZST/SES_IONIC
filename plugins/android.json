@@ -1,0 +1,46 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-pdf-generator": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "ionic-plugin-keyboard": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    }
+  },
+  "dependent_plugins": {
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.shawneerct.app"
+    }
+  }
+}
