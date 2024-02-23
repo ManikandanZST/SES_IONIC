@@ -1,0 +1,100 @@
+<ion-header class="bar-stable bg-trans bar bar-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back-outline" (click)="close()"></ion-icon>
+      <!-- <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons> -->
+    </ion-buttons>
+    <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['']">        
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content  class="bodybg">
+  <h2 class="center">Purchase Entire Package
+  </h2>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="head"  size="3">Name</ion-col>
+      <ion-col class="sub"  size="8">{{infoU.fullName}}</ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col class="head"   size="3">Company</ion-col>
+      <ion-col class="sub"  size="8">{{infoU.company}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="head"   size="3">SSN</ion-col>
+      <ion-col class="sub"  size="8">{{infoU.SSN}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="head"   size="3">Email</ion-col>
+      <ion-col  class="sub"  size="8">{{infoU.email}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="head"   size="3">Phone</ion-col>
+      <ion-col class="sub"  size="8">{{infoU.phone}}</ion-col>
+    </ion-row>
+    
+  </ion-grid>
+  <!-- <div class="list list-1">
+    <label class="item item-input">
+      <span class="input-label">Name</span>
+      <p>{{infoU.fullName}}</p>
+    </label>
+    <label class="item item-input">
+      <span class="input-label">Company</span>
+      <p>{{infoU.company}}</p>
+    </label>
+    <label class="item item-input">
+      <span class="input-label">SSN</span>
+      <p>{{infoU.SSN}}</p>
+    </label>
+    <label class="item item-input">
+      <span class="input-label">Email</span>
+      <p>{{infoU.email}}</p>
+    </label>
+    <label class="item item-input">
+      <span class="input-label">Phone</span>
+      <p>{{infoU.phone}}</p>
+    </label>
+  </div> -->
+
+  <div class="list invoice-label">
+    <h2>Course Purchase Information</h2>
+
+    <table>
+      <tr>
+        <th>S.NO</th>
+        <th>Course Name</th>
+        <th>Price(US)</th>
+      </tr>
+      <tr  *ngFor="let s of sectionList;let i = index">
+
+        <td  *ngIf="s.testingPaid =='0' || s.testingPaid =='' || s.testingPaid == null">{{i+1}}</td>
+        <td  *ngIf="s.testingPaid =='0' || s.testingPaid =='' || s.testingPaid == null">{{s.sectionName}}</td>
+        <td  *ngIf="s.testingPaid =='0' || s.testingPaid =='' || s.testingPaid == null">$ {{s.price}}</td>
+
+      </tr>
+      <tr>
+        <td></td>
+        <td>Total</td>
+        <td>$ {{amt}}</td>
+      </tr>
+    </table>
+  </div>
+
+<div class="pad1">
+  <ion-button color="medium" expand="block" class="purchase" (click)="nextPurchase(amt)">      Purchase Now
+  </ion-button>
+</div>       &nbsp;
+
+ <div class="pad1">
+  <ion-button color="white" class="create" expand="block" (click)="generatepdfALL(infoU,amt)">       Create Invoice
+  </ion-button>
+   
+</div>
+</ion-content>

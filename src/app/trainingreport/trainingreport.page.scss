@@ -1,0 +1,82 @@
+.bodybg{
+    --background: url('../../assets/images/background/bg-training-report.jpg') no-repeat  center fixed;
+    background-size: cover;
+    font-weight: normal !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+}
+.bar-header {
+    background: rgba(28,33,36,255) !important;
+    border: rgba(28,33,36,255) !important;
+}
+.header-md::after{
+    background-image: none;
+}
+.trainingreport h4
+{
+	color:#e6b500;
+    font-size: 18px !important;	
+}
+.usrprof{
+    --background: #020200;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0px 0px #020200;
+    /* padding-right: 10px; */
+    margin-top: 0px;
+    color: #fff !important;   
+    --inner-border-width: 0px !important; 
+}
+.outmain{
+    --background: rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 0px 0px #020200 !important;
+    /* padding-right: 10px; */
+    margin-top: 0px;
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 14px;
+    --inner-border-width: 0px !important;
+}
+.trainingreport ion-label p{
+    color: #fff;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+.input-wrapper{
+    justify-content: space-between !important;
+}
+.icon{
+    color: #fff;
+    position: absolute;
+    right: 10px;
+    font-size: large;
+}
+.outsub{
+    --background: rgba(255, 255, 255, 0.11) !important;
+    border: 1px solid rgba(0, 0, 0, 0.5) !important;    
+    color: #fff !important;
+    font-size: 12px;    
+    --inner-border-width: 0px !important;
+}
+.list{
+    margin-bottom: 20px;
+}
+.ion-text-center{
+    padding: 1px !important;
+}
+.header-row {
+    background: rgba(255, 255, 255, 0.4);
+    color: #f1f1f1;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: left;   
+}
+.body-row{
+    text-align: left;
+    font-size: 12px;
+    color: #ddd;
+    vertical-align: middle;
+}  
+ion-col {
+    border: 1px solid #a2a2a2;
+    text-align: left;    
+}  

@@ -1,0 +1,57 @@
+.text-decoration-none{
+    text-decoration: none;
+}
+.bodybg{
+    --background: url('../../assets/images/background/bg-login.jpg') no-repeat center fixed;
+    background-size: cover;
+
+}
+ion-item{
+    // --background: transparent;
+    // border: 1px solid rgba(255, 255, 255, 0.4);
+    // box-shadow: 0 1px 3px #020200;
+    // padding-right: 10px;
+    border-radius: 5px !important;
+    margin-top: 32px;
+
+}
+ion-menu-button{
+    color:#fff !important
+}
+ a{
+    color: #a0d9f5 !important;
+    font-size: 15px !important;
+    font-weight: normal !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+    text-align: justify !important;
+    text-decoration: none !important;
+}
+h2{
+    margin-bottom: 10px;
+    color: #f9fbbd !important;
+    font-size: 20px !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    width: 100% !important;
+    font-weight: 500;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    line-height: 1.2;
+    // line-height: 30px !important;
+}
+span{
+    color: #FF5722 !important;
+    //margin: 0px 10px;
+}
+ion-input{
+    --color: #aaa !important;
+    // --background: white !important;
+    --background: transparent !important;
+    border: none !important;
+}
+ion-button{
+    --ion-color-base: rgba(0, 0, 0, 0.67)!important;
+    --ion-color-contrast: none !important;
+}
+.bar-header{
+    background: url('../../assets/images/background/bg-login.jpg') no-repeat center fixed;
+}

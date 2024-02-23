@@ -1,0 +1,359 @@
+<!-- #region Homepage Common -->
+<ion-header class="bar-stable bg-trans bar bar-header" *ngIf="type=='common'">
+  <ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-buttons slot="start">
+      <ion-menu-button ></ion-menu-button>
+    </ion-buttons>
+  </ion-buttons>
+
+  <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
+  <ion-buttons slot="end">
+    <ion-button>      
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  <!-- <ion-buttons slot="end" (click)="showPopover($event)">
+ 
+    <ion-button>
+      <ion-icon name="ellipsis-vertical-outline" slot="icon-only" style="color: #fff;"></ion-icon>
+    </ion-button>
+  </ion-buttons> -->
+<ion-content  class="bodybg" *ngIf="type=='common'">
+  <div class="common-dash">
+    <ion-slides pager="true" [options]="slideOpts" class="mt-15">
+      <ion-slide>
+        <img src="assets/images/s1.jpg" alt="" srcset="">
+      </ion-slide>
+      <ion-slide>
+        <img src="assets/images/s2.jpg" alt="" srcset="">
+      </ion-slide>
+      <ion-slide>
+        <img src="assets/images/s3.jpg" alt="" srcset="">
+      </ion-slide>
+    </ion-slides>
+
+    <div *ngFor="let CL of courselist.Course;let i=index">
+      <div (click)="CL.is_group == '1' || CL.is_group == '3' ? trainingcourse(CL.sid) : ''">
+  
+        <!-- check it later -->
+        <!-- <div *ngIf="CL.is_group == '0'" (click)="login({type:'individual',page:'course',sid:CL.sid,mouduleId:CL.mouduleId,title:CL.sh_course})"> -->
+        <ion-item  lines="none" class="mt-15">
+          <ion-avatar>
+            <img *ngIf="i%5 == 0" alt="Silhouette of a person's head" src="assets/images/book.png" />
+            <img *ngIf="i%5 == 1" alt="Silhouette of a person's head" src="assets/images/book1.png" />
+            <img *ngIf="i%5 == 2" alt="Silhouette of a person's head" src="assets/images/book2.png" />
+            <img *ngIf="i%5 == 3" alt="Silhouette of a person's head" src="assets/images/book3.png" />
+            <img *ngIf="i%5 == 4" alt="Silhouette of a person's head" src="assets/images/book4.png" />
+  
+          </ion-avatar>
+          <ion-label  text-wrap class="ion-text-wrap">
+            <a  class="link">{{CL.sh_course}}</a>
+          </ion-label>
+        </ion-item>
+      <!-- </div> -->
+      </div>
+    </div>
+
+    <!-- #region Homepage Common Static Design -->
+    <!--<ion-item class="mt-15">
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Radiation Control Technician (RCT)</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book1.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Red Worker</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book.png" />
+      </ion-avatar>
+      <ion-label> -->
+        <!-- <a href="home-inner" class="link">Electronic Record Keeping System (ERKS)</a> -->
+        <!-- <a href="home-inner" class="link">NISP Procedures </a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book2.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">HAZWOPER</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book3.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Industrial Hygiene</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book1.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">DOT HAZMAT</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book3.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Nuclear Operator Fundamentals</a>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book1.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Emergency Preparedness (EP)</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book2.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Procedure Writting Services (PWS)</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book4.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Red Pro Office</a>
+      </ion-label>
+    </ion-item> -->
+    <!-- #endregion -->
+  
+  </div> 
+</ion-content>
+<!-- #endregion -->
+
+<!-- #region Homepage Group -->
+<ion-header class="bar-stable bg-trans bar bar-header3" *ngIf="type=='group'">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-buttons slot="start">
+        <ion-menu-button ></ion-menu-button>
+      </ion-buttons>
+    </ion-buttons>
+    <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="ellipsis-vertical-outline" id="click-trigger" slot="icon-only" style="color: #fff;"></ion-icon>      
+      <ion-popover trigger="click-trigger" triggerAction="click">
+        <ng-template>
+          <ion-item (click)="logout()">Logout</ion-item>          
+        </ng-template>
+      </ion-popover>
+    </ion-buttons>
+    <!-- <ion-buttons slot="end" (click)="showPopover($event)"> -->
+      <!-- <ion-button [routerLink]="['']">        
+      </ion-button> -->
+      <!-- <ion-button>
+        <ion-icon name="ellipsis-vertical-outline" slot="icon-only" style="color: #fff;"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+  <!-- <ion-buttons slot="end" (click)="showPopover($event)">
+ 
+    <ion-button>
+      <ion-icon name="ellipsis-vertical-outline" slot="icon-only" style="color: #fff;"></ion-icon>
+    </ion-button>
+  </ion-buttons> -->
+<ion-content class="bodybg3" *ngIf="type=='group'">
+  <div class="group_list">
+    <ion-item lines="none" class="mt-15 cus-grp" (click)="purchasecourse()">
+      <ion-label class="link">
+        Purchase Module/Courses      
+
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none" class="cus-grp" (click)="purchaseexam()">
+
+      <ion-label>
+        <a class="link">          Purchase Overall Exam
+        </a>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none" class="cus-grp" (click)="purchasevaluepacks()">
+      <ion-label>
+        <a class="link">          Purchase Value Packs
+        </a>
+      </ion-label>
+    </ion-item >
+    <ion-item class="cus-grp" (click)="purchaseoverall()">
+  
+      <ion-label>
+        <a class="link">          Purchase Overall/Section Value Packs
+        </a>
+      </ion-label>
+    </ion-item >
+    <ion-item class="cus-grp" lines="none" (click)="employeelist()">
+
+      <ion-label>
+        <a class="link">          Employee Lists
+        </a>
+      </ion-label>
+    </ion-item>
+    <ion-item class="cus-grp" lines="none" (click)="employeereport()">
+  
+      <ion-label>
+        <a class="link">          Employee Reports
+        </a>
+      </ion-label>
+    </ion-item>
+
+  </div>
+</ion-content>
+<!-- #endregion -->
+
+<!-- #region Homepage Individual -->
+<ion-header class="bar-stable bg-trans bar bar-header" *ngIf="type=='individual'"> 
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-menu-button ></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="ellipsis-vertical-outline" id="click-trigger" slot="icon-only" style="color: #fff;"></ion-icon>      
+      <ion-popover trigger="click-trigger" triggerAction="click">
+        <ng-template>
+          <ion-item (click)="logout()">Logout</ion-item>          
+        </ng-template>
+      </ion-popover>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bodybg"  *ngIf="type=='individual'">
+  <div class="home-dash">
+    <!-- <ion-slides pager="true" [options]="slideOpts" class="mt-15">
+      <ion-slide>
+        <img src="assets/images/s1.jpg" alt="" srcset="">
+      </ion-slide>
+      <ion-slide>
+        <img src="assets/images/s2.jpg" alt="" srcset="">
+      </ion-slide>
+      <ion-slide>
+        <img src="assets/images/s3.jpg" alt="" srcset="">
+      </ion-slide>
+    </ion-slides> -->
+    <div *ngFor="let CL of courselist.Course;let i=index">
+      <div (click)="CL.is_group == '1' || CL.is_group == '3' ? trainingcourse(CL.sid) : ''">
+
+        <!-- check it later -->
+        <!-- <div *ngIf="CL.is_group == '0'" (click)="login({type:'individual',page:'course',sid:CL.sid,mouduleId:CL.mouduleId,title:CL.sh_course})"> -->
+        <ion-item  lines="none" class="mt-15">
+          <ion-avatar>
+            <img *ngIf="i%5 == 0" alt="Silhouette of a person's head" src="assets/images/book.png" />
+            <img *ngIf="i%5 == 1" alt="Silhouette of a person's head" src="assets/images/book1.png" />
+            <img *ngIf="i%5 == 2" alt="Silhouette of a person's head" src="assets/images/book2.png" />
+            <img *ngIf="i%5 == 3" alt="Silhouette of a person's head" src="assets/images/book3.png" />
+            <img *ngIf="i%5 == 4" alt="Silhouette of a person's head" src="assets/images/book4.png" />
+
+          </ion-avatar>
+          <ion-label  text-wrap class="ion-text-wrap">
+            <a  class="link">{{CL.sh_course}}</a>
+          </ion-label>
+        </ion-item>
+      <!-- </div> -->
+      </div>
+    </div>
+
+    <!-- #region Homepage Individual Static Design -->
+    <!-- <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book1.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Red Worker</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">NISP Procedures </a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book2.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">HAZWOPER</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book3.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Industrial Hygiene</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book1.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">DOT HAZMAT</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book3.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Nuclear Operator Fundamentals</a>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book1.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Emergency Preparedness (EP)</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book2.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Procedure Writting Services (PWS)</a>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img alt="Silhouette of a person's head" src="assets/images/book4.png" />
+      </ion-avatar>
+      <ion-label>
+        <a href="home-inner" class="link">Red Pro Office</a>
+      </ion-label>
+    </ion-item> -->
+    <!-- #endregion -->
+
+  </div>
+
+</ion-content>
+<!-- #endregion -->

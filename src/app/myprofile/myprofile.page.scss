@@ -1,0 +1,209 @@
+ion-avatar{
+    background-color: #23991d;
+    padding: 6px;
+    //margin-top: 0px;
+    color: #fff;
+}
+.editprofile{
+    background-color: #025600;
+    padding: 5px;
+    color: #fff;
+    border-radius: 100px;
+    font-size: 5px;
+    text-align: center;
+    width: 40;
+    width: 20px;
+    height: 20px;
+}
+ion-checkbox::part(container) {
+    border-radius: 30px;
+}
+ion-checkbox{
+    width:25px;
+    height:25px;
+    margin-right:10px;
+}
+//$popover-max-height: 200px;
+
+.my-popover {
+    --height: 200px !important;
+    height: var(--height) !important;
+  }
+
+  ::ng-deep .my-popover {
+    height: 200px !important;
+  }
+  :host::ng-deep .my-popover{
+    height: 200px !important;
+  }
+
+
+.select-scrollable {
+    max-height: 200px !important; /* adjust this value to fit your needs */
+    overflow-y: scroll;
+  }
+
+
+ion-select.popover-content {
+    --max-height: 200px !important; /* adjust the value to your desired height */
+  }
+
+  .custom-popover {
+    max-height: 200px; /* adjust the height to your desired value */
+  }
+
+  .popover-content {
+    --min-height: 200px !important;
+}
+
+.my-select .popover-content {
+  max-height: 200px !important; /* Adjust the height as per your requirement */
+}
+
+
+  .custom-popover .popover-content {
+    max-height: 200px !important; /* adjust the height to your desired value */
+  }
+
+
+  .custom-popover .popover-content ion-list {
+    overflow-y: scroll !important;
+  }
+
+  .popover-wrapper .popover-content{
+    height: 200px !important;
+  }
+
+  :host ::ng-deep .popover-content {
+    max-height: 200px !important; /* adjust the max-height to your liking */
+  }
+
+  ::ng-deep.custom-popover .popover-content .select-scrollable {
+    max-height: 200px !important; /* adjust the height to your desired value */
+  }
+
+  .custom-popover {
+    --max-height: 400px; /* adjust the max-height to your liking */
+    --min-height: unset;
+    --height: unset;
+  }
+  
+  .select-popover-content {
+    overflow-y: scroll;
+  }
+
+
+  // :popheight { --height: 200px; }
+
+
+// .custom-select .select-scrollable {
+//     max-height: 200px !important;
+//     overflow-y: scroll !important;
+//   }
+
+:host ::ng-deep .popover-content {
+  max-height: 200px !important; /* Adjust the height as per your requirement */
+}
+
+
+// ion-select-popover{
+//    // height: 200px !important;
+//    max-height: 200px !important;
+// }
+
+// ion-select{
+//     height: 40% !important;
+// }
+
+
+
+ion-popover {
+  .popover-content {
+    max-height: 20px !important; /* set the maximum height for the popover */
+  }
+}
+
+
+:host ion-popover {
+  --max-height: 30% !important;
+}
+
+
+
+ion-popover {
+  --max-height: 50% !important; /* set the maximum height to 50% of the viewport height */
+  --min-height: 200px !important; /* set the minimum height to 200 pixels */
+}
+
+
+
+
+.my-custom-popover {
+  .popover-content {
+    max-height: 200px !important; /* Set the max height as per your requirement */
+  }
+}
+
+
+
+
+ion-input, ion-select{
+ // max-height: 200px !important;
+border: 0px;
+border-bottom: 1px solid #ddd;
+border-radius: 30px;
+color: var(--ion-color-step-600, #666666);
+}
+
+.bodybg{
+    --background: url('../../assets/images/background/bg-profile.jpg') no-repeat center fixed;
+    background-size: cover;
+
+}
+ion-item{
+    --background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 1px 3px #020200;
+    padding-right: 10px;
+    margin-top: 32px;
+
+}
+ion-menu-button{
+    color:#fff !important
+}
+ion-label a{
+    font-size: 16px !important;
+    font-weight: normal !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+}
+h2{
+    color: #fff !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-top: 20 !important;
+    padding: 0 !important;
+    // line-height: 30px !important;
+}
+p{
+    color: #ddd !important;
+}
+ion-input{
+    color: #ddd !important;
+
+}
+ion-button{
+    --ion-color-base: rgba(0, 0, 0, 0.67)!important;
+}
+.login{
+    //--ion-color-base: rgba(0, 0, 0, 0.67)!important;
+    --ion-color-base: #23991d !important;
+    --ion-color-contrast: none !important;
+}
+.cancelbutton{
+    --ion-color-base: #28282B !important;
+    --ion-color-contrast: none !important;
+}
+.bar-header{
+    background: url('../../assets/images/background/bg-profile.jpg') fixed;
+}

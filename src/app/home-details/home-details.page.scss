@@ -1,0 +1,157 @@
+.bodybg{
+    --background: url('../../assets/images/background/bg-details.jpg')  no-repeat  center fixed;
+    background-size: cover;
+
+}
+ion-item{
+    --background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 1px 3px #020200;
+    padding-right: 10px;
+
+}
+ion-content p {
+    padding: 10px ;
+    color: #ccc ;
+    border: 0;
+    vertical-align: baseline ;
+    font: inherit ;
+    font-size: 15px ;
+    text-align: justify;
+    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif; 
+    // font-size: 14px;
+    // line-height: 24px;  
+    // // color: #4e4e4e;
+    // color:#fff;
+
+    // font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;  
+    // // font-family: open sans;  
+    // margin: 0;
+    // font-weight: 400;
+    // padding-bottom: 10px;
+  }
+ion-menu-button{
+    color:#fff !important
+}
+ion-label a{
+    font-size: 16px !important;
+    font-weight: normal !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+}
+h2{
+    color: #fff !important;
+    font-size: 14px !important;
+    padding: 5px !important;
+    font-weight: normal;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+
+}
+ion-card{
+        --background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 1px 3px #020200;
+        //padding-right: 10px;
+    
+}
+h3{
+    color: #fff !important;
+    text-align: center !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    // padding: 5px !important; 
+
+}
+.manual{
+    height: 30px !important;
+    border: none !important;
+    background: transparent !important;
+    font-weight: bold !important;
+    color: #11c1f3 !important;
+    font-size: 14px !important;
+    line-height: 1.42857 !important;
+    text-transform: none !important;
+
+}
+.purchase{
+    border: 1px solid #e6b500;
+    color: #e6b500!important;
+    font-size: 14px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    --ion-color-contrast: #e6b500 !important;
+    --ion-color-base: #222428 !important;
+    background: #e6b500 !important;
+}
+//my-custom-class 
+::ng-deep .my-custom-class .alert-head.sc-ion-alert-md{
+    padding: 10px !important;
+    border-bottom: 1px solid #4c7101;
+}
+::ng-deep .my-custom-class h2.alert-title.sc-ion-alert-md{
+    padding: 15px 0px !important;
+    border-bottom: 1px solid #4c7101 !important;    
+    font-size: 15px !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    color: #4c7101 !important;
+}
+::ng-deep .my-custom-class .alert-message.sc-ion-alert-md{
+    font-size: 15px !important;
+    font-family: Helvetica, Arial, Sans-Serif;
+    color: #000000 !important;
+    padding: 10px 20px 10px 20px !important;
+    text-align: justify;
+}
+::ng-deep .my-custom-class .alert-button-group.sc-ion-alert-md{
+    justify-content: space-around !important;
+}
+::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-cancel{
+    border-color: transparent !important;
+    background-color: #444 !important;
+    color: #fff !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    padding: 10px 20px !important; 
+}
+::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-cancel:hover{
+    border-color: transparent !important;
+    background-color: #444 !important;
+    color: #fff !important;    
+}
+::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-confirm{
+    border-color: transparent !important;
+    background-color: #886aea !important;
+    color: #fff !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    padding: 10px 20px !important; 
+}
+::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-confirm:hover{
+    border-color: transparent !important;
+    background-color: #444 !important;
+    color: #6b46e5 !important;    
+}
+::ng-deep .my-custom-class .alert-wrapper.sc-ion-alert-md{
+    background: #fff !important;
+}
+::ng-deep .my-custom-class .alert-sub-title.sc-ion-alert-md{
+    font-size: 19px !important;
+    color: #4c7101 !important;
+    font-weight: 500 !important;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
+}
+//end my-custom-class 
+.head-pd{
+    padding-top: 0px !important;
+}
+.overflow{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.flx{
+    display: flex;
+    justify-content: space-between;
+}
+.bar-header{
+    background: url('../../assets/images/background/bg-details.jpg') fixed;
+}
+.sc-ion-searchbar-ios-h{
+    --background: #fff !important;
+}
