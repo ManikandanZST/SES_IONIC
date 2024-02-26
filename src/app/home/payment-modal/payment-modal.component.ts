@@ -22,19 +22,18 @@ export class PaymentModalComponent implements OnInit {
   @Input ("coursePrice") coursePrice;
   @Input ("OverId") OverId;
 
-  
 
-  
+
   total: string;
   groupuser_NAMEs: any;
-  groupusers: any; 
+  groupusers: any;
   GroupId: string;
   usign:any=[];
   type: string;
   section: any;
 
   constructor(private loginService: LoginService, public modalController: ModalController,
-    private commonService:CommonService,private router: Router,public alertController: AlertController, 
+    private commonService:CommonService,private router: Router,public alertController: AlertController,
        private activatedRoute: ActivatedRoute,public iab:InAppBrowser,private creditCardService: CreditCardService) { }
 
   ngOnInit() {
@@ -55,7 +54,7 @@ export class PaymentModalComponent implements OnInit {
 
     var lnk =  'GetGroupUserModules?GroupId='+this.GroupId;
 
-  
+
   this.loginService.getData(lnk).then(
     (Response: any) => {
       console.log(Response,"GetGroupUserModules");
@@ -68,9 +67,9 @@ export class PaymentModalComponent implements OnInit {
 
       this.groupusers=Response[0].ModuleList;
       console.log(this.groupusers,"respon");
-      // var templs   = [];    
-      // this.totalAmount=[];  
-      // this.MULTIlist=[];  
+      // var templs   = [];
+      // this.totalAmount=[];
+      // this.MULTIlist=[];
       // for(var j=0;j<Response.length;j++)
       // {
       //  this.totalAmount[j] = 0;
@@ -85,16 +84,16 @@ export class PaymentModalComponent implements OnInit {
       //   localStorage.setItem("totalAmountChoosen",'0');
       // }
       }else{
-       
+
       }
     },
     err => {
-   
+
     }
   );
-} 
+}
 
-//Group user payment 
+//Group user payment
   purchaseModule(amount,usign,infoM){
     console.log(amount,"amount");
     console.table(usign);
@@ -105,18 +104,18 @@ export class PaymentModalComponent implements OnInit {
     else if (usign.ccNumber == "" || usign.ccNumber == undefined){
       this.commonService.presentToast("Enter your credit/debit card number.");
     }
-    
+
     else if (usign.ccExpMonth == "" || usign.ccExpMonth == undefined){
       this.commonService.presentToast("Enter card expire month.");
     }
-  
+
     else if(usign.ccExpYear == "" || usign.ccExpYear == undefined) {
       this.commonService.presentToast("Enter card expire year.d");
     }
     else if(usign.ccCvc == "" || usign.ccCvc == undefined) {
       this.commonService.presentToast("Enter card ccv number.");
     }
-   
+
     else {
       var uid = this.GroupId;
       if(usign.ccExpMonth.toString().length == 1)
@@ -139,11 +138,11 @@ export class PaymentModalComponent implements OnInit {
           {
             joinUser = joinUser + infoM[m].User.userId+'-';
             joinUserOverList += infoM[m].User.userId + '-';
-            joinUserValuePack += infoM[m].User.userId + '-'; 
+            joinUserValuePack += infoM[m].User.userId + '-';
             joinUserOverallValuePack += infoM[m].User.userId + '-';
             console.log(`joinUserCheck: ${joinUser}`);
             console.log(`joinUserOverallValuePack: ${joinUserOverallValuePack}`);
-            
+
             for(var n=0;n<listMulti.length;n++)
             {
               if(n == listMulti.length-1)
@@ -166,7 +165,7 @@ export class PaymentModalComponent implements OnInit {
               }
             }
           }
-          
+
       }
       var joinUser = joinUser.substring(0, joinUser.length-1);
       joinUserOverList = joinUserOverList.substring(0, joinUserOverList.length-1);
@@ -178,12 +177,12 @@ export class PaymentModalComponent implements OnInit {
       console.log(`joinUserOverallValuePackCheck: ${joinUserOverallValuePack}`);
       var ExpireDate = usign.ccExpMonth+usign.ccExpYear;
 
-      var ExpMonth = usign.ccExpMonth.toString(); 
+      var ExpMonth = usign.ccExpMonth.toString();
       if (ExpMonth.length === 2 && ExpMonth.startsWith('0')) {
-          ExpMonth = ExpMonth.substring(1); 
+          ExpMonth = ExpMonth.substring(1);
       }
 
-      var ExpYear = usign.ccExpYear.toString(); 
+      var ExpYear = usign.ccExpYear.toString();
       var data = 'GroupId=' + uid +
       '&SectionList=' + joinUser +
       '&ValueList=' + joinUserValuePack +
@@ -200,7 +199,7 @@ export class PaymentModalComponent implements OnInit {
       console.log(data);
       var datas = ''
       this.loginService.paymentcourse_group(data).then((Response: any) => {
-        
+
          if(Response.Status == 'Success'){
 
            this.commonService.closeLoading();
@@ -218,10 +217,10 @@ export class PaymentModalComponent implements OnInit {
          this.commonService.presentToast(`Connection error`);
        }
      );
-    }   
+    }
 
   }
-    
+
   async presentAlert(response) {
     // console.log(type,"testinftf")
     const alert = await this.alertController.create({
@@ -233,7 +232,11 @@ export class PaymentModalComponent implements OnInit {
         {
           text: "Okay",
           handler: () => {
-            this.router.navigate([`/home/${this.type}/'purchasecourse'`])
+            this.modalController.dismiss({
+              dismissed: true
+            });
+            this.router.navigate([`/home/${this.type}`])
+            // this.router.navigate([`/home/${this.type}/purchasecourse`])
 
           //   if(type=="'register'"){
           //   this.router.navigate([`/login/${type}`])
@@ -253,34 +256,35 @@ export class PaymentModalComponent implements OnInit {
 
   async close(){
     await    this.modalController.dismiss();
+
     }
-    
+
    getlink (link)
     {
       this.iab.create(link,'_blank')
-    
+
     }
 
 
     //individual user payment home
-   singlePurchase(amount,usign,type,section,overid,typeId) {  
+   singlePurchase(amount,usign,type,section,overid,typeId) {
     if(section){
       this.section=section
     }else{
       this.section=this.sectionId
     }
-    
+
       if (usign.cardholder_name == "" || usign.cardholder_name == undefined){
         this.commonService.presentToast("Enter holder name.");
       }
       else if (usign.ccNumber == "" || usign.ccNumber == undefined){
         this.commonService.presentToast("Enter your credit/debit card number.");
       }
-      
+
       else if (usign.ccExpMonth == "" || usign.ccExpMonth == undefined){
         this.commonService.presentToast("Enter card expire month.");
       }
-    
+
       else if(usign.ccExpYear == "" || usign.ccExpYear == undefined) {
         this.commonService.presentToast("Enter card expire year.d");
       }
@@ -292,7 +296,7 @@ export class PaymentModalComponent implements OnInit {
           console.log(typeof this.usign.ccNumber)
           // var uid = '';
           var cardBrand = this.creditCardService.identifyCardBrand(this.usign.ccNumber);
-       
+
         //  const First6 = this.usign.ccNumber.substring(0, 6);
         //  const Last4 = this.usign.ccNumber.substring(this.usign.ccNumber.length - 4);
 
@@ -304,20 +308,26 @@ export class PaymentModalComponent implements OnInit {
 
           // var ExpireDate = usign.ccExpMonth+usign.ccExpYear;
           // var data = 'UserId='+uid+'&SectionId='+this.section+'&manstatus=0&videostatus=0&OverId='+overid+'&Type='+typeId+'&PackId=0&Amount='+amount+'&CardHoldersName='+usign.cardholder_name+'&CardBrand='+cardBrand+'&CreditCardNo='+usign.ccNumber+'&ExpireDate='+ExpireDate;
-          var ExpMonth = usign.ccExpMonth.toString(); 
+          var ExpMonth = usign.ccExpMonth.toString();
         if (ExpMonth.length === 2 && ExpMonth.startsWith('0')) {
-            ExpMonth = ExpMonth.substring(1); 
+            ExpMonth = ExpMonth.substring(1);
         }
 
-        var ExpYear = usign.ccExpYear.toString(); 
+        var ExpYear = usign.ccExpYear.toString();
 
-        var data = 'UserId=' + uid + '&SectionId=' + this.section + '&manstatus=0&videostatus=0&OverId=' + this.OverId + '&Type=' + typeId + '&PackId=0&Amount=' + amount + '&CardHoldersName=' + usign.cardholder_name + '&CardBrand=' + cardBrand + '&CreditCardNo=' + usign.ccNumber + '&ExpMonth=' + ExpMonth + '&ExpYear=' + ExpYear + '&Cvc=' + usign.ccCvc;
+        var PackValue = this.ValueId ?? "-1";
+
+        var TypeValue = this.nid ?? "-1";
+
+        var OverIdValue = this.OverId ?? "-1";
+
+        var data = 'UserId=' + uid + '&SectionId=' + this.section + '&manstatus=0&videostatus=0&OverId=' + OverIdValue + '&Type=' + TypeValue + '&PackId=' + PackValue + '&Amount=' + amount + '&CardHoldersName=' + usign.cardholder_name + '&CardBrand=' + cardBrand + '&CreditCardNo=' + usign.ccNumber + '&ExpMonth=' + ExpMonth + '&ExpYear=' + ExpYear + '&Cvc=' + usign.ccCvc;
           // var data = 'UserId='+uid+'&SectionId='+this.section+'&manstatus=0&videostatus=0&OverId='+overid+'&Type='+typeId+'&PackId=0&Amount='+amount+'&CardHoldersName='+usign.cardholder_name+'&CardBrand='+cardBrand+'&CreditCardNo='+usign.ccNumber+'&ExpireDate='+ExpireDate+'&First6='+First6+'&Last4='+Last4;
           console.log(data);
           this.loginService.paymentcourse_single(data).then((Response: any) => {
-            
+
              if(Response.Status == 'Success'){
-    
+
                this.commonService.closeLoading();
                   // this.signupdetails = Response.data[0];
                   // console.log(this.signupdetails);
@@ -333,10 +343,10 @@ export class PaymentModalComponent implements OnInit {
              this.commonService.presentToast(`Connection error`);
            }
          );
-        }   
+        }
 
       }
-        
+
 
 
       //tarining centerpayment
@@ -350,18 +360,18 @@ export class PaymentModalComponent implements OnInit {
         else if (usign.ccNumber == "" || usign.ccNumber == undefined){
           this.commonService.presentToast("Enter your credit/debit card number.");
         }
-        
+
         else if (usign.ccExpMonth == "" || usign.ccExpMonth == undefined){
           this.commonService.presentToast("Enter card expire month.");
         }
-      
+
         else if(usign.ccExpYear == "" || usign.ccExpYear == undefined) {
           this.commonService.presentToast("Enter card expire year.d");
         }
         else if(usign.ccCvc == "" || usign.ccCvc == undefined) {
           this.commonService.presentToast("Enter card ccv number.");
         }
-       
+
         else {
           var uid = localStorage.getItem("Userid");
           // if(usign.ccExpMonth.toString().length == 1)
@@ -375,19 +385,19 @@ export class PaymentModalComponent implements OnInit {
           var joinUser = joinUser.substring(0, joinUser.length-1);
           console.log(joinUser);
           var ExpireDate = usign.ccExpMonth+usign.ccExpYear;
-          var ExpMonth = usign.ccExpMonth.toString(); 
+          var ExpMonth = usign.ccExpMonth.toString();
           if (ExpMonth.length === 2 && ExpMonth.startsWith('0')) {
-              ExpMonth = ExpMonth.substring(1); 
+              ExpMonth = ExpMonth.substring(1);
           }
-  
-          var ExpYear = usign.ccExpYear.toString(); 
-          
+
+          var ExpYear = usign.ccExpYear.toString();
+
           var data =  'UserId='+uid+'&SectionId='+nullP+'&OverId='+nullP+'&Type='+nullP+'&PackId='+valueid+'&Amount='+amount+'&CardHoldersName='+usign.cardholder_name+'&CreditCardNo='+usign.ccNumber+'&ExpireDate='+ExpireDate + '&ExpMonth=' + ExpMonth + '&ExpYear=' + ExpYear + '&Cvc=' + usign.ccCvc;
           console.log(data);
           this.loginService.paymentcourse_single(data).then((Response: any) => {
-            
+
              if(Response.Status == 'Success'){
-    
+
                this.commonService.closeLoading();
                   // this.signupdetails = Response.data[0];
                   // console.log(this.signupdetails);
@@ -403,8 +413,6 @@ export class PaymentModalComponent implements OnInit {
              this.commonService.presentToast(`Connection error`);
            }
          );
-        }   
+        }
       }
     }
-
-

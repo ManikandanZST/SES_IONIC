@@ -42,6 +42,7 @@ export class PurchasecourseComponent implements OnInit {
   ngOnInit() {
     console.log("TEST PAGE")
     this.GroupId=localStorage.getItem("loginuserid")
+
     this.GetGroupUser();
     this.GetGroupUserModules()
   }
@@ -54,26 +55,26 @@ export class PurchasecourseComponent implements OnInit {
         {
         this.info=Response.UserList;
         }else{
-         
+
         }
       },
       err => {
-     
+
       }
     );
-  } 
+  }
 
   GetGroupUserModules(){
-   var lnk =  'GetGroupUserModules?GroupId='+this.GroupId; 
+   var lnk =  'GetGroupUserModules?GroupId='+this.GroupId;
    this.loginService.getData(lnk).then(
       (Response: any) => {
         if(Response)
         {
           this.groupuser_NAMEs=Response;
           this.groupusers=Response[0].ModuleList;
-          var templs   = [];    
-          this.totalAmount=[];  
-          this.MULTIlist=[];  
+          var templs   = [];
+          this.totalAmount=[];
+          this.MULTIlist=[];
           for(var j=0;j<Response.length;j++)
           {
             this.totalAmount[j] = 0;
@@ -86,14 +87,14 @@ export class PurchasecourseComponent implements OnInit {
             localStorage.setItem("totalAmountChoosen",'0');
           }
         }else{
-        
+
         }
       },
       err => {
-    
+
       }
     );
-  } 
+  }
 
   setFilteredLocations(){
     this.search=true;
@@ -115,7 +116,7 @@ export class PurchasecourseComponent implements OnInit {
     var dync = 'USER'+lst.User.userId;
     var listMulti = JSON.parse(localStorage.getItem(dync));
     this.multipleLists = [];
-    var templas   = [];      
+    var templas   = [];
     var tCheck = false;
     for(var i=0;i<lst.ModuleList.length;i++)
     {
@@ -144,7 +145,7 @@ export class PurchasecourseComponent implements OnInit {
 
     const modal = await this.modalCtrl.create({
       component: ModalpopupComponent,
-      componentProps: { 
+      componentProps: {
         "id": index,
         "selectcourse" : this.selectcourse[index] ? this.selectcourse[index]: '',
       },
@@ -166,17 +167,17 @@ export class PurchasecourseComponent implements OnInit {
     console.log("test")
     const modal = await this.modalCtrl.create({
       component: PaymentModalComponent,
-      componentProps: { 
+      componentProps: {
 
       },
       cssClass: 'my-custom-modal-css',
       swipeToClose: true,
     });
     modal.onDidDismiss().then((result) => {
-  
+
     })
     return await modal.present();
-  }  
+  }
 
   back(){
     this.router.navigate([`home/${this.type}`]).then(() => {
@@ -184,4 +185,3 @@ export class PurchasecourseComponent implements OnInit {
     });
   }
 }
-

@@ -7,10 +7,10 @@ import { CommonService } from './common.service';
 export class LoginService {
   public headers:any;
 //   public uri = "http://constructionmarket.info/zerosoftzst/talev/newrestapi/weblogin";
-// serviceBase: String = "https://shawneerct.com/ShawneerctAPI/action/";
-serviceBase: String = "http://localhost:26368/action";
+serviceBase: String = "https://shawneerct.com/ShawneerctAPI/action/";
 serviceBase1: String = "https://shawneerct.com/API/Pay/";
 serviceBase2: String = "https://shawneerct.com/API/action/";
+// serviceBase: String = "http://localhost:26368/action";
 // serviceBase1: String = "http://localhost:26368/Pay/";
 // serviceBase2: String = "http://localhost:26368/action";
 

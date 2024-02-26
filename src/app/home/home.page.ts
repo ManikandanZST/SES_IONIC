@@ -23,15 +23,15 @@ export class HomePage implements OnInit {
   IndividualUserId: string;
   courselist: any={};
 
-  constructor(private activatedRoute: ActivatedRoute,public router:Router,public popOver: PopoverController,private loginService: LoginService,public modalCtrl:ModalController) { 
+  constructor(private activatedRoute: ActivatedRoute,public router:Router,public popOver: PopoverController,private loginService: LoginService,public modalCtrl:ModalController) {
     this.activatedRoute.params.subscribe(params => {
       console.log(params);
       this.type=params['type'];
       console.log(this.type);
-      // this.myTimeout= setTimeout(() => {   
+      // this.myTimeout= setTimeout(() => {
       //   window.location.reload();
       //   console.log("test56tt")
-  
+
       // }, 2000);
       // this.clear();
 
@@ -44,7 +44,7 @@ export class HomePage implements OnInit {
    this.type=localStorage.getItem('type');
    //console.log("Home page - type", this.type);
    if(this.type=='individual'){
-    this.router.navigate([`home/${this.type}`]);
+    this.router.navigate([`home/${this.type}`]); //
     this.getcourse();
    }
    else if(this.type=='common'){
@@ -56,8 +56,8 @@ export class HomePage implements OnInit {
   }
   ionViewDidEnter(){
     console.log("testtttt")
-    
-  
+
+
   }
   clear(){
     console.log("test22")
@@ -77,17 +77,17 @@ export class HomePage implements OnInit {
   }
   purchaseoverall(){
     this.router.navigate([`home/${this.type}/purchaseoverall`]);
- 
+
   }
   employeelist(){
     this.router.navigate([`home/${this.type}/employeelist`]);
 
-    
+
   }
   async employeereport(){
     const modal = await this.modalCtrl.create({
       component: EmployeereportComponent,
-      componentProps: { 
+      componentProps: {
         // "court": this.club,
         // court: "Test Title",
       },
@@ -105,20 +105,20 @@ export class HomePage implements OnInit {
       var lnk =  'GetCourses?id='+id;
       this.loginService.getData(lnk).then(
       (Response: any) => {
-  
+
         if(Response)
         {
           this.courselist=Response;
           console.log(this.courselist.Course,"courselist")
         }else{
-         
+
         }
       },
       err => {
-     
+
       }
     );
-  } 
+  }
   trainingcourse(id){
     console.log(id);
     this.router.navigate([`/home-inner/${id}`])
@@ -131,7 +131,7 @@ export class HomePage implements OnInit {
     });
     popover.onDidDismiss().then(data=>{
       if(data !=null){
-       
+
       }
     })
     await popover.present();
@@ -143,7 +143,7 @@ export class HomePage implements OnInit {
       if(this.type=="individual"){
         this.router.navigate([`/login/${this.type}`]).then(() => {
           localStorage.clear();
-  
+
           window.location.reload();
         });
       }else if(this.type=="group"){
@@ -151,9 +151,9 @@ export class HomePage implements OnInit {
           localStorage.clear();
           window.location.reload();
         });
-  
+
       }
-  
+
     }
-  
+
   }
