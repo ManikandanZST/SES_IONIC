@@ -44,7 +44,7 @@ export class HomePage implements OnInit {
    this.type=localStorage.getItem('type');
    //console.log("Home page - type", this.type);
    if(this.type=='individual'){
-    this.router.navigate([`home/${this.type}`]);
+    this.router.navigate([`home/${this.type}`]); // 
     this.getcourse();
    }
    else if(this.type=='common'){

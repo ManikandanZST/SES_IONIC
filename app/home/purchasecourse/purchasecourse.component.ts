@@ -42,6 +42,7 @@ export class PurchasecourseComponent implements OnInit {
   ngOnInit() {
     console.log("TEST PAGE")
     this.GroupId=localStorage.getItem("loginuserid")
+    
     this.GetGroupUser();
     this.GetGroupUserModules()
   }

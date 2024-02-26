@@ -21,7 +21,6 @@ export class PaymentModalComponent implements OnInit {
   @Input ("ValueId") ValueId;
   @Input ("coursePrice") coursePrice;
   @Input ("OverId") OverId;
-
   
 
   
@@ -233,7 +232,9 @@ export class PaymentModalComponent implements OnInit {
         {
           text: "Okay",
           handler: () => {
-            this.router.navigate([`/home/${this.type}/'purchasecourse'`])
+            this.router.navigate([`/home/${this.type}`])
+            
+            // this.router.navigate([`/home/${this.type}/purchasecourse`])
 
           //   if(type=="'register'"){
           //   this.router.navigate([`/login/${type}`])
@@ -311,7 +312,13 @@ export class PaymentModalComponent implements OnInit {
 
         var ExpYear = usign.ccExpYear.toString(); 
 
-        var data = 'UserId=' + uid + '&SectionId=' + this.section + '&manstatus=0&videostatus=0&OverId=' + this.OverId + '&Type=' + typeId + '&PackId=0&Amount=' + amount + '&CardHoldersName=' + usign.cardholder_name + '&CardBrand=' + cardBrand + '&CreditCardNo=' + usign.ccNumber + '&ExpMonth=' + ExpMonth + '&ExpYear=' + ExpYear + '&Cvc=' + usign.ccCvc;
+        var PackValue = this.ValueId ?? "-1";
+
+        var TypeValue = this.nid ?? "-1";
+
+        var OverIdValue = this.OverId ?? "-1";
+
+        var data = 'UserId=' + uid + '&SectionId=' + this.section + '&manstatus=0&videostatus=0&OverId=' + OverIdValue + '&Type=' + TypeValue + '&PackId=' + PackValue + '&Amount=' + amount + '&CardHoldersName=' + usign.cardholder_name + '&CardBrand=' + cardBrand + '&CreditCardNo=' + usign.ccNumber + '&ExpMonth=' + ExpMonth + '&ExpYear=' + ExpYear + '&Cvc=' + usign.ccCvc;
           // var data = 'UserId='+uid+'&SectionId='+this.section+'&manstatus=0&videostatus=0&OverId='+overid+'&Type='+typeId+'&PackId=0&Amount='+amount+'&CardHoldersName='+usign.cardholder_name+'&CardBrand='+cardBrand+'&CreditCardNo='+usign.ccNumber+'&ExpireDate='+ExpireDate+'&First6='+First6+'&Last4='+Last4;
           console.log(data);
           this.loginService.paymentcourse_single(data).then((Response: any) => {
