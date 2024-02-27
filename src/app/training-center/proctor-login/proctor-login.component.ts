@@ -32,12 +32,12 @@ type: any;
   inputtype: any;
   LoginProctID: any;
   coursesList: any;
-constructor(public router:Router,public loginService:LoginService,public alertController: AlertController, private commonService: CommonService,private modalCtrl:ModalController,private activatedRoute: ActivatedRoute,) { 
+constructor(public router:Router,public loginService:LoginService,public alertController: AlertController, private commonService: CommonService,private modalCtrl:ModalController,private activatedRoute: ActivatedRoute,) {
   this.activatedRoute.params.subscribe(params => {
-    // console.log(params['id']);
+    
     this.type=params['id'];
 });
- 
+
 
 }
 
@@ -50,18 +50,18 @@ SignIn(ulogin)
 
   if (ulogin.userId == "" || ulogin.userId == undefined) {
     this.commonService.presentToast("Enter userId");
-    console.log("test");
+    
   } else if(ulogin.password == "" || ulogin.password == undefined) {
-    console.log("test3");
+    
     this.commonService.presentToast("Enter Password");
   }else{
-    var id = localStorage.getItem("Userid"); 
+    var id = localStorage.getItem("Userid");
     var mType=this.Mtype;
     var SLVal=this.SLVal;
     var ttP=this.ttP;
-    console.log("mType",mType);
-    console.log("SLVal",SLVal);
-    console.log("ttP",ttP);
+    
+    
+    
     var data = 'ProctorId='+ulogin.userId+'&Password='+ulogin.password +'&UserId='+id;
    this.commonService.presentLoading();
    this.loginService.Signin_proctor(data).then(
@@ -71,15 +71,15 @@ SignIn(ulogin)
 
          this.commonService.closeLoading();
          this.commonService.presentToast('Login Sucessfully');
-        
+
          localStorage.setItem("ProctID",ulogin.userId);
          localStorage.setItem("MVal",this.SLVal);
-           
+
          if(ttP == 'training')
 
               {
                 // $rootScope.$emit("CallParentListTraining");
-                this.listTraining();                
+                this.listTraining();
               }
               if(mType == 'normal')
               {
@@ -96,12 +96,12 @@ SignIn(ulogin)
               {
               //  this.testRedirect(SLVal); --pending
                 this.commonService.presentToast(Response.Message);
-                
+
               }else if(mType == 'video')
               {
               //  this.videoRedirect(SLVal); --pending
                this.commonService.presentToast(Response.Message);
-                
+
               }
               //close the modal
               this.modalCtrl.dismiss();
@@ -109,7 +109,7 @@ SignIn(ulogin)
         //   window.location.reload();
         // });
        }else{
-        // console.log(Response);
+        
         localStorage.setItem("ProctID",'');
 
          this.commonService.closeLoading();
@@ -128,19 +128,19 @@ SignIn(ulogin)
 
 async listTraining(){
   if(localStorage.getItem("ProctID") == null || localStorage.getItem("ProctID") == undefined){
-    this.LoginProctID = ''; 
+    this.LoginProctID = '';
     localStorage.setItem("ProctID",'');
   }else{
     if(localStorage.getItem("ProctID") == '')
     {
-      this.LoginProctID = ''; 
+      this.LoginProctID = '';
 
     }else
     {
-      this.LoginProctID = localStorage.getItem("ProctID"); 
+      this.LoginProctID = localStorage.getItem("ProctID");
     }
   }
-  var uid = localStorage.getItem("Userid"); 
+  var uid = localStorage.getItem("Userid");
   if(localStorage.getItem("ProctID") == '' || localStorage.getItem("ProctID") == undefined || localStorage.getItem("ProctID") == null){
     var pid = '0';
   }
@@ -150,20 +150,20 @@ async listTraining(){
   this.commonService.presentLoading();
   var lnk = 'GetMemModules/?UserId=' + uid + '&ProctorId=' + pid;
   this.loginService.getData(lnk).then((Response) => {
-    console.log("sk - list Training");
+    
     this.commonService.closeLoading();
     if (Response) {
       this.coursesList = Response;
-      console.log(this.coursesList.Exam[0], "this.MemModules");      
-      console.log("SLVal",this.SLVal);
-      // this.router.navigate(['trainingcenter']).then(() => {        
+      
+      
+      // this.router.navigate(['trainingcenter']).then(() => {
       //   window.location.reload();
       // });
       //this.commonOverallTest(this.SLVal);
     }
     else {
       this.commonService.closeLoading();
-      this.commonService.presentToast(`Connection error`);  
+      this.commonService.presentToast(`Connection error`);
     }
   }, err => {
     this.commonService.closeLoading();
@@ -174,7 +174,7 @@ async listTraining(){
 
 async overallRedirect(val)
 {
-  console.log(val);
+  
   if(val.UserStatus == '2' || val.UserStatus == '1')
   {
      if(val.showAlert == '0' || val.showAlert == null || val.showAlert == '')
@@ -196,7 +196,7 @@ async overallRedirect(val)
 
               // $state.go("sidemenu.trainingcenter",{type:'individual',page:'none'});
               // this.router.navigate([`/home/${this.type}/'purchasecourse'`])
-        
+
             }
           }
         ]
@@ -224,7 +224,7 @@ async overallRedirect(val)
 
             // $state.go("sidemenu.trainingcenter",{type:'individual',page:'none'});
             // this.router.navigate([`/home/${this.type}/'purchasecourse'`])
-                  
+
           }
         }
       ]
@@ -237,21 +237,21 @@ async overallRedirect(val)
       //  alertPopup.then(function(res) {
       //  });
   }
-   
-  
+
+
 }
 
 async commonOverallTest(val)
-{  
+{
   if(!val.IsPay)
-  { 
+  {
     this.openPage7(val);
-    console.log(val.testId);    
+    
   }else
-  {    
+  {
     var tT = this.countdownTime( val.timelimit, 0 );
     //var tT=0;
-    
+
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Total Time Duration of Exam Overall!',
@@ -261,7 +261,7 @@ async commonOverallTest(val)
         {
           text: "Not Now",
           cssClass: 'alert-button-cancel',
-          handler: () => {  
+          handler: () => {
             //close the modal
             this.modalCtrl.dismiss();
           }
@@ -269,15 +269,15 @@ async commonOverallTest(val)
         {
           text: "Continue",
           cssClass: 'alert-button-confirm',
-          handler: () => {            
+          handler: () => {
             this.router.navigate([`/questionsall/${val.testId}/${val.OverId}/${val.timelimit}`]);
           }
         }
       ],
-      
+
     });
     await alert.present();
-  
+
       // var alertPopup = $ionicPopup.show({
       //        title: "<div class=''><b>Total Time Duration of Exam Overall!</b></div>",
       //        template: "<div>"+tT+"</div>",
@@ -296,8 +296,8 @@ async commonOverallTest(val)
       //          },
       //        ]
       //  });
-    
-        
+
+
   }
 }
 
@@ -319,10 +319,10 @@ countdownTime( minutes, seconds )
 
 async openPage7(val)
 {
-  console.log("openpage",val)
-  this.myActiveSlide = 0;  
-  var id = localStorage.getItem("Userid"); 
-  var userType =localStorage.getItem("type"); 
+  
+  this.myActiveSlide = 0;
+  var id = localStorage.getItem("Userid");
+  var userType =localStorage.getItem("type");
   if(userType == 'group')
     {
         var lnk =  'GetGroupUser?GroupId='+id;
@@ -330,7 +330,7 @@ async openPage7(val)
     }else
     {
         var lnk =  'GetUser/'+id;
-    } 
+    }
     this.loginService.getData(lnk).then(
    async   (Response: any) => {
         this.valInfo = val;
@@ -338,13 +338,13 @@ async openPage7(val)
         this.titleCourse = val.Module_Name;
         this.coursePrice = val.Price;
         this.sectionId = val.sid;
-        this.info=Response;     
+        this.info=Response;
        this.modalCtrl.dismiss();
 
       setTimeout(async () => {
         const modal = await this.modalCtrl.create({
           component: PurchaseinfoProctorComponent,
-          componentProps: { 
+          componentProps: {
             "titleCourse": this.titleCourse,
             "coursePrice": this.coursePrice,
           },
@@ -356,16 +356,16 @@ async openPage7(val)
         })
         return await modal.present();
       }, 100);
-        
+
 
 
       },
       err => {
-     
+
       }
     );
   // webservice.userInfo(id,lnk).then(function(response) {
-  // console.log(response.data);
+  
   //       $ionicLoading.hide();
   //       $scope.valInfo = val;
   //       $scope.type = 'overall';
@@ -373,18 +373,18 @@ async openPage7(val)
   //       $scope.coursePrice = val.Price;
   //       $scope.sectionId = val.sid;
   //       $scope.infoU = response.data;
-  //       $scope.modalPage7.show();  
+  //       $scope.modalPage7.show();
   // })
 }
 async modal_popup(){
-  console.log("test");
-  this.router.navigate([`signup/proctorregister`]).then(() => {    
+  
+  this.router.navigate([`signup/proctorregister`]).then(() => {
     this.modalCtrl.dismiss();
   });
 
   // const modal = await this.modalCtrl.create({
   //   component: SignUpDetailComponent,
-  //   componentProps: { 
+  //   componentProps: {
   //     // "court": this.club,
   //     // court: "Test Title",
   //   },
@@ -400,14 +400,14 @@ back(){
   this.modalCtrl.dismiss();
 }
 toggleShow() {
-  console.log("tested");
+  
   this.showPassword = !this.showPassword;
-  console.log(this.showPassword);
+  
   this.inputtype = this.showPassword ? 'text' : 'password';
-  console.log(this.inputtype);
+  
 }
 
-  forgotpass(){ 
+  forgotpass(){
     this.router.navigate([`/forgotpassproc`]);
     this.modalCtrl.dismiss();
   }

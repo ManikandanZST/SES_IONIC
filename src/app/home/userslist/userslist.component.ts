@@ -21,7 +21,7 @@ export class UserslistComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,private loginService: LoginService,public router:Router,
     private modalCtrl:ModalController,private alertController:AlertController,public commonService:CommonService
-    ) { 
+    ) {
     this.activatedRoute.params.subscribe(params => {
       this.type=params['type'];
 
@@ -31,11 +31,11 @@ export class UserslistComponent implements OnInit {
   ngOnInit() {
     this.GroupId=localStorage.getItem("loginuserid")
     this.GetGroupUser();
-    console.log("ghde");
+
 
   }
   ionViewWillEnter() {
-    console.log("home enter called");
+    
     this.GetGroupUser();
 
 
@@ -48,16 +48,16 @@ export class UserslistComponent implements OnInit {
       if(Response)
       {
       this.userlist=Response.UserList;
-  console.log(this.userlist,"info")
+  
       }else{
-       
+
       }
     },
     err => {
-   
+
     }
   );
-} 
+}
 
 //search data
 setFilteredLocations(){
@@ -77,14 +77,14 @@ onCancel($event){
 async showModalUEdit(id){
   const modal = await this.modalCtrl.create({
     component: EditgroupuserComponent,
-    componentProps: { 
+    componentProps: {
       "id": id,
     },
     cssClass: 'my-custom-modal-css',
     swipeToClose: true,
   });
   modal.onDidDismiss().then((result) => {
- 
+
    })
   return await modal.present();
 }
@@ -99,7 +99,7 @@ async deleteUser(uid,lk){
     var mssg = 'Do you want to activate user?';
 
   }
-  var id = localStorage.getItem("loginuserid"); 
+  var id = localStorage.getItem("loginuserid");
   const alert = await this.alertController.create({
     cssClass: 'my-custom-class',
     header: '',
@@ -118,12 +118,12 @@ async deleteUser(uid,lk){
           var url='UpdateGroupUserStatus/';
           var data = 'userId='+uid+'&Group_id='+id;
           this.loginService.postdata(data,url).then((Response: any) => {
-             console.log(Response);
+             
              if(Response.Status == 'Success'){
-    
+
                this.commonService.closeLoading();
                   // this.signupdetails = Response.data[0];
-                  // console.log(this.signupdetails);
+                  
                this.commonService.presentToast(Response.Message);
                this.GetGroupUser();
              }else{
@@ -136,12 +136,12 @@ async deleteUser(uid,lk){
              this.commonService.presentToast(`Connection error`);
            }
          );
-        }   
+        }
 
-        
+
       }
     ],
-    
+
 
   });
   await alert.present();
@@ -151,7 +151,7 @@ async deleteUser(uid,lk){
 async chooseActionsheet(){
   const modal = await this.modalCtrl.create({
     component: GroupuseraddComponent,
-    componentProps: { 
+    componentProps: {
       // "court": this.club,
       // court: "Test Title",
     },
@@ -168,4 +168,3 @@ back(){
 
 }
 }
-

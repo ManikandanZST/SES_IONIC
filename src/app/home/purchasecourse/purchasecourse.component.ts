@@ -40,7 +40,7 @@ export class PurchasecourseComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("TEST PAGE")
+    
     this.GroupId=localStorage.getItem("loginuserid")
 
     this.GetGroupUser();
@@ -154,17 +154,18 @@ export class PurchasecourseComponent implements OnInit {
     });
 
     modal.onDidDismiss().then((result) => {
-      this.total=result.data.data4;
+      this.total=result.data.data3;
       this.selectcourse[result.data.data2]=result.data.data;
       this.totalAmounts[result.data.data2]=result.data.data4;
-      console.log(this.selectcourse,"selectcourse")
-      console.log(result,"total")
+      
+      
+      
     })
     return await modal.present();
   }
 
   async showPayment(){
-    console.log("test")
+    
     const modal = await this.modalCtrl.create({
       component: PaymentModalComponent,
       componentProps: {

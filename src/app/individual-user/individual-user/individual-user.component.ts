@@ -37,43 +37,43 @@ export class IndividualUserComponent implements OnInit {
     }
     this.loginService.getData(lnk).then(
       (Response: any) => {
-        console.log(Response);
+        
 
         if(Response)
         {
         this.info=Response;
-         
+
         }else{
-         
+
         }
       },
       err => {
-     
+
       }
     );
-  } 
+  }
   GetCompletedCourse(){
 
-    
+
     var lnk =  'GetCompletedCourse/?UserId='+this.IndividualId;
-    
+
     this.loginService.getData(lnk).then(
       (Response: any) => {
-        console.log(Response);
+        
 
         if(Response)
         {
         this.info=Response;
-         
+
         }else{
-         
+
         }
       },
       err => {
-     
+
       }
     );
-  } 
+  }
 
   studentFormSubmission(usign,course){
   //   if (usign.studentid == "" || usign.studentid == undefined){
@@ -82,7 +82,7 @@ export class IndividualUserComponent implements OnInit {
   //   else if (usign.lastname == "" || usign.lastname == undefined){
   //     this.commonService.presentToast("Enter Last Name");
   //   }
-   
+
   //   else if (usign.company == "" || usign.company == undefined){
   //     this.commonService.presentToast("Enter Company");
   //   }
@@ -122,14 +122,14 @@ export class IndividualUserComponent implements OnInit {
   //   else if (usign.lastname1 == "" || usign.lastname1 == undefined){
   //     this.commonService.presentToast("Enter Last Name");
   //   }
-   
+
   //   else if (usign.email1 == "" || usign.email1 == undefined){
   //     this.commonService.presentToast("Enter Email");
   //   }
   //   else if ((await this.commonService.validateEmail(usign.email1)) == false){
   //      this.commonService.presentToast("Enter Valid Email");
   //   }
-   
+
   //   else if(usign.password1 == "" || usign.password1 == undefined) {
   //     this.commonService.presentToast("Enter Password");
   //   }else if (usign.firstname2 == "" || usign.firstname2 == undefined){
@@ -138,38 +138,38 @@ export class IndividualUserComponent implements OnInit {
   //   else if (usign.lastname2 == "" || usign.lastname2 == undefined){
   //     this.commonService.presentToast("Enter Last Name");
   //   }
-   
+
   //   else if (usign.email2 == "" || usign.email2 == undefined){
   //     this.commonService.presentToast("Enter Email");
   //   }
   //   else if ((await this.commonService.validateEmail(usign.email2)) == false){
   //      this.commonService.presentToast("Enter Valid Email");
   //   }
-   
+
   //   else if(usign.password2 == "" || usign.password2 == undefined) {
   //     this.commonService.presentToast("Enter Password");
   //   }
-   
+
   //   else {
   //     var sendPass=usign.sendPass;
   //     if(sendPass=true){
   //       sendPass=1;
   //     }else{
   //       sendPass=0;
-  
+
   //     }
-  //     console.log("test");
+  
   //     var data = 'First_Name='+usign.firstname+'&Last_Name='+usign.lastname+'&Company_Name='+usign.company+'&Email='+usign.email+'&EIN='+usign.ein+'&Phone='+usign.phone+'&Password='+usign.password+'&Hint_Question='+usign.question+'&Hint_Answer='+usign.answer+'&FirstName1='+usign.firstname1+'&LastName1='+usign.lastname1+'&Password1='+usign.password1+'&Email1='+usign.email1+'&FirstName2='+usign.firstname2+'&LastName2='+usign.lastname2+'&Password2='+usign.password2+'&Email2='+usign.email2;
   //     this.commonService.presentLoading();
   //     this.loginService.Signup_group(data,sendPass).then((Response: any) => {
   //       this.type_user="groupregister";
-  //        console.log(Response);
+  
   //        if(Response.Status == 'Success'){
-  //         console.log(this.type_user);
+  
 
   //          this.commonService.closeLoading();
   //             // this.signupdetails = Response.data[0];
-  //             // console.log(this.signupdetails);
+  
   //         //  this.commonService.presentToast(Response.Message);
   //          this.presentAlert(Response.Message,this.type_user);
   //        }else{
@@ -182,7 +182,7 @@ export class IndividualUserComponent implements OnInit {
   //        this.commonService.presentToast(`Connection error`);
   //      }
   //    );
-  //   }   
+  //   }
   // }
   // }
 }

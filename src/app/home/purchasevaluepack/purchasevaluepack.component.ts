@@ -53,29 +53,29 @@ export class PurchasevaluepackComponent implements OnInit {
         if(Response)
         {
         this.info=Response.UserList;
-    
+
         }else{
-         
+
         }
       },
       err => {
-     
+
       }
     );
-  } 
+  }
   GetGroupUserModules(){
-    console.log("test");
+
     var lnk =  'GroupValuePackage?GroupId='+this.GroupId;
     this.loginService.getData(lnk).then(
     (Response: any) => {
       if(Response)
       {
-        console.log(Response,"Response")
+
       this.groupuser_NAMEs=Response;
       this.groupusers=Response[0].OverAllList;
-      var templs   = [];    
-      this.totalAmount=[];  
-      this.MULTIlist=[];  
+      var templs   = [];
+      this.totalAmount=[];
+      this.MULTIlist=[];
       for(var j=0;j<Response.length;j++)
       {
        this.totalAmount[j] = 0;
@@ -91,10 +91,10 @@ export class PurchasevaluepackComponent implements OnInit {
             }
     },
     err => {
-   
+
     }
   );
-} 
+}
 
 
 setFilteredLocations(){
@@ -115,7 +115,7 @@ async showCourse(lst, index){
   var dync = 'USER'+lst.User.userId;
   var listMulti = JSON.parse(localStorage.getItem(dync));
   this.multipleLists = [];
-  var templas   = [];      
+  var templas   = [];
   var tCheck = false;
   for(var i=0;i<lst.ValuePackList.length;i++)
   {
@@ -144,7 +144,7 @@ async showCourse(lst, index){
 
     const modal = await this.modalCtrl.create({
       component: ValuepackComponent,
-      componentProps: { 
+      componentProps: {
         "id": index,
         "selectcourse" : this.selectcourse[index] ? this.selectcourse[index]: '',
       },
@@ -152,19 +152,18 @@ async showCourse(lst, index){
       swipeToClose: true,
     });
     modal.onDidDismiss().then((result) => {
-    this.total=result.data.data4;
+    this.total=result.data.data3;
     this.selectcourse[result.data.data2]=result.data.data;
     this.totalAmounts[result.data.data2]=result.data.data4;
-    console.log( this.selectcourse[result.data.data2],"selectedvalue")
-    console.log(result,"result")
+
      })
     return await modal.present();
   }
   async showPayment(){
-    console.log("test")
+
     const modal = await this.modalCtrl.create({
       component: PaymentModalComponent,
-      componentProps: { 
+      componentProps: {
         // amount: this.total,
         // valueS: this.selectcourse,
         // nid: localStorage.getItem("selecteduser"),
@@ -178,10 +177,10 @@ async showCourse(lst, index){
       swipeToClose: true,
     });
     modal.onDidDismiss().then((result) => {
-   
+
      })
     return await modal.present();
-  }  
+  }
 
   back(){
     this.router.navigate([`home/${this.type}`]).then(() => {

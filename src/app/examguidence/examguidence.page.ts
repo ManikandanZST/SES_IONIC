@@ -10,34 +10,34 @@ import { WebService } from '../../providers/web.service';
   styleUrls: ['./examguidence.page.scss'],
 })
 
-export class ExamGuidencePage implements OnInit {  
+export class ExamGuidencePage implements OnInit {
 
     examguidence:any=[];
     IndividualId: string;
 
     constructor(public router:Router, private commonService: CommonService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private webService: WebService) {
-        
+
     }
 
     ngOnInit() {
-        this.IndividualId=localStorage.getItem("Userid");        
-        this.getexamguidence();    
+        this.IndividualId=localStorage.getItem("Userid");
+        this.getexamguidence();
         //this.commonService.closeLoading();
-    }  
+    }
 
-    getexamguidence(){        
+    getexamguidence(){
         this.commonService.presentLoading();
         var lnk =  'GetContent/3';
         this.loginService.getData(lnk).then(
             (Response: any) => {
-                
+
                 if(Response)
-                {   
+                {
                     this.commonService.closeLoading();
-                    this.examguidence=Response;                
-                    console.log(this.examguidence,"examguidance")
+                    this.examguidence=Response;
+                  
                 }else{
-                
+
                 }
             },
             err => {
@@ -47,10 +47,10 @@ export class ExamGuidencePage implements OnInit {
         );
     }
 
-    back(){                
+    back(){
         this.router.navigate([`home/individual`]).then(()=>{
          // window.location.reload()
-        });      
+        });
     }
 
     trainsection(){
@@ -58,7 +58,7 @@ export class ExamGuidencePage implements OnInit {
             this.router.navigate([`/trainingcenter`])
         }
         else{
-            this.router.navigate([`/login/individual`]) 
+            this.router.navigate([`/login/individual`])
         }
     }
-}  
+}

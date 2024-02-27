@@ -40,7 +40,7 @@ export class OverallvalueComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log("TEST PAGE")
+    
     this.GroupId=localStorage.getItem("loginuserid")
     this.GetGroupUser();
     this.GetGroupUserModules()
@@ -65,13 +65,13 @@ export class OverallvalueComponent implements OnInit {
     );
   }
   GetGroupUserModules(){
-    console.log("test");
+    
     var lnk =  'GroupOverallValuePackage?GroupId='+this.GroupId;
     this.loginService.getData(lnk).then(
     (Response: any) => {
       if(Response)
       {
-        console.log(Response,"Response")
+        
       this.groupuser_NAMEs=Response;
       this.groupusers=Response[0].OverValuePackList      ;
       var templs   = [];
@@ -114,9 +114,9 @@ async showCourse(lst, index){
   localStorage.setItem("selecteduser",index)
   this.indexValue = index;
   var dync = 'USER'+lst.User.userId;
-  console.log(`Dync: ${dync}`)
+  
   var listMulti = JSON.parse(localStorage.getItem(dync));
-  console.log(`listMulti: ${listMulti}`);
+  
   this.multipleLists = [];
   var templas   = [];
   var tCheck = false;
@@ -156,16 +156,16 @@ async showCourse(lst, index){
       swipeToClose: true,
     });
     modal.onDidDismiss().then((result) => {
-    this.total=result.data.data4;
+    this.total=result.data.data3;
     this.selectcourse[result.data.data2]=result.data.data;
     this.totalAmounts[result.data.data2]=result.data.data4;
-    console.log( this.selectcourse[result.data.data2],"selectedvalue")
-    console.log(result,"result")
+    
+    
      })
     return await modal.present();
   }
   async showPayment(){
-    console.log("test")
+    
     const modal = await this.modalCtrl.create({
       component: PaymentModalComponent,
       componentProps: {
@@ -186,7 +186,7 @@ async showCourse(lst, index){
       if (result && result.data && result.data.dismissed) {
 
 
-       
+
       }
     });
     return await modal.present();

@@ -13,26 +13,26 @@ import { ModalController, AlertController, NavController } from '@ionic/angular'
 export class ForgorPassConfirmPage implements OnInit {
 
     type: any;
-    utype: any;    
-    typeUser: any;    
+    utype: any;
+    typeUser: any;
     forgetPass: any;
     HintQuestion: any;
     HintAnswer:any=[];
     email: any;
 
-    constructor(private commonService:CommonService, private router: Router, private loginService: LoginService, public alertController: AlertController, private activatedRoute: ActivatedRoute, public modalCtrl:ModalController, private navCtrl: NavController) { 
+    constructor(private commonService:CommonService, private router: Router, private loginService: LoginService, public alertController: AlertController, private activatedRoute: ActivatedRoute, public modalCtrl:ModalController, private navCtrl: NavController) {
         this.activatedRoute.params.subscribe(params => {
-            //console.log(params['email']);
+            
             this.email=params['email'];
-            //console.log(params['type']);
+            
             this.type=params['type'];
         });
     }
 
     ngOnInit() {
-        //console.log("forgot confirm page - email",this.email);        
+        
         if(this.type=="individual"){
-            this.utype = "User";            
+            this.utype = "User";
             this.typeUser = "user";
         }
         else if(this.type=="group"){
@@ -42,17 +42,17 @@ export class ForgorPassConfirmPage implements OnInit {
         this.getuserbyemail();
     }
 
-    getuserbyemail(){        
+    getuserbyemail(){
         var lnk =  'GetUserByEmail/?email='+this.email+'&type='+this.typeUser;
         this.loginService.getData(lnk).then(
             (Response: any) => {
                 this.commonService.closeLoading();
-                //console.log("Response",Response);
+                
                 if(Response.Status == "Success")
                 {
                     this.forgetPass=Response;
-                    this.HintQuestion = this.forgetPass.question;                    
-                }else{                        
+                    this.HintQuestion = this.forgetPass.question;
+                }else{
                     this.commonService.presentToast("Your Email id not registered.");
                 }
 
@@ -66,27 +66,27 @@ export class ForgorPassConfirmPage implements OnInit {
 
     close(){
         // if(this.type=="individual"){
-        //     console.log("inside individual");
-        //     this.router.navigate([`/forgotpassword/${this.type}`])      
-        // }else if(this.type=="group"){      
+        
+        //     this.router.navigate([`/forgotpassword/${this.type}`])
+        // }else if(this.type=="group"){
         //     this.router.navigate([`/forgotpassword/${this.type}`])
         // }
         this.navCtrl.back();
     }
 
-    nextPass(ulogin){        
+    nextPass(ulogin){
         var question    = this.forgetPass.question;
-        var email   = this.email;         
+        var email   = this.email;
         var answer    = this.forgetPass.answer;
         var correctanswer    = ulogin.answer;
 
         if(correctanswer === undefined || correctanswer == '')
         {
-            this.commonService.presentToast("Enter answer.");            
+            this.commonService.presentToast("Enter answer.");
 
         }else if(answer !== correctanswer)
         {
-            this.commonService.presentToast("Enter correct answer.");            
+            this.commonService.presentToast("Enter correct answer.");
         }
         else{
             if(this.typeUser == 'group')
@@ -98,14 +98,14 @@ export class ForgorPassConfirmPage implements OnInit {
                 var data = 'question='+question+'&answer='+correctanswer+'&email='+email;
                 var linkPath = 'NormalUserForgotPass';
             }
-            //console.log(data);
+            
 
             this.commonService.presentLoading();
             this.loginService.forgetPassiUsers(data,linkPath).then(
                 async (Response: any) => {
                     this.commonService.closeLoading();
-                    //console.log("Response",Response);
-                    if(Response.Status == 'Success'){ 
+                    
+                    if(Response.Status == 'Success'){
                         const alert = await this.alertController.create({
                             cssClass: 'my-custom-class',
                             header: '',
@@ -117,8 +117,8 @@ export class ForgorPassConfirmPage implements OnInit {
                                 cssClass: 'alert-button-confirm',
                                 handler: () => {
                                     if(this.type=="individual"){
-                                        this.router.navigate([`/login/${this.type}`])                                        
-                                    }else if(this.type=="group"){                                        
+                                        this.router.navigate([`/login/${this.type}`])
+                                    }else if(this.type=="group"){
                                         this.router.navigate([`/login/${this.type}`])
                                     }
                                 }

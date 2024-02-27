@@ -11,7 +11,7 @@ export class AboutusPage implements OnInit {
   type: any;
   about:any=[];
 
-  constructor(private activatedRoute: ActivatedRoute,public router:Router,private loginService: LoginService) { 
+  constructor(private activatedRoute: ActivatedRoute,public router:Router,private loginService: LoginService) {
     this.activatedRoute.params.subscribe(params => {
       this.type=params['type'];
     });
@@ -23,7 +23,7 @@ export class AboutusPage implements OnInit {
 
   close(){
     this.type=localStorage.getItem('type');
-    this.router.navigate([`home/${this.type}`])  
+    this.router.navigate([`home/${this.type}`])
   }
 
   getaboutus(){
@@ -34,14 +34,14 @@ export class AboutusPage implements OnInit {
         if(Response)
         {
           this.about=Response;
-          console.log(this.about,"about")
+    
         }else{
-        
+
         }
       },
       err => {
-    
+
       }
     );
-  } 
+  }
 }

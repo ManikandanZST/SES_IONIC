@@ -17,7 +17,7 @@ export class EmployeereportComponent implements OnInit {
   }
   Report(val){
     // this.type=val;
-    // console.log(this.type,"type")
+  
     if(val=="training"){
       this.router.navigate([`/home/${this.type}/trainingreport`])
       this.close();

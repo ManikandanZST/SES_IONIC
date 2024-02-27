@@ -29,30 +29,30 @@ export class EditgroupuserComponent implements OnInit {
       {
       this.edituser=Response;
       }else{
-       
+
       }
     },
     err => {
-   
+
     }
   );
-} 
+}
 async updateUserInfo(dusers){
-  console.log(dusers,"dusers")
-  var name   = dusers.fullName; 
+  
+  var name   = dusers.fullName;
   var company    = dusers.company;
   var ssn    = dusers.SSN;
   var email    = dusers.email;
-  var phone   = dusers.phone; 
+  var phone   = dusers.phone;
   var hint    = dusers.question;
   var answer    = dusers.answer;
   var comment    = dusers.comment;
 var url="UpdateNormalUser/"
   if (dusers.fullName == "" || dusers.fullName == undefined) {
     this.commonService.presentToast("Enter Name");
-    console.log("test");
+    
   } else if(dusers.password == "" || dusers.password == undefined) {
-    console.log("test3");
+    
     this.commonService.presentToast("Enter Password");
   }else if (dusers.email == "" || dusers.email == undefined){
     this.commonService.presentToast("Enter Email");
@@ -63,7 +63,7 @@ var url="UpdateNormalUser/"
     var data = 'fullName='+name+'&company='+company+'&SSN='+ssn+'&email='+email+'&question='+hint+'&answer='+answer+'&userId='+this.id+'&comment='+comment+'&phone='+phone;
     this.commonService.presentLoading();
     this.loginService.postdata(data,url).then((Response: any) => {
-       console.log(Response);
+       
        if(Response.Status == 'Success'){
          this.commonService.closeLoading();
          this.commonService.presentToast(Response.Message);
@@ -80,15 +80,13 @@ var url="UpdateNormalUser/"
        this.commonService.presentToast(`Connection error`);
      }
    );
-  }   
+  }
   }
   async close(){
     await this.modalctrl.dismiss();
   }
   back(){
-    console.log("back works")
+    
 this.modalctrl.dismiss();
   }
 }
-
-

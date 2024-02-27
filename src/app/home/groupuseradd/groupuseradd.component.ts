@@ -18,7 +18,7 @@
 //    }
 
 //   ngOnInit() {
-//     console.log(this.type,"type")
+//     
 //   }
 //   AddnewUser(gusers,modal,ein){
 //     if(gusers === undefined)
@@ -26,7 +26,7 @@
 //       gusers ='';
 //     }
 
-//     var fname2, lname2, password2, email2, fname1 ,lname1, password1,email1; 
+//     var fname2, lname2, password2, email2, fname1 ,lname1, password1,email1;
 //     fname1 = gusers.fname1;
 //     lname1 = gusers.lname1;
 //     password1 = gusers.password1;
@@ -48,23 +48,23 @@
 //     } else if(validateEmail(email1) == false)
 //     {
 
-//     }  
+//     }
 //   else
 //     {
-        
-//       var id = localStorage.getItem("loginuserid"); 
+
+//       var id = localStorage.getItem("loginuserid");
 //       var data = 'fullName='+fname1+' '+lname1+'&email='+email1+'&password='+password1+'&Group_Id='+id+'&EIN='+ein;
-//         console.log(data);
+//         
 
 //     // $ionicLoading.show({showBackdrop:true,template:'<ion-spinner icon="ios"></ion-spinner>  '});
 //     //   webservice.addMoreusers(data).then(function(response){
-//     //     console.log(response.data); 
-//     //     if(response.data.Status == 'Success'){ 
+//     //     
+//     //     if(response.data.Status == 'Success'){
 //     //         $ionicLoading.hide();
 //     //          $scope.userInfo();
 //     //          if(modal)
 //     //          {
-//     //             $scope.modalPage4.hide();  
+//     //             $scope.modalPage4.hide();
 //     //          }
 //     //          $state.go("sidemenugroup.userslist");
 //     //         $cordovaToast.showShortBottom(response.data.Message);
@@ -74,9 +74,9 @@
 //             // $cordovaToast.showShortBottom(response.data.Message);
 //         }
 //       });
-     
-//     } 
-    
+
+//     }
+
 // }
 //   }
 // }

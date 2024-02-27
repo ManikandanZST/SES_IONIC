@@ -15,7 +15,7 @@ export class ForgorPassProcPage implements OnInit {
     ulogin:any=[];
     utype:any;
 
-    constructor(private commonService:CommonService, private router: Router, private loginService: LoginService, public alertController: AlertController, private activatedRoute: ActivatedRoute, public modalCtrl:ModalController, private navCtrl: NavController) { 
+    constructor(private commonService:CommonService, private router: Router, private loginService: LoginService, public alertController: AlertController, private activatedRoute: ActivatedRoute, public modalCtrl:ModalController, private navCtrl: NavController) {
 
     }
 
@@ -30,15 +30,15 @@ export class ForgorPassProcPage implements OnInit {
     async nextPass(ulogin){
 
         var email = ulogin.email;
-        console.log("test", email);
+      
 
         if(ulogin === undefined || ulogin === '')
-        {    
+        {
             this.commonService.presentToast("Fields are required.");
         }
         else if(email === undefined || email == '')
         {
-            this.commonService.presentToast("Enter email.");        
+            this.commonService.presentToast("Enter email.");
         }
         else if((await this.commonService.validateEmail(email)) == false)
         {
@@ -63,7 +63,7 @@ export class ForgorPassProcPage implements OnInit {
                                 text: "Okay",
                                 cssClass: 'alert-button-confirm',
                                 handler: () => {
-                                    this.router.navigate([`/trainingcenter`])                                      
+                                    this.router.navigate([`/trainingcenter`])
                                 }
                               }
                             ]

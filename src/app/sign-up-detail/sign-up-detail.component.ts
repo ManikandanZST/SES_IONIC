@@ -13,10 +13,10 @@ export class SignUpDetailComponent implements OnInit {
   constructor(private router: Router,public modalController: ModalController,) { }
 
   ngOnInit() {}
-  
+
   SignUp(val){
     this.type=val;
-    // console.log(this.type,"type")
+
     if(this.type=="individual"){
       this.router.navigate([`/signup/${this.type}`])
       this.close();

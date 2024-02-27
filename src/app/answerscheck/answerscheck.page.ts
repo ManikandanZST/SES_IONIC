@@ -30,19 +30,19 @@ export class AnswersCheckPage implements OnInit {
 
     constructor(public router:Router, private commonService: CommonService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private webService: WebService) {
         this.activatedRoute.params.subscribe(params => {
-            // console.log(params['type']);
+            // 
             this.sid=params['sid'];
-            console.log("sid",this.sid);
+            
             this.link=params['link'];
-            console.log("link",this.link);            
+            
         });
     }
 
     ngOnInit() {
         this.testID = localStorage.getItem("testID");
-        this.userid = localStorage.getItem("Userid");            
-        this.getanswersInfo();    
-        console.log("Inside answers all page");
+        this.userid = localStorage.getItem("Userid");
+        this.getanswersInfo();
+        
     }
 
     getanswersInfo(){
@@ -55,36 +55,36 @@ export class AnswersCheckPage implements OnInit {
         this.d = c/(l)*100;
         var testResult = parseInt(this.d); //c/(l + 1)*100; // removed parseInt
 
-        console.log(c,"count")
-        console.log(this.d,"di")
-        console.log(l,"l")
-        console.log(testResult,"testresult")
+        
+        
+        
+        
 
-        var id = this.userid; 
+        var id = this.userid;
         var stime = localStorage.getItem("stime");
         var etime = this.dayTime();
         var quesList = localStorage.getItem("quesList");
         this.testResult = testResult;
         this.infoQue = this.qInfo;
-        console.log("answerscheck - infoQue",this.infoQue);
+        
         this.correctAnswer = c;
         this.wrongAnswer = l - c;
         this.STime = stime;
         this.ETime = etime;
-        console.log("quesList", quesList);
+        
         var tid = this.testID;
         //need to call API
         var data = 'userId='+id+'&totalQues='+l+'&crctCount='+c+'&startTime='+stime+'&endTime='+etime+'&sectionid='+sid+'&testId='+tid+'&Questions='+quesList;
         this.webService.answersList(link,data).then((res) => {
 
-            if (res.Status == 'Success') {                        
-                
+            if (res.Status == 'Success') {
+
             } else {
-            
+
             }
           }, err => {
-            console.log(err);
             
+
         });
     }
 
@@ -99,23 +99,23 @@ export class AnswersCheckPage implements OnInit {
         var HH = conDate.getHours();
         var MIN = conDate.getMinutes();
         var SEC = conDate.getSeconds();
-        var endmonth = yy+"-"+MM+"-"+dd;  
-        if(dd<10) 
+        var endmonth = yy+"-"+MM+"-"+dd;
+        if(dd<10)
         {
             dd='0'+dd;
-        } 
+        }
 
-        if(MM<10) 
+        if(MM<10)
         {
             MM='0'+MM;
-        } 
-        var endmonth1 = yy+'-'+MM+'-'+dd+' '+HH+':'+MIN+':'+SEC;  
+        }
+        var endmonth1 = yy+'-'+MM+'-'+dd+' '+HH+':'+MIN+':'+SEC;
         return endmonth1;
     }
 
     back(){
         this.type=localStorage.getItem('type');
-        console.log(this.type);
+        
         if(this.type=="individual"){
         this.router.navigate([`/home/${this.type}`])
         }else if(this.type=="group"){
@@ -123,6 +123,6 @@ export class AnswersCheckPage implements OnInit {
 
         }else{
         this.router.navigate([`/home/common`])
-        }  
+        }
     }
 }

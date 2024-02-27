@@ -24,8 +24,7 @@ export class MenuPage implements OnInit {
         { title: 'My ', url: 'myprofile', icon: 'person' },
       ]
     }
-  
-    console.log("menu works")
+
   }
 OpenPage(page){
   this.nav.navigateRoot(page);
@@ -36,6 +35,6 @@ ionViewCanEnter(){
 }
   ngOnInit() {
   }
-  
+
 
 }

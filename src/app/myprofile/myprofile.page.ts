@@ -29,11 +29,11 @@ export class MyprofilePage implements OnInit {
   IndividualId: string;
   SSN: any;
 
-  constructor(private activatedRoute: ActivatedRoute,private loginService: LoginService,private common: CommonService,public popOver: PopoverController) { 
+  constructor(private activatedRoute: ActivatedRoute,private loginService: LoginService,private common: CommonService,public popOver: PopoverController) {
     this.activatedRoute.params.subscribe(params => {
-      // console.log(params['type']);
+      
       this.type=params['type'];
-      console.log(this.type);
+      
 
  });
   }
@@ -55,44 +55,44 @@ export class MyprofilePage implements OnInit {
     }
     this.loginService.getData(lnk).then(
       (Response: any) => {
-        console.log(Response);
+        
         this.common.closeLoading();
         if(this.type=="individual")
         {
-          // console.log("Individual");
-          this.info=Response;          
-          this.FullName=this.info.fullName;                    
+          
+          this.info=Response;
+          this.FullName=this.info.fullName;
           this.Email=this.info.email;
           this.Phone=this.info.phone;
           this.Company_Name=this.info.company;
           this.SSN=this.info.SSN;
           this.Ein=this.info.EIN;
           this.Hint_Answer=this.info.answer;
-          this.Hint_Question=this.info.question;  
+          this.Hint_Question=this.info.question;
         }else{
-          //console.log("Group");
-          this.info=Response.Group;          
-          this.FullName=this.info.First_Name + this.info.Last_Name;                    
+          
+          this.info=Response.Group;
+          this.FullName=this.info.First_Name + this.info.Last_Name;
           this.Email=this.info.Email;
           this.Phone=this.info.Phone;
           this.Company_Name=this.info.Company_Name;
           this.Ein=this.info.EIN;
           this.Hint_Answer=this.info.Hint_Answer;
-          this.Hint_Question=this.info.Hint_Question;  
+          this.Hint_Question=this.info.Hint_Question;
         }
       },
       err => {
-     
+
       }
     );
-  } 
+  }
 
   Editprofile(event:any){
     this.editprofile = true;
     if(this.type == "individual")
     {
-      // console.log("Individual");
-      this.CustomersForm.firstname=this.info.fullName;      
+      
+      this.CustomersForm.firstname=this.info.fullName;
       this.CustomersForm.email=this.info.email;
       this.CustomersForm.phone=this.info.phone;
       this.CustomersForm.Company_Name=this.info.company ;
@@ -103,7 +103,7 @@ export class MyprofilePage implements OnInit {
     }
     else
     {
-      //console.log("Group");
+      
       this.CustomersForm.firstname=this.info.First_Name;
       this.CustomersForm.lastname=this.info.Last_Name;
       this.CustomersForm.email=this.info.Email;
@@ -111,10 +111,10 @@ export class MyprofilePage implements OnInit {
       this.CustomersForm.Company_Name=this.info.Company_Name ;
       this.CustomersForm.Ein=this.info.EIN ;
       this.CustomersForm.Hint_Answer=this.info.Hint_Answer ;
-      this.CustomersForm.Hint_Question=this.info.Hint_Question ;      
+      this.CustomersForm.Hint_Question=this.info.Hint_Question ;
     }
 
-    //console.log(this.CustomersForm.profile,"firstname");
+    
 
   }
 
@@ -147,17 +147,17 @@ export class MyprofilePage implements OnInit {
       if(this.type == "individual")
       {
         this.common.presentLoading();
-        //console.log("Individual");
+        
         this.CustomersForm.IndividualId = this.IndividualId;
 
         var data = 'fullName='+this.CustomersForm.firstname+'&company='+this.CustomersForm.Company_Name+'&SSN='+this.CustomersForm.SSN+'&email='+this.CustomersForm.email+'&question='+this.CustomersForm.Hint_Question+'&answer='+this.CustomersForm.Hint_Answer+'&userId='+this.CustomersForm.IndividualId+'&comment='+this.CustomersForm.Comment+'&phone='+this.CustomersForm.phone;
 
         this.loginService.profile_individual(data).then((res) => {
-          //console.log("sk - result", res);
+          
           if (res.Status == 'Success') {
             this.common.closeLoading();
             this.common.presentToast('Updated Successfully');
-            this.editprofile = false;      
+            this.editprofile = false;
             // window.location.reload();
             this.GetGroupUser();
           } else {
@@ -166,7 +166,7 @@ export class MyprofilePage implements OnInit {
             this.common.presentToast(`Connection error`);
           }
         }, err => {
-          console.log(err);
+          
           this.common.closeLoading();
           this.common.presentToast(`Connection error`);
           // this.alert.errorMsg('Connection Error', '');
@@ -175,17 +175,17 @@ export class MyprofilePage implements OnInit {
       else
       {
         this.common.presentLoading();
-        //console.log("Group");
+        
         this.CustomersForm.groupid = this.GroupId;
-     
-        var data= 'Group_Id='+this.GroupId+'&First_Name='+this.CustomersForm.firstname+'&Last_Name='+this.CustomersForm.lastname+'&Email='+this.CustomersForm.email+'&EIN='+this.CustomersForm.Ein+'&Phone='+this.CustomersForm.phone+'&Hint_Question='+this.CustomersForm.Hint_Question+'&Hint_Answer='+this.CustomersForm.Hint_Answer;   
-      
+
+        var data= 'Group_Id='+this.GroupId+'&First_Name='+this.CustomersForm.firstname+'&Last_Name='+this.CustomersForm.lastname+'&Email='+this.CustomersForm.email+'&EIN='+this.CustomersForm.Ein+'&Phone='+this.CustomersForm.phone+'&Hint_Question='+this.CustomersForm.Hint_Question+'&Hint_Answer='+this.CustomersForm.Hint_Answer;
+
         this.loginService.profile_group(data).then((res) => {
 
           if (res.Status == 'Success') {
             this.common.closeLoading();
             this.common.presentToast('Updated Successfully');
-            this.editprofile = false;      
+            this.editprofile = false;
             // window.location.reload();
             this.GetGroupUser();
           } else {
@@ -193,13 +193,13 @@ export class MyprofilePage implements OnInit {
             this.common.closeLoading();
           }
         }, err => {
-          console.log(err);
+          
           this.common.closeLoading();
           this.common.presentToast(`Connection error`);
           // this.alert.errorMsg('Connection Error', '');
         });
       }
-      
+
     }
   }
 
@@ -218,7 +218,7 @@ export class MyprofilePage implements OnInit {
     });
     popover.onDidDismiss().then(data=>{
       if(data !=null){
-       
+
       }
     })
     await popover.present();
@@ -229,4 +229,3 @@ export class MyprofilePage implements OnInit {
     this.ngOnInit();
   }
 }
-

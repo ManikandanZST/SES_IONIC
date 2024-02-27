@@ -12,9 +12,9 @@ export class CommonService {
   constructor(public toastController: ToastController,public loadingController: LoadingController,) {
 
     // this.selectedvalue=JSON.parse(localStorage.getItem(this.dynName))
-    // console.log(this.selectedvalue)
+    
    }
-  
+
   async presentToast(msg: string) {
     const toast = await this.toastController.create({
       message: msg,
@@ -52,7 +52,7 @@ export class CommonService {
   }
 
   async closeLoading() {
-    //console.log(this.loadingController.getTop());
+    
     //   this.loadingController.dismiss();
     setTimeout(async () => {
       try {
@@ -62,12 +62,12 @@ export class CommonService {
             throw new Error(
               "Could not dismiss the topmost loader. Aborting..."
             );
-            //console.log('Error aborting');
+            
           }
           topLoader = await this.loadingController.getTop();
         }
       } catch (e) {
-        console.log("problem with loader");
+        
       }
     }, 800);
   }
@@ -110,7 +110,7 @@ export class CommonService {
     localStorage.removeItem('ParkingUserDetails');
     localStorage.removeItem('ParkingToken');
     localStorage.clear();
-   
+
   }
 
 

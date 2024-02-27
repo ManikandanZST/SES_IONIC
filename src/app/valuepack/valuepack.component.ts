@@ -37,6 +37,8 @@ export class ValuepackComponent implements OnInit {
   customMULTIlist: any=[];
   //End multiselect fix code
 
+  isTotalAmount : boolean = true;
+
   constructor(private loginService: LoginService,public modalController: ModalController, private platform: Platform) { }
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class ValuepackComponent implements OnInit {
     this.selected_user=localStorage.getItem("selecteduser");
   }
 
-  //To disable back button 
+  //To disable back button
   ionViewDidEnter() {
     this.subscription = this.platform.backButton.subscribeWithPriority(9999, () => {
       // do nothing
@@ -66,19 +68,19 @@ export class ValuepackComponent implements OnInit {
         {
           this.info=Response.UserList;
           this.infouser=this.info[this.selected_user];
-          console.log(this.infouser,"onfo");
+          
           this.dynNames = 'USER'+this.infouser.userId;
         }else{
-        
+
         }
       },
       err => {
-    
+
       }
     );
-  } 
+  }
 
-  
+
   GetGroupUserModules(){
     this.GetGroupUser();
     var lnk =  'GroupValuePackage?GroupId='+this.GroupId;
@@ -99,25 +101,25 @@ export class ValuepackComponent implements OnInit {
             }
           })
         }
-   
+
       }else{
-       
+
       }
       },
       err => {
-    
+
       }
     );
-  } 
+  }
 
   checkMultilist(as,ind,infouser,indexValue,listsS){
     this.inds=ind.target.checked;
     if(as.Prize != 0)
     {
-      var temp   = []; 
+      var temp   = [];
       var dynName = 'USER'+infouser.userId;
       var totalAmount = 'total'+infouser.userId;
-      var tmp    = localStorage.getItem(dynName); 
+      var tmp    = localStorage.getItem(dynName);
       if(this.inds == false)
       {
         if(tmp != null)
@@ -134,7 +136,7 @@ export class ValuepackComponent implements OnInit {
               temp.push(tmp[i]) ;
           }
           temp.push(multiList);
-          localStorage[dynName] = JSON.stringify(temp);    
+          localStorage[dynName] = JSON.stringify(temp);
         } else
         {
           var multiList = {
@@ -145,35 +147,40 @@ export class ValuepackComponent implements OnInit {
 
           tmp = JSON.parse(tmp);
           temp.push(multiList);
-          localStorage[dynName] = JSON.stringify(temp); 
+          localStorage[dynName] = JSON.stringify(temp);
         }
         var t = localStorage.getItem(totalAmount);
         this.totalAmount[indexValue] =  parseFloat(t) + parseFloat(as.Prize);
       }else{
         this.saved    = localStorage.getItem(dynName);
         this.reminder = JSON.parse(this.saved);
-        var reminders   = JSON.parse(localStorage.getItem(dynName));           
+        var reminders   = JSON.parse(localStorage.getItem(dynName));
         for(var i=0; i<reminders.length; i++)
-        {             
+        {
           if(reminders[i].Valuepack_id ===  as.Valuepack_id)
           {
             var index = reminders.indexOf(i);
             reminders.splice(i, 1);
           }
-        }     
+        }
         localStorage[dynName] = JSON.stringify(reminders);
         this.favorite = JSON.parse(this.saved);
         var t = localStorage.getItem(totalAmount);
         this.totalAmount[indexValue] =  parseFloat(t) - parseFloat(as.Prize);
       }
-      setTimeout(function(){
+      this.isTotalAmount = false;
+      setTimeout(async() => {
         var tt = 0;
         for(var k=0;k<listsS.length;k++)
         {
           var totalAmt = 'total'+listsS[k].userId;
           tt = tt + parseFloat(localStorage.getItem(totalAmt));
           localStorage.setItem("totalAmountChoosen",tt.toString());
-          this.totalAmountChoosen = tt;
+          // this.totalAmountChoosen = tt;
+          if( k == listsS.length - 1){
+            this.isTotalAmount = true;
+            
+          }
         }
       },1000)
       localStorage.setItem(totalAmount,this.totalAmount[indexValue]);
@@ -182,7 +189,7 @@ export class ValuepackComponent implements OnInit {
       // multiselect fix Code
       this.customindex = indexValue;
       this.customMULTIlist = this.MULTIlist[this.customindex];
-      console.log("MULTIlist", this.customMULTIlist);
+      
       //End multiselect fix Code
     }else
     {
@@ -204,28 +211,29 @@ export class ValuepackComponent implements OnInit {
   }
 
   async close(){
+    if(this.isTotalAmount){
     let T =0;
 
     // multiselect fix code - to calculate selected course amount
-    // console.log("close - Multilist", this.MULTIlist);
-    // console.log("close - custom multilist",this.customMULTIlist);
+    
+    
     // let customtotal =0;
     // if(this.customMULTIlist.length != 0){
     //   for(var i=0; i<this.customMULTIlist.length; i++){
-    //     //console.log("test",this.customMULTIlist[i].ModulePrice);
+    
     //     customtotal = customtotal + +this.customMULTIlist[i].ModulePrice
     //   }
     // }
-    // console.log("test customtotal",customtotal);
+    
     //End multiselect fix code - to calculate selected course amount
 
-    console.log(this.MULTIlist[this.MULTIlist.length-1],"list")
+    
     if(this.MULTIlist[this.MULTIlist.length-1]){
       this.total = this.MULTIlist[this.MULTIlist.length-1].map((location) => {
         T=T+parseInt(location.Prize);
       });
       this.Total=T;
-      //console.log("If Total", this.Total);
+      
     }
     else{
       if(this.selectcourse){
@@ -233,15 +241,16 @@ export class ValuepackComponent implements OnInit {
           T=T+parseInt(location.Prize);
         });
         this.Total=T;
-        //console.log("Else Total", this.Total);
+        
       }
     }
     await this.modalController.dismiss({
       data: this.MULTIlist[this.MULTIlist.length-1] ? this.customMULTIlist : this.selectcourse,
       data2:this.id,
       data3:localStorage.getItem("totalAmountChoosen"),
-      //data4:this.Total
-      data4: localStorage.getItem("totalAmountChoosen")
+      data4:this.Total
+      // data4: localStorage.getItem("totalAmountChoosen")
     });
   }
+}
 }

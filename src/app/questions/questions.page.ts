@@ -12,13 +12,13 @@ import { IonSlides } from '@ionic/angular';
     styleUrls: ['./questions.page.scss'],
 })
 
-export class QuestionsPage implements OnInit { 
+export class QuestionsPage implements OnInit {
     public options = {
         initialSlide: 0,
         speed: 400
       };
     userid: string;
-    testID: any;    
+    testID: any;
     sectionId: any;
     sectionName: any;
     timer: any;
@@ -29,35 +29,35 @@ export class QuestionsPage implements OnInit {
     nextbtn: boolean = true;
     qInfo: any=[];
     count: any;
-    quesList: any;    
+    quesList: any;
     @ViewChild('mySlider') slides: IonSlides;
     module_id: any;
     CourseId: any;
-    
+
     constructor(public router:Router, private commonService: CommonService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private webService: WebService) {
         this.activatedRoute.params.subscribe(params => {
-            this.sectionId=params['sectionId'];            
-            //console.log("sectionId",this.sectionId);
+            this.sectionId=params['sectionId'];
+            
             localStorage.setItem("sectinoID",this.sectionId);
             this.testID=params['testID'];
             localStorage.setItem("testID",this.testID);
-            //console.log("testID",this.testID);
+            
             this.sectionName=params['sectionName'];
-            //console.log("sectionName",this.sectionName);
-            this.timer=params['timer'];            
+            
+            this.timer=params['timer'];
             this.module_id=params['module'];
             this.CourseId=params['back']
-            //this.timer='01';    //To change timer for testing         
-            //console.log("timer",this.timer);
+            //this.timer='01';    //To change timer for testing
+            
         });
     }
 
     ngOnInit() {
-        this.userid = localStorage.getItem("Userid");        
-        //console.log("questionsall - userid", this.userid);
+        this.userid = localStorage.getItem("Userid");
+        
         var stime = this.startTime();
         localStorage.setItem("stime",this.dayTime());
-        this.GetQuestions();        
+        this.GetQuestions();
     }
 
     startTime()
@@ -71,17 +71,17 @@ export class QuestionsPage implements OnInit {
         var HH = conDate.getHours();
         var MIN = conDate.getMinutes();
         var SEC = conDate.getSeconds();
-        var endmonth = yy+"-"+MM+"-"+dd;  
-        if(dd<10) 
+        var endmonth = yy+"-"+MM+"-"+dd;
+        if(dd<10)
         {
             dd='0'+dd;
-        } 
+        }
 
-        if(MM<10) 
+        if(MM<10)
         {
             MM='0'+MM;
-        } 
-        var endmonth1 = dd+'.'+MM+'.'+yy+' '+HH+':'+MIN+':'+SEC;  
+        }
+        var endmonth1 = dd+'.'+MM+'.'+yy+' '+HH+':'+MIN+':'+SEC;
         return endmonth1;
     }
 
@@ -96,44 +96,44 @@ export class QuestionsPage implements OnInit {
         var HH = conDate.getHours();
         var MIN = conDate.getMinutes();
         var SEC = conDate.getSeconds();
-        var endmonth = yy+"-"+MM+"-"+dd;  
-        if(dd<10) 
+        var endmonth = yy+"-"+MM+"-"+dd;
+        if(dd<10)
         {
             dd='0'+dd;
-        } 
+        }
 
-        if(MM<10) 
+        if(MM<10)
         {
             MM='0'+MM;
-        } 
-        var endmonth1 = yy+'-'+MM+'-'+dd+' '+HH+':'+MIN+':'+SEC;  
+        }
+        var endmonth1 = yy+'-'+MM+'-'+dd+' '+HH+':'+MIN+':'+SEC;
         return endmonth1;
     }
 
     GetQuestions(){
         this.commonService.presentLoading();
-        var id = this.sectionId; 
-        var testID = this.testID; 
-        var minutes = this.timer; 
+        var id = this.sectionId;
+        var testID = this.testID;
+        var minutes = this.timer;
 
         if(testID == 0){
-           localStorage.setItem("testID",'1'); 
+           localStorage.setItem("testID",'1');
         }
         else{
             localStorage.setItem("testID",this.testID);
         }
 
-        this.title = this.sectionName;        
+        this.title = this.sectionName;
 
-        //console.log(id +' + '+testID);
+        
 
         var stime = localStorage.getItem("stime");
         var lnk = 'GetQuestions/?sectionid='+id+'&userId='+this.userid+'&starttime='+stime+'&testID='+testID;
-        this.commonService.closeLoading();  
+        this.commonService.closeLoading();
         this.webService.GetQuestions(lnk).then(
             (Response: any) => {
 
-                this.Questions = Response;  
+                this.Questions = Response;
                 this.Questions.forEach((value, key) => {
                     this.questionsOver[key] = value;
                 });
@@ -162,7 +162,7 @@ export class QuestionsPage implements OnInit {
                         hours = time.getUTCHours();
                         mins = time.getUTCMinutes();
                         element.innerHTML = 'Time ' +(hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() );
-                        setTimeout(() => { 
+                        setTimeout(() => {
                             updateTimer()
                         }, time.getUTCMilliseconds() + 500 );
                     }
@@ -175,25 +175,25 @@ export class QuestionsPage implements OnInit {
             },
             err => {
                 this.commonService.closeLoading();
-                this.commonService.presentToast(`Connection error`);                
+                this.commonService.presentToast(`Connection error`);
             }
         );
     }
 
     next(){
-        //console.log("next",this.slides);
+        
         this.slides.slideNext();
 
         this.slides.getActiveIndex().then(index => {
-            //console.log("slider index",index);
+            
             if(index == 0 || index == undefined){
-                this.cancel = true;    
+                this.cancel = true;
             }
             else if ((index+1) == this.questionsOver.length){
-                this.nextbtn = false;    
+                this.nextbtn = false;
             }else{
-                //console.log("Next cancel true");
-                this.cancel = false;    
+                
+                this.cancel = false;
             }
 
         });
@@ -202,27 +202,27 @@ export class QuestionsPage implements OnInit {
     prev(){
         this.slides.slidePrev();
         this.slides.getActiveIndex().then(index => {
-            //console.log("slider index",index);
+            
             if(index == 0){
-                this.cancel = true;    
+                this.cancel = true;
             }
             else if ((index+1) != this.questionsOver.length){
-                this.nextbtn = true;    
+                this.nextbtn = true;
             }
         });
     }
 
     close(){
-        // this.router.navigate([`/trainingcenter/`])  
-        this.router.navigate([`/home-details/${this.module_id}`],{queryParams: {back: this.CourseId}});  
+        // this.router.navigate([`/trainingcenter/`])
+        this.router.navigate([`/home-details/${this.module_id}`],{queryParams: {back: this.CourseId}});
 
     }
 
     answerCheck(questionsOver,sectinoID){
-        //console.log("questionsOver",questionsOver);
-        //console.log("sectinoID",sectinoID);
+        
+        
         this.qInfo = questionsOver;
-        //console.log("questions all - qInfo",this.qInfo);
+        
         localStorage.setItem("qInfo",JSON.stringify(this.qInfo));
         this.count = 0;
         var qList = '';
@@ -247,7 +247,7 @@ export class QuestionsPage implements OnInit {
                 this.count = this.count+1;
                 //this.count = this.count;
                 localStorage.setItem("count",this.count);
-            }            
+            }
         }
         this.router.navigate([`/answerscheck/${sectinoID}/${"CompleteExam"}`]);
     }

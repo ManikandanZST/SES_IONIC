@@ -19,23 +19,23 @@ export class PopoverComponent implements OnInit {
     constructor(
         public router: Router,
         public popOver: PopoverController,
-        private alertCtrl: AlertController,        
+        private alertCtrl: AlertController,
         private modalCtrl: ModalController,
         private activatedRoute: ActivatedRoute
     ) {
         this.activatedRoute.params.subscribe(params => {
-            // console.log(params['type']);
+            
             this.type=params['type'];
-            console.log(this.type);      
+            
         });
     }
 
-    async GotoSettings(page) {        
+    async GotoSettings(page) {
         this.type=localStorage.getItem('type');
-        //console.log("saravana", page);
-        //console.log(this.type);
+        
+        
         if(this.type=="individual"){
-            //console.log(`/`+page+`/${this.type}`);
+            
             this.router.navigate([`/`+page+`/${this.type}`])
         }else if(this.type=="group"){
             this.router.navigate([`/`+page+`/${this.type}`])
@@ -43,7 +43,7 @@ export class PopoverComponent implements OnInit {
             //     localStorage.clear();
             //     window.location.reload();
             //   });
-        }           
+        }
         //this.router.navigate(["/" + page, {}]);
         this.popOver.dismiss();
     }
@@ -55,11 +55,11 @@ export class PopoverComponent implements OnInit {
     }
     logout(){
         this.type=localStorage.getItem('type');
-        console.log(this.type);
+        
           if(this.type=="individual"){
             this.router.navigate([`/login/${this.type}`]).then(() => {
               localStorage.clear();
-      
+
               window.location.reload();
             });
           }else if(this.type=="group"){
@@ -67,8 +67,8 @@ export class PopoverComponent implements OnInit {
               localStorage.clear();
               window.location.reload();
             });
-      
+
           }
-      
+
         }
 }

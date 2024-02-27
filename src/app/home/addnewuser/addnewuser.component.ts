@@ -31,18 +31,18 @@ export class AddnewuserComponent implements OnInit {
       if(Response)
       {
       this.Ein=Response.Group.EIN;
-  
+
       }else{
-       
+
       }
     },
     err => {
-   
+
     }
   );
-} 
+}
   async AddnewUser(usign,modal){
-    var fname1 ,lname1, password1,email1; 
+    var fname1 ,lname1, password1,email1;
 
     fname1 = usign.fname1;
     lname1 = usign.lname1;
@@ -63,20 +63,20 @@ export class AddnewuserComponent implements OnInit {
     else if ((await this.commonService.validateEmail(usign.email1)) == false){
        this.commonService.presentToast("Enter Valid Email");
     }
-    
+
     else {
       var id = localStorage.getItem("loginuserid");
           var lnk='AddNewUserToGroup';
       var data = 'fullName='+fname1+' '+lname1+'&email='+email1+'&password='+password1+'&Group_Id='+id+'&EIN='+this.Ein;
       this.commonService.presentLoading();
       this.loginService.postdata(data,lnk).then((Response: any) => {
-         console.log(Response);
+         
          if(Response.Status == 'Success'){
-          console.log("test works");
+          
 
            this.commonService.closeLoading();
               // this.signupdetails = Response.data[0];
-              // console.log(this.signupdetails);
+              
            this.commonService.presentToast(Response.Message);
            this.router.navigate([`/home/${this.type}/employeelist`]);
 
@@ -90,8 +90,8 @@ export class AddnewuserComponent implements OnInit {
          this.commonService.presentToast(`Connection error`);
        }
      );
-    }   
-  
+    }
+
   }
   close(){
     this.router.navigate([`/home/${this.type}/employeelist`]);

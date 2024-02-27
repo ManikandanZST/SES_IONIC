@@ -13,10 +13,10 @@ export class LoginDetailsComponent implements OnInit {
   constructor(public modalController: ModalController, private router: Router, ) { }
 
   ngOnInit() {}
-  
+
     SignIn(val){
       this.type=val;
-      // console.log(this.type,"type")
+
       if(this.type=="individual"){
         this.router.navigate([`/login/${this.type}`])
         this.close();
@@ -29,5 +29,5 @@ export class LoginDetailsComponent implements OnInit {
       const closeModal: string = "Modal Closed";
       await this.modalController.dismiss(closeModal);
     }
-  
+
 }

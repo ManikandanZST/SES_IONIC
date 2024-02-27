@@ -21,35 +21,36 @@ export class TrainingCenterComponent implements OnInit {
   }
   valuepack(){
     var uid=localStorage.getItem('Userid');
-   
+
     var lnk='GetUserValuePack?UserId='+uid;
     this.loginService.getData(lnk).then(
       (Response: any) => {
-  
+
         if(Response)
         {
         this.valuepacks=Response;
-        console.log(this.valuepacks,"valuepack")
-        console.log(Response,"Response")
-       
+        
+        
+
         }else{
-         
+
         }
       },
       err => {
-     
+
       }
     );
   }
   async showCourse(index, data){
-    console.log(data);
-    console.log(index);
+    
+    
+    
     this.subCourse =data.ModuleList;
-    console.log(this.subCourse);
+    
 
       const modal = await this.modalctrl.create({
         component: ValuePackComponent,
-        componentProps: { 
+        componentProps: {
           "subCourse": this.subCourse,
           "heading":data
         },
@@ -57,8 +58,8 @@ export class TrainingCenterComponent implements OnInit {
         swipeToClose: true,
       });
       modal.onDidDismiss().then((result) => {
-  
-    console.log(result,"total")
+
+    
        })
       return await modal.present();
     }

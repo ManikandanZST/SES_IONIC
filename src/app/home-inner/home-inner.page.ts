@@ -17,9 +17,7 @@ export class HomeInnerPage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,public loginService:LoginService,public router:Router, private commonService: CommonService) {
     this.activatedRoute.params.subscribe(params => {
-      console.log(params);
-      this.CourseId=params['id'];      
-      console.log(this.CourseId);      
+      this.CourseId=params['id'];
    });
   }
 
@@ -37,18 +35,18 @@ export class HomeInnerPage implements OnInit {
         if(Response)
         {
           this.subcourselist=Response;
-          console.log(this.subcourselist.Course,"courselist")
+          
         }else{
-         
+
         }
       },
       err => {
-     
+
       }
     );
-  } 
+  }
   trainingcourse(nodeid){
-    console.log(nodeid,"training");
+
     this.router.navigate([`/home-inner/${nodeid}`])
   //   var uid=localStorage.getItem('Userid');
   //   var lnk =  'GetModulesList/?nodeid='+nodeid+'&userId='+uid;
@@ -58,24 +56,24 @@ export class HomeInnerPage implements OnInit {
   //     if(Response)
   //     {
   //       this.sectionlist=Response;
-  //       console.log(this.sectionlist.sectionlist,"courselist")
+
   //     }else{
-       
+
   //     }
   //   },
   //   err => {
-   
+
   //   }
   // );
   }
   coursePage(module_id,sid,sh_course){
-    console.log(module_id);
+    
     var uid=localStorage.getItem('Userid');
     if(uid == null){
       this.router.navigate([`login/individual`])
     }
     else{
-      this.router.navigate([`/home-details/${module_id}`],{queryParams: {back: this.CourseId}});  
+      this.router.navigate([`/home-details/${module_id}`],{queryParams: {back: this.CourseId}});
     }
     //this.router.navigate([`/home-details/${module_id}`],{queryParams: {back: this.CourseId}});
 
@@ -83,15 +81,15 @@ export class HomeInnerPage implements OnInit {
   back(){
     if(this.type=='individual'){
       this.getpage = localStorage.getItem("pgtrain");
-      //console.log("Saravana",this.getpage);      
+      
       if(this.getpage == '1'){
         localStorage.setItem("pgtrain", '0');
         this.router.navigate([`/trainingcenter`])
       }else{
         this.router.navigate([`/home/individual`])
-      }      
+      }
     }
-    else if(this.type=='common'){      
+    else if(this.type=='common'){
       this.router.navigate([`/home/common`])
     }
     //this.router.navigate([`/home/individual`])

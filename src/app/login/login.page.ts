@@ -22,12 +22,12 @@ export class LoginPage implements OnInit {
   type: any;
   showPassword = false;
   inputtype: any;
-  constructor(public router:Router, private commonService: CommonService,public app: AppComponent,private modalCtrl:ModalController,private activatedRoute: ActivatedRoute, private loginService: LoginService) { 
+  constructor(public router:Router, private commonService: CommonService,public app: AppComponent,private modalCtrl:ModalController,private activatedRoute: ActivatedRoute, private loginService: LoginService) {
     this.activatedRoute.params.subscribe(params => {
-      // console.log(params['id']);
+
       this.type=params['id'];
  });
-   
+
 
   }
 
@@ -40,9 +40,9 @@ export class LoginPage implements OnInit {
     if(this.type=="individual"){
     if (ulogin.userId == "" || ulogin.userId == undefined) {
       this.commonService.presentToast("Enter userId");
-      console.log("test");
+
     } else if(ulogin.password == "" || ulogin.password == undefined) {
-      console.log("test3");
+
       this.commonService.presentToast("Enter Password");
     }else{
       var data = "userId="+ulogin.userId+"&password="+ulogin.password;
@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
        (Response: any) => {
          if(Response.Status == 'Success')
          {
-          console.log(Response);
+
            this.commonService.closeLoading();
            this.commonService.presentToast('Login Sucessfully');
            var appid = localStorage.getItem("SesdeviceLocal");
@@ -60,10 +60,10 @@ export class LoginPage implements OnInit {
            localStorage.setItem("ProctID","");
            localStorage.setItem("ses_login_user", '0');
 
-           
+
            localStorage.setItem("SesdeviceLocal", appid);
            localStorage.setItem("SesTokenLocal", fcmid);
-             
+
            localStorage.setItem("Userid",ulogin.userId);
            localStorage.setItem("Userdata",JSON.stringify(Response));
            this.status = 0;
@@ -88,7 +88,7 @@ export class LoginPage implements OnInit {
 
           });
         }else{
-          // console.log(Response);
+
 
            this.commonService.closeLoading();
            this.commonService.presentToast(Response.Message);
@@ -99,7 +99,7 @@ export class LoginPage implements OnInit {
          this.commonService.presentToast(`Connection error`);
        }
      );
-   } 
+   }
   }else if(this.type=="group"){
     if (ulogin.userId == "" || ulogin.userId == undefined) {
       this.commonService.presentToast("Enter Company Name");
@@ -112,7 +112,7 @@ export class LoginPage implements OnInit {
        (Response: any) => {
          if(Response.Status == 'Success')
          {
-          console.log(Response);
+
            this.commonService.closeLoading();
            this.commonService.presentToast('Login Sucessfully');
            localStorage.setItem("ses_login_user", '0');
@@ -142,14 +142,14 @@ export class LoginPage implements OnInit {
          this.commonService.presentToast(`Connection error`);
        }
      );
-   } 
+   }
   }
   }
  async modal_popup(){
-  console.log("test");
+
     const modal = await this.modalCtrl.create({
       component: SignUpDetailComponent,
-      componentProps: { 
+      componentProps: {
         // "court": this.club,
         // court: "Test Title",
       },
@@ -165,17 +165,17 @@ export class LoginPage implements OnInit {
     this.router.navigate([`home/common`])
   }
   toggleShow() {
-    console.log("tested");
+
     this.showPassword = !this.showPassword;
-    console.log(this.showPassword);
+
     this.inputtype = this.showPassword ? 'text' : 'password';
-    console.log(this.inputtype);
+
   }
   Forgot(){
     if(this.type=="individual"){
-      this.router.navigate([`/forgotpassword/${this.type}`])      
-    }else if(this.type=="group"){      
+      this.router.navigate([`/forgotpassword/${this.type}`])
+    }else if(this.type=="group"){
       this.router.navigate([`/forgotpassword/${this.type}`])
     }
-  }  
+  }
 }

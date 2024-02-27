@@ -30,42 +30,42 @@ export class AddexistuserComponent implements OnInit {
       if(Response)
       {
       this.Ein=Response.Group.EIN;
-  
+
       }else{
-       
+
       }
     },
     err => {
-   
+
     }
   );
-} 
+}
   async AddnewUser(usign,modal){
-    var userId, password; 
+    var userId, password;
     password = usign.password;
     userId = usign.userId;
     if (usign.userId == "" || usign.userId == undefined){
       this.commonService.presentToast("Enter UserId");
     }
-    
+
     else if(usign.password == "" || usign.password == undefined) {
       this.commonService.presentToast("Enter Password");
     }
-    
-    
+
+
     else {
       var id = localStorage.getItem("loginuserid");
           var lnk='AddExistingUserToGroup';
       var data = 'userId='+userId+'&password='+password+'&Group_Id='+id+'&EIN='+this.Ein;
       this.commonService.presentLoading();
       this.loginService.postdata(data,lnk).then((Response: any) => {
-         console.log(Response);
+
          if(Response.Status == 'Success'){
-          console.log("test works");
+
 
            this.commonService.closeLoading();
               // this.signupdetails = Response.data[0];
-              // console.log(this.signupdetails);
+            
            this.commonService.presentToast(Response.Message);
            this.router.navigate([`/home/${this.type}/employeelist`]);
 
@@ -79,8 +79,8 @@ export class AddexistuserComponent implements OnInit {
          this.commonService.presentToast(`Connection error`);
        }
      );
-    }   
-  
+    }
+
   }
   close(){
     this.router.navigate([`/home/${this.type}/employeelist`]);

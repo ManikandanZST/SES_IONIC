@@ -23,29 +23,29 @@ export class AppComponent {
   login_menu:any;
   GroupId: string;
   info: any={};
-  FullName: any;  
+  FullName: any;
   ses_login_session: string;
 
-  constructor(private modalCtrl:ModalController,private inAppBrowser: InAppBrowser, public platform: Platform,private menu: MenuController,private iab: InAppBrowser,private router: Router, private loginService: LoginService) 
-  { 
+  constructor(private modalCtrl:ModalController,private inAppBrowser: InAppBrowser, public platform: Platform,private menu: MenuController,private iab: InAppBrowser,private router: Router, private loginService: LoginService)
+  {
     this.initializeApp();
-console.log("app module works")
+
     this.userid=localStorage.getItem('Userid');
     this.GroupId=localStorage.getItem("loginuserid");
     if(this.userid != null){
       var lnk =  'GetUser/'+this.userid;
       this.loginService.getData(lnk).then(
         (Response: any) => {
-          console.log(Response);    
+
           if(this.type=="individual")
           {
-            // console.log("Individual");
-            this.info=Response;          
-            this.FullName=this.info.fullName;                                    
+            //
+            this.info=Response;
+            this.FullName=this.info.fullName;
           }
         },
         err => {
-        
+
         }
       );
     }
@@ -53,21 +53,21 @@ console.log("app module works")
       var lnk =  'GetGroupUser?GroupId='+this.GroupId;
       this.loginService.getData(lnk).then(
         (Response: any) => {
-          console.log(Response);    
+          
           if(this.type!="individual")
           {
-            // console.log("Individual");
-            this.info=Response.Group;          
-            this.FullName=this.info.First_Name;                                   
+            
+            this.info=Response.Group;
+            this.FullName=this.info.First_Name;
           }
         },
         err => {
-        
+
         }
       );
     }
 
-    console.log("logged user id", this.userid);
+    
     this.type=localStorage.getItem('type');
     this.ses_login_session=localStorage.getItem('ses_login_user');
     if(this.ses_login_session==null){
@@ -75,22 +75,22 @@ console.log("app module works")
 
     }
     if(this.type==null){
-    
+
       localStorage.setItem('type',"common");
 
     }
     this.type=localStorage.getItem('type');
-    console.log(this.type,"type")
+    
     // this.login_menu={ title: 'Login', url: 'login', icon: 'log-in' };
 
     // if(!this.userid){
     // const menu=this.appPages;
-    // console.log(menu)
+    
 
     // menu.splice(4, 0,this.login_menu)
     // }else{
     //   const menu=this.appPages;
-    //         console.log(menu)
+    
 
     // }
     this.backButtonEvent()
@@ -103,11 +103,11 @@ console.log("app module works")
     this.platform.ready().then(() => {
       // localStorage.clear();
 
-      console.log("test works appmodul")
+      
     });
 
-    
-  
+
+
   }
 
   ngOnInit() {
@@ -117,16 +117,16 @@ console.log("app module works")
       var lnk =  'GetUser/'+this.userid;
       this.loginService.getData(lnk).then(
         (Response: any) => {
-          console.log(Response);    
+          
           if(this.type=="individual")
           {
-            // console.log("Individual");
-            this.info=Response;          
-            this.FullName=this.info.fullName;                                    
+            
+            this.info=Response;
+            this.FullName=this.info.fullName;
           }
         },
         err => {
-        
+
         }
       );
     }
@@ -134,21 +134,21 @@ console.log("app module works")
       var lnk =  'GetGroupUser?GroupId='+this.GroupId;
       this.loginService.getData(lnk).then(
         (Response: any) => {
-          console.log(Response);    
+
           if(this.type!="individual")
           {
-            // console.log("Individual");
-            this.info=Response.Group;          
-            this.FullName=this.info.First_Name;                                   
+
+            this.info=Response.Group;
+            this.FullName=this.info.First_Name;
           }
         },
         err => {
-        
+
         }
       );
     }
 
-    console.log("logged user id", this.userid);
+
     this.type=localStorage.getItem('type');
     this.ses_login_session=localStorage.getItem('ses_login_user');
     if(this.ses_login_session==null){
@@ -156,13 +156,12 @@ console.log("app module works")
 
     }
     if(this.type==null){
-    
+
       localStorage.setItem('type',"common");
 
     }
     this.type=localStorage.getItem('type');
-    console.log(this.type,"type")
-    console.log("app ng works")
+
   }
 
   closeMenu(){
@@ -170,10 +169,10 @@ console.log("app module works")
   }
 
   ionViewWillEnter() {
-    console.log("app module works")
+
   }
 
-  public appPages = [    
+  public appPages = [
     { title: 'Home', url: 'home', icon: 'home' },
     { title: 'My Profile', url: 'myprofile', icon: 'person' },
     { title: 'Training Center', url: 'Training-Center', icon: 'information-circle' },
@@ -191,7 +190,7 @@ console.log("app module works")
  async modal_popup(){
     const modal = await this.modalCtrl.create({
       component: LoginDetailsComponent,
-      componentProps: { 
+      componentProps: {
         // "court": this.club,
         // court: "Test Title",
       },
@@ -204,10 +203,10 @@ console.log("app module works")
   }
 
   async modal_popup2(){
-    console.log("test");
+
     const modal = await this.modalCtrl.create({
       component: SignUpDetailComponent,
-      componentProps: { 
+      componentProps: {
         // "court": this.club,
         // court: "Test Title",
       },
@@ -224,7 +223,7 @@ console.log("app module works")
   }
   logout(){
     this.type=localStorage.getItem('type');
-    console.log(this.type);
+
     if(this.type=="individual"){
       this.router.navigate([`/login/${this.type}`]).then(() => {
         localStorage.clear();
@@ -249,42 +248,42 @@ console.log("app module works")
 
   profile(){
     this.type=localStorage.getItem('type');
-    console.log(this.type);
+
     if(this.type=="individual"){
       this.router.navigate([`/myprofile/${this.type}`])
     }else if(this.type=="group"){
       this.router.navigate([`/myprofile/${this.type}`])
-    } 
+    }
   }
 
   Home(){
     this.type=localStorage.getItem('type');
-    console.log(this.type);
+
     if(this.type=="individual"){
       this.router.navigate([`/home/${this.type}`])
     }else if(this.type=="group"){
       this.router.navigate([`/home/${this.type}`])
 
     }else{
-      console.log("test common works")
+
       // this.type=localStorage.setItem("type", 'common');
 
       this.router.navigate([`/home/common`])
-    }  
+    }
   }
 
   refreshing(event: any) {
-    console.log("Begin async operation");
+
 
     setTimeout(() => {
-      console.log("Async operation has ended");
+
       event.target.complete();
     }, 2000);
   }
 
   work(){
-    var link="https://shawneerct.com/manuals/123016%20SES%20Services.pdf";    
-    this.iab.create(link, '_system');    
+    var link="https://shawneerct.com/manuals/123016%20SES%20Services.pdf";
+    this.iab.create(link, '_system');
   }
 
   trainingcenter()
@@ -293,15 +292,15 @@ console.log("app module works")
     if(uid != '')
     {
       if(uid == null)
-      {  
-        this.router.navigate([`/login/individual`])            
+      {
+        this.router.navigate([`/login/individual`])
       }else
       {
-        this.router.navigate([`/trainingcenter/`])            
+        this.router.navigate([`/trainingcenter/`])
       }
     }else
     {
-      this.router.navigate([`/login/individual`])            
+      this.router.navigate([`/login/individual`])
       // $state.go("login",{sid:'',page:'training',mouduleId:'',type:'individual'});
     }
   }
@@ -311,29 +310,29 @@ console.log("app module works")
     if(uid != '')
     {
       if(uid == null)
-      {  
-        this.router.navigate([`/login/individual`])            
+      {
+        this.router.navigate([`/login/individual`])
       }else
       {
-        this.router.navigate([`/trainingreport/`])            
+        this.router.navigate([`/trainingreport/`])
       }
 
     }else
     {
-      this.router.navigate([`/login/individual`])                
+      this.router.navigate([`/login/individual`])
     }
   }
 
   backButtonEvent() {
     document.addEventListener("backbutton", () => {
       this.routerOutlets.forEach((outlet: IonRouterOutlet) => {
-        console.log("Inside back button event");
+
         if (outlet && outlet.canGoBack()) {
           outlet.pop();
         }else if(this.router.url === "/home/group"){
-          console.log("Homepage - Group");
+
           navigator['app'].exitApp(); // work for ionic 4
-        } 
+        }
         else if(this.router.url === "/home/common"){
           navigator['app'].exitApp(); // work for ionic 4
         }

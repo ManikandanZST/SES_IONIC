@@ -37,12 +37,12 @@ export class PaymentModalComponent implements OnInit {
        private activatedRoute: ActivatedRoute,public iab:InAppBrowser,private creditCardService: CreditCardService) { }
 
   ngOnInit() {
-    console.log(this.coursePrice,"coursePrice");
-    console.log(this.ValueId,"ValueId");
-    console.log(`OverIdPaymentComponent: ${this.OverId}`);
+    
+    
+    
 
     this.valueS=this.valueS;
-    console.log(this.valueS,"valueS");
+    
     this.type=localStorage.getItem("type");
     this.total=localStorage.getItem("totalAmountChoosen");
     this.GroupId=localStorage.getItem("loginuserid");
@@ -57,16 +57,16 @@ export class PaymentModalComponent implements OnInit {
 
   this.loginService.getData(lnk).then(
     (Response: any) => {
-      console.log(Response,"GetGroupUserModules");
+      
 
       if(Response)
       {
       // this.groupusers=Response;
       this.groupuser_NAMEs=Response;
-      console.log(this.groupuser_NAMEs,"groupuser_NAMEs");
+      
 
       this.groupusers=Response[0].ModuleList;
-      console.log(this.groupusers,"respon");
+      
       // var templs   = [];
       // this.totalAmount=[];
       // this.MULTIlist=[];
@@ -76,7 +76,7 @@ export class PaymentModalComponent implements OnInit {
       //  this.totalAmountChoosen = 0;
       //  this.MULTIlist[j] = '';
       //   var dynNames = 'USER'+Response[j].User.userId;
-      //   console.log(dynNames,"test");
+      
 
       //   var totalAmount = 'total'+Response[j].User.userId;
       //   localStorage[dynNames] = JSON.stringify(templs);
@@ -95,9 +95,9 @@ export class PaymentModalComponent implements OnInit {
 
 //Group user payment
   purchaseModule(amount,usign,infoM){
-    console.log(amount,"amount");
+    
     console.table(usign);
-    console.log(infoM,"infoM");
+    
     if (usign.cardholder_name == "" || usign.cardholder_name == undefined){
       this.commonService.presentToast("Enter holder name.");
     }
@@ -130,18 +130,15 @@ export class PaymentModalComponent implements OnInit {
       for(var m=0;m<infoM.length;m++)
       {
           var dyncname = 'USER'+infoM[m].User.userId;
-          console.log(dyncname,"dync")
-
           var listMulti = JSON.parse(localStorage.getItem(dyncname));
-          console.log(`SectionList: ${listMulti}`);
+
           if(listMulti.length > 0)
           {
             joinUser = joinUser + infoM[m].User.userId+'-';
             joinUserOverList += infoM[m].User.userId + '-';
             joinUserValuePack += infoM[m].User.userId + '-';
             joinUserOverallValuePack += infoM[m].User.userId + '-';
-            console.log(`joinUserCheck: ${joinUser}`);
-            console.log(`joinUserOverallValuePack: ${joinUserOverallValuePack}`);
+
 
             for(var n=0;n<listMulti.length;n++)
             {
@@ -151,16 +148,14 @@ export class PaymentModalComponent implements OnInit {
                 joinUserOverList += listMulti[n].OverId + '|';
                 joinUserValuePack += listMulti[n].Valuepack_id + '|';
                 joinUserOverallValuePack += listMulti[n].OverallValuePack_id + '|';
-                console.log(joinUser,"joinUser")
-                console.log(`joinUserOverList: ${joinUserOverList}`);
-                console.log(`joinUserOverallValuePack: ${joinUserOverallValuePack}`);
+
               }else
               {
                 joinUser = joinUser + listMulti[n].ModuleType + ',';
                 joinUserOverList += listMulti[n].OverId + ',';
                 joinUserValuePack += listMulti[n].Valuepack_id + ',';
                 joinUserOverallValuePack += listMulti[n].OverallValuePack_id + ',';
-                console.log(joinUser,"joinUser1")
+
 
               }
             }
@@ -171,10 +166,7 @@ export class PaymentModalComponent implements OnInit {
       joinUserOverList = joinUserOverList.substring(0, joinUserOverList.length-1);
       joinUserValuePack = joinUserValuePack.substring(0, joinUserValuePack.length-1);
       joinUserOverallValuePack = joinUserOverallValuePack.substring(0, joinUserOverallValuePack.length-1);
-      console.log(joinUser);
-      console.log(`joinUserOverList: ${joinUserOverList}`);
-      console.log(`joinUserValuePack: ${joinUserValuePack}`);
-      console.log(`joinUserOverallValuePackCheck: ${joinUserOverallValuePack}`);
+
       var ExpireDate = usign.ccExpMonth+usign.ccExpYear;
 
       var ExpMonth = usign.ccExpMonth.toString();
@@ -196,7 +188,6 @@ export class PaymentModalComponent implements OnInit {
       '&ExpYear=' + ExpYear +
       '&Cvc=' + usign.ccCvc;
 
-      console.log(data);
       var datas = ''
       this.loginService.paymentcourse_group(data).then((Response: any) => {
 
@@ -204,7 +195,7 @@ export class PaymentModalComponent implements OnInit {
 
            this.commonService.closeLoading();
               // this.signupdetails = Response.data[0];
-              // console.log(this.signupdetails);
+
           //  this.commonService.presentToast(Response.Message);
            this.presentAlert("Payment Successful!");
          }else{
@@ -222,7 +213,7 @@ export class PaymentModalComponent implements OnInit {
   }
 
   async presentAlert(response) {
-    // console.log(type,"testinftf")
+
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: '',
@@ -293,8 +284,7 @@ export class PaymentModalComponent implements OnInit {
       }
      else{
           var uid = localStorage.getItem("Userid");
-          console.log(typeof this.usign.ccNumber)
-          // var uid = '';
+
           var cardBrand = this.creditCardService.identifyCardBrand(this.usign.ccNumber);
 
         //  const First6 = this.usign.ccNumber.substring(0, 6);
@@ -323,14 +313,14 @@ export class PaymentModalComponent implements OnInit {
 
         var data = 'UserId=' + uid + '&SectionId=' + this.section + '&manstatus=0&videostatus=0&OverId=' + OverIdValue + '&Type=' + TypeValue + '&PackId=' + PackValue + '&Amount=' + amount + '&CardHoldersName=' + usign.cardholder_name + '&CardBrand=' + cardBrand + '&CreditCardNo=' + usign.ccNumber + '&ExpMonth=' + ExpMonth + '&ExpYear=' + ExpYear + '&Cvc=' + usign.ccCvc;
           // var data = 'UserId='+uid+'&SectionId='+this.section+'&manstatus=0&videostatus=0&OverId='+overid+'&Type='+typeId+'&PackId=0&Amount='+amount+'&CardHoldersName='+usign.cardholder_name+'&CardBrand='+cardBrand+'&CreditCardNo='+usign.ccNumber+'&ExpireDate='+ExpireDate+'&First6='+First6+'&Last4='+Last4;
-          console.log(data);
+
           this.loginService.paymentcourse_single(data).then((Response: any) => {
 
              if(Response.Status == 'Success'){
 
                this.commonService.closeLoading();
                   // this.signupdetails = Response.data[0];
-                  // console.log(this.signupdetails);
+
               //  this.commonService.presentToast(Response.Message);
                this.presentAlert("Payment Successful!");
              }else{
@@ -351,9 +341,7 @@ export class PaymentModalComponent implements OnInit {
 
       //tarining centerpayment
       purchaseModule_trainingcenter(amount,usign,valueid){
-        console.log(amount,"amount");
-        console.log(usign,"usign");
-        console.log(valueid,"valueid");
+
         if (usign.cardholder_name == "" || usign.cardholder_name == undefined){
           this.commonService.presentToast("Enter holder name.");
         }
@@ -383,7 +371,7 @@ export class PaymentModalComponent implements OnInit {
           var nullP = "-1";
 
           var joinUser = joinUser.substring(0, joinUser.length-1);
-          console.log(joinUser);
+
           var ExpireDate = usign.ccExpMonth+usign.ccExpYear;
           var ExpMonth = usign.ccExpMonth.toString();
           if (ExpMonth.length === 2 && ExpMonth.startsWith('0')) {
@@ -393,14 +381,14 @@ export class PaymentModalComponent implements OnInit {
           var ExpYear = usign.ccExpYear.toString();
 
           var data =  'UserId='+uid+'&SectionId='+nullP+'&OverId='+nullP+'&Type='+nullP+'&PackId='+valueid+'&Amount='+amount+'&CardHoldersName='+usign.cardholder_name+'&CreditCardNo='+usign.ccNumber+'&ExpireDate='+ExpireDate + '&ExpMonth=' + ExpMonth + '&ExpYear=' + ExpYear + '&Cvc=' + usign.ccCvc;
-          console.log(data);
+
           this.loginService.paymentcourse_single(data).then((Response: any) => {
 
              if(Response.Status == 'Success'){
 
                this.commonService.closeLoading();
                   // this.signupdetails = Response.data[0];
-                  // console.log(this.signupdetails);
+
               //  this.commonService.presentToast(Response.Message);
                this.presentAlert("Payment Successful!");
              }else{

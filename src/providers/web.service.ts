@@ -156,7 +156,7 @@ export class WebService {
   }
 
   studentform(params: any): Promise<any> {
-    console.log(params);
+
     return new Promise((resolve, reject) => {
         this._httpClient.post(`${this.serviceBase2}StudentAck`, params, {
             headers:
@@ -170,10 +170,10 @@ export class WebService {
                 resolve(response);
         }, reject);
     });
-  } 
+  }
 
   studentformIssue(params: any): Promise<any> {
-    console.log(params);
+
     return new Promise((resolve, reject) => {
         this._httpClient.post(`${this.serviceBase2}Certification/`, params, {
             headers:
@@ -187,7 +187,7 @@ export class WebService {
                 resolve(response);
         }, reject);
     });
-  } 
+  }
 
   GetProctQuestions(controller:any): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -213,10 +213,10 @@ export class WebService {
         }
       });
     });
-  } 
+  }
 
   answersList(controller:any, params: any): Promise<any> {
-    console.log(params);
+  
      return new Promise((resolve, reject) => {
         this._httpClient.post(`${this.serviceBase2}`+controller, params, {
           headers:
@@ -256,5 +256,5 @@ export class WebService {
         }
       });
     });
-  } 
+  }
 }

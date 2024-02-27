@@ -32,10 +32,10 @@ export class HomeDetailsPage implements OnInit {
   coursePrice: any;
   sectionId: any;
 
-  constructor(private activatedRoute: ActivatedRoute,private commonService: CommonService,public loginService:LoginService,private modalCtrl:ModalController,public router:Router,public alertController: AlertController,private iab: InAppBrowser) { 
+  constructor(private activatedRoute: ActivatedRoute,private commonService: CommonService,public loginService:LoginService,private modalCtrl:ModalController,public router:Router,public alertController: AlertController,private iab: InAppBrowser) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.back_id=params['back'];
-      console.log(params,"params");
+
    });
    this.moduleid= this.activatedRoute.snapshot.paramMap.get('id');
   }
@@ -56,25 +56,25 @@ getcourse_detail(){
       if(Response)
       {
         this.modulelist=Response;
-        console.log(this.modulelist.sectionlist,"modulelist")
+
       }else{
         this.commonService.closeLoading();
 
       }
     },
     err => {
-   
+
     }
   );
 }
   async manualRedirect(val){
   //Added to restrict displaying pdf without purchasing
-  console.log(val);
+
   if(val.sectionName == '2.10 Demonstration & Rad Worker Study Guide' || val.sectionName == '1.08 Demonstration & Rad Worker Study Guide'){ //rad worker Demonstration & Rad Worker Study Guide is free for all users
     this.getlink('https://shawneerct.com/manuals/'+val.manFile);
-  }else{  
+  }else{
     if(val.showAlert == '0'){
-      this.commonManual(val);  
+      this.commonManual(val);
     }
     else{
       const alert = await this.alertController.create({
@@ -87,7 +87,7 @@ getcourse_detail(){
             text: "Okay",
             cssClass: 'alert-button-confirm',
             handler: () => {
-            
+
             }
           }
         ]
@@ -102,7 +102,7 @@ commonManual(val)
     // alert(JSON.stringify(val));
     // alert(val.manualPaid);
     if(val.testingPaid == "0")
-    {  
+    {
         this.openPage3(val,'manual')
     }else
     {
@@ -114,9 +114,9 @@ commonManual(val)
  async openPage3(val,type)
   {
     var sectionlist=val;
-   this.myActiveSlide = 0;  
+   this.myActiveSlide = 0;
     var id =localStorage.getItem('Userid');
-    var userType = localStorage.getItem('type'); 
+    var userType = localStorage.getItem('type');
       if(userType == 'group')
         {
             var lnk =  'GetGroupUser?GroupId='+id;
@@ -124,11 +124,11 @@ commonManual(val)
         }else
         {
             var lnk =  'GetUser/'+id;
-        } 
+        }
 
         this.loginService.getData(lnk).then(
           async (Response: any) => {
-      
+
             if(Response)
             {
               this.valInfo = val;
@@ -140,7 +140,7 @@ commonManual(val)
 
               const modal = await this.modalCtrl.create({
                 component: PurchaseinformationformComponent,
-                componentProps: {                   
+                componentProps: {
                   "sectionlist": sectionlist,
                   "info": this.infoU,
                   "sectionId":this.sectionId,
@@ -149,13 +149,13 @@ commonManual(val)
                 swipeToClose: true,
                 // breakpoints: [0, 0.25, 0.5, 0.75],
                     // initialBreakpoint: 0.3,
-            
+
               })
               return await modal.present();
 
               // const modal = await this.modalCtrl.create({
               //   component: PurchaseinformationformComponent,
-              //   componentProps: { 
+              //   componentProps: {
               //     "sectionlist": sectionlist,
               //     "info": this.infoU,
               //     "sectionId":this.sectionId,
@@ -165,21 +165,21 @@ commonManual(val)
               //   swipeToClose: true,
               //   // breakpoints: [0, 0.25, 0.5, 0.75],
               //       // initialBreakpoint: 0.3,
-          
+
               // })
               // return await modal.present();
-              console.log(Response,"Response.data")
+
             }else{
-             
+
             }
           },
           err => {
-         
+
           }
         );
     // $ionicLoading.show({showBackdrop:true,template:'<ion-spinner icon="ios"></ion-spinner>  '});
     // webservice.userInfo(id,lnk).then(function(response) {
-    // console.log(response.data);
+
     //       $ionicLoading.hide();
     //       $scope.valInfo = val;
     //       $scope.type = type;
@@ -187,7 +187,7 @@ commonManual(val)
     //       $scope.coursePrice = val.price;
     //       $scope.sectionId = val.sectionId;
     //       $scope.infoU = response.data;
-    //       $scope.modalPage3.show();  
+    //       $scope.modalPage3.show();
     // })
   }
 
@@ -198,7 +198,7 @@ commonManual(val)
 		clearcache: 'yes',
 		toolbar: 'no'
 		};
-		// console.log(link);
+
 		//alert(link);
 		this.iab.create(link, '_system')
     // .then(function(event) {
@@ -207,17 +207,17 @@ commonManual(val)
 		// });
 	}
   back(){
-    //console.log("back id",this.back_id);
+
     if(this.back_id == undefined){
-      this.router.navigate([`/trainingcenter/`]);            
+      this.router.navigate([`/trainingcenter/`]);
     }
     else{
       this.router.navigate([`home-inner/${this.back_id}`]);
     }
   }
-  
+
  async checkTest (sVal,mtype)
-  {  
+  {
 
     if(sVal.UserStatus == '2' || sVal.UserStatus == '1')
     {
@@ -235,7 +235,7 @@ commonManual(val)
           if(sVal.IsPay)
           {
           //   var tT = countdownTime( sVal.timelimit, 0 );
-      
+
           //   var alertPopup = $ionicPopup.show({
           //        title: "<div class=''><b>Total Time Duration of Exam!</b></div>",
           //        template: "<div>"+tT+"</div>",
@@ -275,23 +275,21 @@ commonManual(val)
             text: "Okay",
             cssClass: 'alert-button-confirm',
             handler: () => {
-             
+
             }
           }
         ]
       });
       await alert.present();
-        
+
       }
-  } 
+  }
 async showModalPLogin(SL,mtype)
-  {      
-      console.log(SL);
+  {
+
       if(SL.UserStatus == '2' || SL.UserStatus == '1')
       {
-        // $scope.modalPage6.show();  
-        console.log(" procter login page redirect");
-
+        // $scope.modalPage6.show();
         //should include procter login page redirect
        this.SLVal = SL;
         this.Mtype = mtype;
@@ -303,14 +301,14 @@ async showModalPLogin(SL,mtype)
           message: '<p>This course is suspended to your account.</br> Please contact Shawneerct Admin.</p>',
         });
         await alert.present();
-        
+
       }
-       
-  }  
+
+  }
 
   async overallRedirect(val)
   {
-    console.log(val);
+
     if(val.UserStatus == '2' || val.UserStatus == '1')
     {
        if(val.showAlert == '0' || val.showAlert == null || val.showAlert == '')
@@ -329,7 +327,7 @@ async showModalPLogin(SL,mtype)
               text: "Okay",
               cssClass: 'alert-button-confirm',
               handler: () => {
-               
+
               }
             }
           ]
@@ -342,7 +340,7 @@ async showModalPLogin(SL,mtype)
             //  alertPopup.then(function(res) {
             //     $state.go("sidemenu.trainingcenter",{type:'individual',page:'none'});?
             //  });
-            
+
        }
     }else{
       const alert = await this.alertController.create({
@@ -355,7 +353,7 @@ async showModalPLogin(SL,mtype)
             text: "Okay",
             cssClass: 'alert-button-confirm',
             handler: () => {
-             
+
             }
           }
         ]
@@ -368,19 +366,19 @@ async showModalPLogin(SL,mtype)
         //  alertPopup.then(function(res) {
         //  });
     }
-     
-    
+
+
   }
 async commonOverallTest(val)
   {
-    console.log(val.testId);
+
     if(!val.IsPay)
-    {  
+    {
         this.openPage7(val);
     }else
     {
       // var tT = countdownTime( val.timelimit, 0 );
-    
+
       //   var alertPopup = $ionicPopup.show({
       //          title: "<div class=''><b>Total Time Duration of Exam Overall!</b></div>",
       //          template: "<div>"+tT+"</div>",
@@ -400,16 +398,16 @@ async commonOverallTest(val)
       //            },
       //          ]
       //    });
-       
-          
+
+
     }
   }
 
  openPage7(val)
   {
-    this.myActiveSlide = 0;  
+    this.myActiveSlide = 0;
     var id =localStorage.getItem('Userid');
-    var userType = localStorage.getItem('type'); 
+    var userType = localStorage.getItem('type');
     if(userType == 'group')
       {
           var lnk =  'GetGroupUser?GroupId='+id;
@@ -417,25 +415,25 @@ async commonOverallTest(val)
       }else
       {
           var lnk =  'GetUser/'+id;
-      } 
+      }
       this.loginService.getData(lnk).then(
         (Response: any) => {
-    
+
           if(Response)
           {
             this.modulelist=Response;
             // this.modulelist.sectionlist=this.sectionlist;
-            console.log(this.modulelist,"MANUL")
+
           }else{
-           
+
           }
         },
         err => {
-       
+
         }
       );
     // webservice.userInfo(id,lnk).then(function(response) {
-    // console.log(response.data);
+
     //       $ionicLoading.hide();
     //       $scope.valInfo = val;
     //       $scope.type = 'overall';
@@ -443,12 +441,12 @@ async commonOverallTest(val)
     //       $scope.coursePrice = val.Price;
     //       $scope.sectionId = val.sid;
     //       $scope.infoU = response.data;
-    //       $scope.modalPage7.show();  
+    //       $scope.modalPage7.show();
     // })
   }
  async videoRedirect(val)
   {
-    console.log("saravana", val);
+
     if(val.sectionName == '2.10 Demonstration & Rad Worker Study Guide' || val.sectionName == '1.08 Demonstration & Rad Worker Study Guide'){ //rad worker Demonstration & Rad Worker Study Guide is free for all users
       this.getlink(val.videoFile);
     }else{
@@ -468,7 +466,7 @@ async commonOverallTest(val)
             text: "Okay",
             cssClass: 'alert-button-confirm',
             handler: () => {
-             
+
             }
           }
         ]
@@ -481,7 +479,7 @@ async commonOverallTest(val)
           //  alertPopup.then(function(res) {
           //     $state.go("sidemenu.trainingcenter",{type:'individual',page:'none'});
           //  });
-          
+
      }
     }
   }
@@ -490,7 +488,7 @@ commonVideo(val)
     // alert(JSON.stringify(val));
     // alert(val.manualPaid);
     if(val.testingPaid == "0")
-    {  
+    {
         this.openPage3(val,'video')
     }else
     {
@@ -500,10 +498,10 @@ commonVideo(val)
 
   openPage4(val)
   {
-    this.myActiveSlide = 0;  
-    var id = localStorage.getItem("Userid"); 
+    this.myActiveSlide = 0;
+    var id = localStorage.getItem("Userid");
   this.tAmt=0;
-    var userType = localStorage.getItem("type");  
+    var userType = localStorage.getItem("type");
     if(userType == 'group')
       {
           var lnk =  'GetGroupUser?GroupId='+id;
@@ -511,10 +509,10 @@ commonVideo(val)
       }else
       {
           var lnk =  'GetUser/'+id;
-      } 
+      }
       this.loginService.getData(lnk).then(
         (Response: any) => {
-    
+
           if(Response)
           {
             this.valueS = val;
@@ -530,16 +528,14 @@ commonVideo(val)
                   var amt=this.tAmt
                   var nid=this.moduleid;
 
-                  console.log(this.tAmt,"amt")
-                  console.log(nid,"nid")
                    this.purchasepackage(amt,nid);
 
           }else{
-           
+
           }
         },
         err => {
-       
+
         }
       );
     // webservice.userInfo(id,lnk).then(function(response) {
@@ -553,16 +549,15 @@ commonVideo(val)
     //           this.tAmt = val[a].price + this.tAmt;
     //         }
     //       }
-    //       $scope.modalPage4.show();  
+    //       $scope.modalPage4.show();
     // })
   }
 
  async  purchasepackage(amt:any,nid:any){
-    console.log(nid,"nid")
 
     const modal = await this.modalCtrl.create({
       component: PurchaseEntirePackageComponent,
-      componentProps: { 
+      componentProps: {
         "sectionlist": this.modulelist.sectionlist,
         "amt": amt,
         "nid":nid,
@@ -578,11 +573,10 @@ commonVideo(val)
 
   //  async testRedirect(val)
   //   {
-  //     console.log("enter");
-  //     console.log(val);
-       
+
+
   //           this.commonTest(val)
-  
+
   //      }
 
 
@@ -591,15 +585,14 @@ commonVideo(val)
 
 async testRedirect(val)
   {
-    console.log("enter");
-    console.log(val);
+
      if(val.showAlert == '0')
      {
           this.commonTest(val)
 
      }else
      {
-      
+
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: '',
@@ -610,7 +603,7 @@ async testRedirect(val)
             text: "Okay",
             cssClass: 'alert-button-confirm',
             handler: () => {
-             
+
             }
           }
         ]
@@ -623,16 +616,16 @@ async testRedirect(val)
           //  alertPopup.then(function(res) {
           //     $state.go("sidemenu.trainingcenter",{type:'individual',page:'none'});
           //  });
-          
+
      }
-          
+
      }
 
      async commonTest (val)
      {
-       console.log(val);
+
        if(val.testingPaid != "0")
-       {  
+       {
           var tT = this.countdownTime( val.timelimit ,0 );
           //var tT = 0;
         const alert = await this.alertController.create({
@@ -646,7 +639,7 @@ async testRedirect(val)
               cssClass: 'alert-button-cancel',
               handler: () => {
                 //close the modal
-                this.modalCtrl.dismiss();              
+                this.modalCtrl.dismiss();
               }
             },
             {
@@ -662,11 +655,11 @@ async testRedirect(val)
           ]
         });
         await alert.present();
-            
+
        }else
        {
              this.openPage3(val,'test')
-             
+
        }
      }
 
@@ -689,7 +682,7 @@ async testRedirect(val)
      setFilteredLocations(){
       this.search=true;
       this.filterData = this.modulelist.sectionlist.filter((location) => {
-        // console.log(location.sectionName,"location.sectionName")
+      
         return location.sectionName.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
       });
     }
@@ -697,6 +690,6 @@ async testRedirect(val)
       this.search=false;
       this.filterData=this.sectionlist
       $event.target.value = '';
-    
+
     }
 }

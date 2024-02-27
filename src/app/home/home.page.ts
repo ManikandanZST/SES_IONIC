@@ -25,12 +25,12 @@ export class HomePage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,public router:Router,public popOver: PopoverController,private loginService: LoginService,public modalCtrl:ModalController) {
     this.activatedRoute.params.subscribe(params => {
-      console.log(params);
+      
       this.type=params['type'];
-      console.log(this.type);
+      
       // this.myTimeout= setTimeout(() => {
       //   window.location.reload();
-      //   console.log("test56tt")
+      //   
 
       // }, 2000);
       // this.clear();
@@ -40,9 +40,9 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
    this.IndividualUserId=localStorage.getItem('Userid');
-   //console.log("User ID", this.IndividualUserId);
+   //
    this.type=localStorage.getItem('type');
-   //console.log("Home page - type", this.type);
+   //
    if(this.type=='individual'){
     this.router.navigate([`home/${this.type}`]); //
     this.getcourse();
@@ -55,12 +55,12 @@ export class HomePage implements OnInit {
    }
   }
   ionViewDidEnter(){
-    console.log("testtttt")
+    
 
 
   }
   clear(){
-    console.log("test22")
+    
 
     clearTimeout(this.myTimeout);
   }
@@ -109,7 +109,7 @@ export class HomePage implements OnInit {
         if(Response)
         {
           this.courselist=Response;
-          console.log(this.courselist.Course,"courselist")
+          
         }else{
 
         }
@@ -120,7 +120,7 @@ export class HomePage implements OnInit {
     );
   }
   trainingcourse(id){
-    console.log(id);
+    
     this.router.navigate([`/home-inner/${id}`])
   }
   async showPopover(ev: any) {
@@ -139,7 +139,7 @@ export class HomePage implements OnInit {
 
     logout(){
       this.type=localStorage.getItem('type');
-      console.log(this.type);
+      
       if(this.type=="individual"){
         this.router.navigate([`/login/${this.type}`]).then(() => {
           localStorage.clear();

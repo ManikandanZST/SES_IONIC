@@ -30,7 +30,7 @@ export class TrainingCenterPage implements OnInit {
     this.getmemmodule();
     this.type=localStorage.getItem('type')
     this.LoginProctID=localStorage.getItem('ProctID')
-    console.log(this.LoginProctID,"pid")
+    
   }
 getmemmodule(){
   var uid=localStorage.getItem('Userid');
@@ -49,14 +49,14 @@ getmemmodule(){
       if(Response)
       {
       this.coursesList=Response;
-      console.log(this.coursesList.Exam[0],"this.MemModules")
-     
+      
+
       }else{
-       
+
       }
     },
     err => {
-   
+
     }
   );
 }
@@ -65,7 +65,7 @@ this.Outstanding=true
 }
 
 click_label(SL){
-  console.log("selected list",SL);
+  
   localStorage.setItem("pgtrain", '1');
 if(SL.Proctor_Login == false && SL.Isgroup){
 
@@ -77,22 +77,22 @@ this.coursePage(SL.ModuleId,'','');
 
 this.valuepack();
 }else if(this.LoginProctID != '' && SL.Proctor_Login == true){
-console.log("overallRedirect")
+
 this.overallRedirect(SL)
 }else if(this.LoginProctID == '' && SL.Proctor_Login == true){
-  console.log("showModalPLogin")
+  
 
 this.showModalPLogin(SL,'normal')
 
 }
 }
 trainingcourse(id){
-  console.log(id);
+  
   this.router.navigate([`/home-inner/${id}`])
 }
 
 coursePage(module_id,sid,sh_course){
-  console.log(module_id);
+  
   this.router.navigate([`/home-details/${module_id}`]);
   // this.router.navigate([`/home-details/${module_id}`],{queryParams: {back: this.CourseId}});
 
@@ -102,7 +102,7 @@ valuepack(){
 }
 async overallRedirect(val)
 {
-  console.log("Over all redirect",val);
+  
   if(val.UserStatus == '2' || val.UserStatus == '1')
   {
      if(val.showAlert == '0' || val.showAlert == null || val.showAlert == '')
@@ -124,9 +124,9 @@ async overallRedirect(val)
 
               // $state.go("sidemenu.trainingcenter",{type:'individual',page:'none'});
               // this.router.navigate([`/home/${this.type}/'purchasecourse'`])
-              
-  
-        
+
+
+
             }
           }
         ]
@@ -139,7 +139,7 @@ async overallRedirect(val)
           //  alertPopup.then(function(res) {
           //     $state.go("sidemenu.trainingcenter",{type:'individual',page:'none'});
           //  });
-          
+
      }
   }else{
 
@@ -155,9 +155,9 @@ async overallRedirect(val)
 
             // $state.go("sidemenu.trainingcenter",{type:'individual',page:'none'});
             // this.router.navigate([`/home/${this.type}/'purchasecourse'`])
-            
 
-      
+
+
           }
         }
       ]
@@ -170,25 +170,25 @@ async overallRedirect(val)
       //  alertPopup.then(function(res) {
       //  });
   }
-   
-  
+
+
 }
 
 
 async commonOverallTest(val)
 {
-  console.log(val.testId);
+  
   if(!val.IsPay)
-  {  
-    console.log("openpage7");
+  {
+    
 
     this.openPage7(val);
   }else
   {
-    //console.log("sk - common ocer all test");
+    
     var tT = this.countdownTime( val.timelimit, 0 );
     //var tT=0;
-    
+
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Total Time Duration of Exam Overall!',
@@ -198,7 +198,7 @@ async commonOverallTest(val)
         {
           text: "Not Now",
           cssClass: 'alert-button-cancel',
-          handler: () => {  
+          handler: () => {
             //close the modal
             this.modalCtrl.dismiss();
           }
@@ -209,14 +209,14 @@ async commonOverallTest(val)
           handler: () => {
             this.router.navigate([`/questionsall/${val.testId}/${val.OverId}/${val.timelimit}`]);
             // $state.go("questionsAll",{OverId:val.OverId,testID:val.testId,timer:val.timelimit});
-            // this.router.navigate([`/home/${this.type}/'purchasecourse'`])                 
+            // this.router.navigate([`/home/${this.type}/'purchasecourse'`])
           }
         }
       ],
-      
+
     });
     await alert.present();
-  
+
       // var alertPopup = $ionicPopup.show({
       //        title: "<div class=''><b>Total Time Duration of Exam Overall!</b></div>",
       //        template: "<div>"+tT+"</div>",
@@ -235,8 +235,8 @@ async commonOverallTest(val)
       //          },
       //        ]
       //  });
-    
-        
+
+
   }
 }
 
@@ -259,9 +259,9 @@ countdownTime( minutes, seconds )
 
 openPage7(val)
 {
-  this.myActiveSlide = 0;  
-  var id = localStorage.getItem("Userid"); 
-  var userType =localStorage.getItem("type"); 
+  this.myActiveSlide = 0;
+  var id = localStorage.getItem("Userid");
+  var userType =localStorage.getItem("type");
   if(userType == 'group')
     {
         var lnk =  'GetGroupUser?GroupId='+id;
@@ -269,7 +269,7 @@ openPage7(val)
     }else
     {
         var lnk =  'GetUser/'+id;
-    } 
+    }
     this.loginService.getData(lnk).then(
      async (Response: any) => {
         this.valInfo = val;
@@ -277,11 +277,11 @@ openPage7(val)
         this.titleCourse = val.Module_Name;
         this.coursePrice = val.Price;
         this.sectionId = val.sid;
-        this.info=Response;   
-    
+        this.info=Response;
+
         const modal = await this.modalCtrl.create({
           component: PurchaseinfoProctorComponent,
-          componentProps: { 
+          componentProps: {
             "titleCourse": this.titleCourse,
             "coursePrice": this.coursePrice,
             "OverId": this.valInfo.OverId
@@ -290,16 +290,16 @@ openPage7(val)
           swipeToClose: true,
           // breakpoints: [0, 0.25, 0.5, 0.75],
               // initialBreakpoint: 0.3,
-      
+
         })
         return await modal.present();
       },
       err => {
-     
+
       }
     );
   // webservice.userInfo(id,lnk).then(function(response) {
-  // console.log(response.data);
+  
   //       $ionicLoading.hide();
   //       $scope.valInfo = val;
   //       $scope.type = 'overall';
@@ -307,13 +307,13 @@ openPage7(val)
   //       $scope.coursePrice = val.Price;
   //       $scope.sectionId = val.sid;
   //       $scope.infoU = response.data;
-  //       $scope.modalPage7.show();  
+  //       $scope.modalPage7.show();
   // })
 }
 async showModalPLogin(SL,mtype)
-{      
-  console.log("test1")
-  console.log("proctor login")
+{
+  
+  
 
     if(SL.UserStatus == '2' || SL.UserStatus == '1')
     {
@@ -322,7 +322,7 @@ async showModalPLogin(SL,mtype)
       this.Mtype = mtype;
       const modal = await this.modalCtrl.create({
         component: ProctorLoginComponent,
-        componentProps: { 
+        componentProps: {
           "SLVal": this.SLVal,
           "Mtype":this.Mtype,
           "ttP":'training'
@@ -331,12 +331,12 @@ async showModalPLogin(SL,mtype)
         swipeToClose: true,
         // breakpoints: [0, 0.25, 0.5, 0.75],
             // initialBreakpoint: 0.3,
-  
+
       })
       return await modal.present();
-      // $scope.modalPage6.show();  
+      // $scope.modalPage6.show();
       // proctor login
-   
+
     }else{
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
@@ -347,12 +347,12 @@ async showModalPLogin(SL,mtype)
           {
             text: "Okay",
             handler: () => {
-  
+
               // $state.go("sidemenu.trainingcenter",{type:'individual',page:'none'});
               // this.router.navigate([`/home/${this.type}/'purchasecourse'`])
-              
-  
-        
+
+
+
             }
           }
         ]
@@ -365,8 +365,8 @@ async showModalPLogin(SL,mtype)
         //  alertPopup.then(function(res) {
         //  });
     }
-     
-}  
+
+}
 back(){
   // this.Outstanding=false;
   if(this.Outstanding==false){

@@ -40,17 +40,18 @@ export class ModalpopupComponent implements OnInit {
   customMULTIlist: any=[];
   //End multiselect fix code
 
+  isTotalAmount : boolean = true;
   constructor(private loginService: LoginService,public modalController: ModalController,private platform: Platform) { }
 
   ngOnInit() {
-    // console.log(this.id,"index of the user");
+    
     this.GroupId=localStorage.getItem("loginuserid");
     this.GetGroupUserModules();
     this.selected_user=localStorage.getItem("selecteduser");
     this.select=this.selectcourse;
   }
 
-  //To disable back button 
+  //To disable back button
   ionViewDidEnter() {
     this.subscription = this.platform.backButton.subscribeWithPriority(9999, () => {
       // do nothing
@@ -66,29 +67,29 @@ export class ModalpopupComponent implements OnInit {
     var lnk =  'GetGroupUser?GroupId='+this.GroupId;
     this.loginService.getData(lnk).then(
       (Response: any) => {
-        //console.log(Response);
+        
 
         if(Response)
         {
           this.info=Response.UserList;
           this.infouser=this.info[this.selected_user];
-          //console.log(this.infouser,"onfo");
+          
           this.dynNames = 'USER'+this.infouser.userId;
         }else{
-        
+
         }
       },
       err => {
-    
+
       }
     );
-  } 
+  }
   GetGroupUserModules(){
     this.GetGroupUser();
     var lnk =  'GetGroupUserModules?GroupId='+this.GroupId;
     this.loginService.getData(lnk).then(
       (Response: any) => {
-      //console.log(Response);
+      
       if(Response)
       {
         this.groupuser_NAMEs=Response;
@@ -97,38 +98,38 @@ export class ModalpopupComponent implements OnInit {
           result.checked=false;
         })
         if(this.selectcourse){
-        //console.log(this.selectcourse)
+        
           this.groupusers.map((user)=>{
           let find=this.selectcourse.find((course)=> course.ModuleType==user.ModuleType );
           if(find){
             user.checked=true;
-            //console.log("find works")
-            //console.log(user,"trues")
+            
+            
 
           }
         })
       }
       }else{
-       
+
       }
     },
     err => {
-   
+
     });
-  } 
+  }
 
 
   checkMultilist(as,ind,infouser,indexValue,listsS){
-    //console.log("testcheck")
+    
     this.inds=as.checked;
-    //console.log(this.inds)
+    
     if(as.ModulePrice != 0)
     {
-      //console.log("1")
-      var temp   = []; 
+      
+      var temp   = [];
       var dynName = 'USER'+infouser.userId;
       var totalAmount = 'total'+infouser.userId;
-      var tmp    = localStorage.getItem(dynName); 
+      var tmp    = localStorage.getItem(dynName);
       if(this.inds == false)
       {
           if(tmp != null)
@@ -144,7 +145,7 @@ export class ModalpopupComponent implements OnInit {
                   temp.push(tmp[i]) ;
               }
               temp.push(multiList);
-              localStorage[dynName] = JSON.stringify(temp);    
+              localStorage[dynName] = JSON.stringify(temp);
           } else
           {
               var multiList = {
@@ -154,51 +155,57 @@ export class ModalpopupComponent implements OnInit {
               }
               tmp = JSON.parse(tmp);
               temp.push(multiList);
-              localStorage[dynName] = JSON.stringify(temp); 
+              localStorage[dynName] = JSON.stringify(temp);
           }
           var t = localStorage.getItem(totalAmount);
           this.totalAmount[indexValue] =  parseFloat(t) + parseFloat(as.ModulePrice);
       }else{
           this.saved    = localStorage.getItem(dynName);
           this.reminder = JSON.parse(this.saved);
-          var reminders   = JSON.parse(localStorage.getItem(dynName));           
+          var reminders   = JSON.parse(localStorage.getItem(dynName));
           for(var i=0; i<reminders.length; i++)
-          {             
+          {
               if(reminders[i].ModuleType ===  as.ModuleType)
               {
                   var index = reminders.indexOf(i);
                   reminders.splice(i, 1);
               }
-          }     
+          }
           localStorage[dynName] = JSON.stringify(reminders);
         this.favorite = JSON.parse(this.saved);
           var t = localStorage.getItem(totalAmount);
         this.totalAmount[indexValue] =  parseFloat(t) - parseFloat(as.ModulePrice);
       }
-      setTimeout(function(){
+
+      this.isTotalAmount = false;
+      setTimeout(async () => {
         var tt = 0;
         for(var k=0;k<listsS.length;k++)
         {
             var totalAmt = 'total'+listsS[k].userId;
             tt = tt + parseFloat(localStorage.getItem(totalAmt));
             localStorage.setItem("totalAmountChoosen",tt.toString());
-          this.totalAmountChoosen = tt;
+          // this.totalAmountChoosen = tt;
+          if( k == listsS.length - 1){
+            this.isTotalAmount = true;
+            
+          }
 
         }
       },1000)
 
       localStorage.setItem(totalAmount,this.totalAmount[indexValue]);
 
-      //console.log( indexValue,this.totalAmount[indexValue],"totalllll")
+      
 
       this.MULTIlist[indexValue] = JSON.parse(localStorage.getItem(dynName));
 
-      //console.log(this.MULTIlist[indexValue],"indesss"); 
+      
 
       // multiselect fix Code
       this.customindex = indexValue;
       this.customMULTIlist = this.MULTIlist[this.customindex];
-      console.log("MULTIlist", this.customMULTIlist);
+      
       //End multiselect fix Code
     }else
     {
@@ -219,20 +226,21 @@ export class ModalpopupComponent implements OnInit {
     $event.target.value = '';
   }
 
-  async close(){  
+  async close(){
+    if(this.isTotalAmount){
     let T =0;
 
       // multiselect fix code - to calculate selected course amount
-      // console.log("close - Multilist", this.MULTIlist);
-      // console.log("close - custom multilist",this.customMULTIlist);
+      
+      
       // let customtotal =0;
       // if(this.customMULTIlist.length != 0){
       //   for(var i=0; i<this.customMULTIlist.length; i++){
-      //     //console.log("test",this.customMULTIlist[i].ModulePrice);
+      
       //     customtotal = customtotal + +this.customMULTIlist[i].ModulePrice
       //   }
       // }
-      // console.log("test customtotal",customtotal);
+      
       //End multiselect fix code - to calculate selected course amount
 
       if(this.MULTIlist[this.MULTIlist.length-1]){
@@ -240,23 +248,26 @@ export class ModalpopupComponent implements OnInit {
         T=T+parseInt(location.ModulePrice);
       });
       this.Total=T;
-      //console.log("If Total", this.Total);
+      
       }else{
         if(this.selectcourse){
         this.total = this.selectcourse.map((location) => {
           T=T+parseInt(location.ModulePrice);
         });
         this.Total=T;
-        //console.log("Else Total", this.Total);
+        
       }
     }
+    
+    
     await this.modalController.dismiss({
       data: this.MULTIlist[this.MULTIlist.length-1] ? this.customMULTIlist : this.selectcourse,
       data2:this.id,
       data3:localStorage.getItem("totalAmountChoosen"),
-      //data4:this.Total
-      data4: localStorage.getItem("totalAmountChoosen")
+      data4:this.Total
+      // data4: localStorage.getItem("totalAmountChoosen")
+
     });
   }
 }
-
+}
