@@ -5,14 +5,12 @@ import { ValuepackComponent } from 'src/app/valuepack/valuepack.component';
 import { CommonService } from 'src/providers/common.service';
 import { LoginService } from 'src/providers/login.service';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
-
 @Component({
   selector: 'app-purchasevaluepack',
   templateUrl: './purchasevaluepack.component.html',
   styleUrls: ['./purchasevaluepack.component.scss'],
 })
 export class PurchasevaluepackComponent implements OnInit {
-
   selectcourse:any={};
   GroupId: string;
   info: any;
@@ -35,42 +33,33 @@ export class PurchasevaluepackComponent implements OnInit {
   constructor(private loginService: LoginService,public router:Router,private activatedRoute: ActivatedRoute,private modalCtrl:ModalController,public common:CommonService) {
     this.activatedRoute.params.subscribe(params => {
       this.type=params['type'];
-
  });
    }
-
   ngOnInit() {
     this.GroupId=localStorage.getItem("loginuserid")
     this.GetGroupUser();
     this.GetGroupUserModules()
   }
-
   GetGroupUser(){
       var lnk =  'GetGroupUser?GroupId='+this.GroupId;
       this.loginService.getData(lnk).then(
       (Response: any) => {
-
         if(Response)
         {
         this.info=Response.UserList;
-
         }else{
-
         }
       },
       err => {
-
       }
     );
   }
   GetGroupUserModules(){
-
     var lnk =  'GroupValuePackage?GroupId='+this.GroupId;
     this.loginService.getData(lnk).then(
     (Response: any) => {
       if(Response)
       {
-
       this.groupuser_NAMEs=Response;
       this.groupusers=Response[0].OverAllList;
       var templs   = [];
@@ -91,12 +80,9 @@ export class PurchasevaluepackComponent implements OnInit {
             }
     },
     err => {
-
     }
   );
 }
-
-
 setFilteredLocations(){
   this.search=true;
   this.filterData = this.groupuser_NAMEs.filter((location) => {
@@ -107,7 +93,6 @@ onCancel($event){
   this.search=false;
   this.filterData=this.groupuser_NAMEs
   $event.target.value = '';
-
 }
 async showCourse(lst, index){
   localStorage.setItem("selecteduser",index)
@@ -141,7 +126,6 @@ async showCourse(lst, index){
   setTimeout(function(){
     this.multipleLists = templas;
   },600)
-
     const modal = await this.modalCtrl.create({
       component: ValuepackComponent,
       componentProps: {
@@ -154,38 +138,31 @@ async showCourse(lst, index){
     modal.onDidDismiss().then((result) => {
     this.total=result.data.data3;
     this.selectcourse[result.data.data2]=result.data.data;
-    this.totalAmounts[result.data.data2]=result.data.data4;
+    // this.totalAmounts[result.data.data2]=result.data.data4;
 
-     })
+    let T =0;
+    let arr = result.data.data
+    arr.map((location) => {
+      T=T+parseInt(location.Prize);
+    });
+    this.totalAmounts[result.data.data2]=T;
+    })
     return await modal.present();
   }
   async showPayment(){
-
     const modal = await this.modalCtrl.create({
       component: PaymentModalComponent,
       componentProps: {
-        // amount: this.total,
-        // valueS: this.selectcourse,
-        // nid: localStorage.getItem("selecteduser"),
-        // payInfoamount: this.totalAmounts,
-        // sectionId: this.userindex,
-        // ValueAmount: this.totalAmount,
-        // ValueId: this.indexValue,
-        // coursePrice: this.coursePrice
       },
       cssClass: 'my-custom-modal-css',
       swipeToClose: true,
     });
     modal.onDidDismiss().then((result) => {
-
      })
     return await modal.present();
   }
-
   back(){
     this.router.navigate([`home/${this.type}`]).then(() => {
-     // window.location.reload();
     });
   }
-
 }

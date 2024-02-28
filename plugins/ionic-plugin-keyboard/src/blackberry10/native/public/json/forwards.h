@@ -1,20 +1,14 @@
 #ifndef JSON_FORWARDS_H_INCLUDED
 # define JSON_FORWARDS_H_INCLUDED
-
 # include "config.h"
-
 namespace Json {
-
    // writer.h
    class FastWriter;
    class StyledWriter;
-
    // reader.h
    class Reader;
-
    // features.h
    class Features;
-
    // value.h
    typedef int Int;
    typedef unsigned int UInt;
@@ -32,8 +26,5 @@ namespace Json {
    class ValueInternalArray;
    class ValueInternalMap;
 #endif // #ifdef JSON_VALUE_USE_INTERNAL_MAP
-
 } // namespace Json
-
-
 #endif // JSON_FORWARDS_H_INCLUDED

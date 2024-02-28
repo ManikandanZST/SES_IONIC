@@ -5,48 +5,40 @@
             <ion-menu-button ></ion-menu-button>
           </ion-buttons>
         </ion-buttons>
-        <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>  
+        <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
         <ion-buttons slot="end">
-          <ion-icon name="arrow-back-outline" (click)="back()"></ion-icon>    
+          <ion-icon name="arrow-back-outline" (click)="back()"></ion-icon>
         </ion-buttons>
       </ion-toolbar>
 </ion-header>
-
 <ion-content class="bodybg">
     <h2 class="title text_white">Exam Result</h2>
-    
-    <ion-label class="item"> 
+    <ion-label class="item">
       <span class="input-label">Score</span>
       <p class="text_red" *ngIf="testResult < 80">{{testResult}}</p>
-      <p class="text_green" *ngIf="testResult >= 80">{{testResult}}</p> 
+      <p class="text_green" *ngIf="testResult >= 80">{{testResult}}</p>
     </ion-label>
-    
     <ion-label class="item">
       <span class="input-label">Start Time</span>
       <p class="exam-details">{{STime}}</p>
     </ion-label>
-    
     <ion-label class="item">
       <span class="input-label">End Time</span>
       <p class="exam-details">{{ETime}}</p>
     </ion-label>
-
     <ion-label class="item">
       <span class="input-label">Correct Answers</span>
       <p class="exam-details">{{correctAnswer}}</p>
     </ion-label>
-
     <ion-label class="item">
       <span class="input-label">Wrong Answers</span>
       <p class="exam-details">{{wrongAnswer}}</p>
     </ion-label>
-
     <ion-label class="item">
       <span class="input-label">Status</span>
       <p class="text_red" *ngIf="testResult < 80">Fail</p>
       <p class="text_green" *ngIf="testResult >= 80">Pass</p>
     </ion-label>
-
     <div class="list list-2">
       <div *ngFor="let q of infoQue; let i=index">
         <div class="border" *ngIf="q.correct != q.QSelected">
@@ -56,13 +48,11 @@
             <p class="answer" *ngIf="q.correct == '2'"><span class="text-blue">Correct Answer:</span> {{q.ansver2}}</p>
             <p class="answer" *ngIf="q.correct == '3'"><span class="text-blue">Correct Answer:</span> {{q.ansver3}}</p>
             <p class="answer" *ngIf="q.correct == '4'"><span class="text-blue">Correct Answer:</span> {{q.ansver4}}</p>
-          </div>          
+          </div>
           <div class="ic">
             <ion-icon class="close-icon" name="close-sharp"></ion-icon>
-          </div>    
-        </div>            
+          </div>
+        </div>
       </div>
     </div>
-    
-
 </ion-content>

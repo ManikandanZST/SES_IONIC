@@ -5,19 +5,16 @@ import { CommonService } from 'src/providers/common.service';
 import { LoginService } from '../../providers/login.service';
 import { WebService } from '../../providers/web.service';
 import { IonSlides } from '@ionic/angular';
-
 @Component({
     selector: 'app-questionsall',
     templateUrl: './questionsall.page.html',
     styleUrls: ['./questionsall.page.scss'],
 })
-
 export class QuestionsAllPage implements OnInit {
     public options = {
         initialSlide: 0,
         speed: 400
       };
-
     testID: any;
     OverId: any;
     timer: any;
@@ -33,21 +30,14 @@ export class QuestionsAllPage implements OnInit {
     quesList: any;
     isShown: boolean = true;
     @ViewChild('mySlider') slides: IonSlides;
-
     constructor(public router:Router, private commonService: CommonService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private webService: WebService) {
         this.activatedRoute.params.subscribe(params => {
-            
             this.testID=params['testID'];
             localStorage.setItem("testID",this.testID);
-            
             this.OverId=params['OverId'];
-            
             this.timer=params['timer'];
-            //this.timer='01';     //To change timer for testing
-            
         });
     }
-
     startTime()
     {
         var  conDate = new Date();
@@ -64,7 +54,6 @@ export class QuestionsAllPage implements OnInit {
         {
             dd='0'+dd;
         }
-
         if(MM<10)
         {
             MM='0'+MM;
@@ -72,7 +61,6 @@ export class QuestionsAllPage implements OnInit {
         var endmonth1 = dd+'.'+MM+'.'+yy+' '+HH+':'+MIN+':'+SEC;
         return endmonth1;
     }
-
     dayTime()
     {
         var  conDate = new Date();
@@ -89,7 +77,6 @@ export class QuestionsAllPage implements OnInit {
         {
             dd='0'+dd;
         }
-
         if(MM<10)
         {
             MM='0'+MM;
@@ -97,17 +84,14 @@ export class QuestionsAllPage implements OnInit {
         var endmonth1 = yy+'-'+MM+'-'+dd+' '+HH+':'+MIN+':'+SEC;
         return endmonth1;
     }
-
     ngOnInit() {
         this.userid = localStorage.getItem("Userid");
-        
         var stime = this.startTime();
         localStorage.setItem("stime",this.dayTime());
         this.GetProctQuestions();
         localStorage.setItem("sectinoID",this.OverId);
         this.sectinoID = localStorage.getItem("sectinoID");
     }
-
     GetProctQuestions(){
         this.commonService.presentLoading();
         var stime = localStorage.getItem("stime");
@@ -119,18 +103,11 @@ export class QuestionsAllPage implements OnInit {
                 this.ProctQuestions.forEach((value, key) => {
                     this.questionsOver[key] = value;
                 });
-                // var element, endTime, hours, mins, msLeft, time, seconds=0;
-                // element = document.getElementById( "countdown2" );
-                // endTime = (+new Date) + 1000 * (60*this.timer + seconds) + 500;
-                
-
                 var element, endTime, hours, mins, msLeft, time, seconds=0;
-
                 function updateTimer()
                 {
                     msLeft = endTime - (+new Date);
                     if ( msLeft < 1000 ) {
-                        //showSlide = false;
                         element.innerHTML = "Time over!";
                         const box = document.querySelector<HTMLElement>(".questionlist");
                         box.style.visibility = 'hidden';
@@ -138,16 +115,11 @@ export class QuestionsAllPage implements OnInit {
                         boxbutton.style.visibility = 'hidden';
                         const timeover = document.querySelector<HTMLElement>(".over");
                         timeover.style.visibility = 'inherit';
-                        //this.isShown = false;
                     } else {
                         function twoDigits( n )
                         {
                             return (n <= 9 ? "0" + n : n);
                         }
-                        //showSlide = true;
-                        // const box = document.querySelector<HTMLElement>(".questionlist");
-                        // box.style.visibility = 'hidden';
-                        //this.isShown = true;
                         time = new Date( msLeft );
                         hours = time.getUTCHours();
                         mins = time.getUTCMinutes();
@@ -156,15 +128,10 @@ export class QuestionsAllPage implements OnInit {
                             updateTimer()
                         }, time.getUTCMilliseconds() + 500 );
                     }
-                    //$scope.showSlide.div = showSlide;
-
                 }
-
                 element = document.getElementById( "countdown2" );
                 endTime = (+new Date) + 1000 * (60*this.timer + seconds) + 500;
                 updateTimer();
-
-                
             },
             err => {
                 this.commonService.closeLoading();
@@ -172,30 +139,22 @@ export class QuestionsAllPage implements OnInit {
             }
         );
     }
-
     next(){
-        
         this.slides.slideNext();
-
         this.slides.getActiveIndex().then(index => {
-            
             if(index == 0 || index == undefined){
                 this.cancel = true;
             }
             else if ((index+1) == this.questionsOver.length){
                 this.nextbtn = false;
             }else{
-                
                 this.cancel = false;
             }
-
         });
     }
-
     prev(){
         this.slides.slidePrev();
         this.slides.getActiveIndex().then(index => {
-            
             if(index == 0){
                 this.cancel = true;
             }
@@ -204,19 +163,12 @@ export class QuestionsAllPage implements OnInit {
             }
         });
     }
-
     close(){
         this.router.navigate([`/trainingcenter/`])
     }
-
     answerCheckALL(questionsOver,sectinoID){
-        
-        
         this.qInfo = questionsOver;
-        
         localStorage.setItem("qInfo",JSON.stringify(this.qInfo));
-        // var temp = JSON.parse(localStorage.getItem("qInfo"));
-        
         this.count = 0;
         var qList = '';
         var comma = ',';
@@ -236,7 +188,6 @@ export class QuestionsAllPage implements OnInit {
             localStorage.setItem("quesList",this.quesList);
             if(Qs == c){
                 this.count = this.count+1;
-                //this.count = this.count;
                 localStorage.setItem("count",this.count);
             }
         }

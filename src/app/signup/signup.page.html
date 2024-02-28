@@ -4,22 +4,18 @@
       <ion-buttons slot="start">
         <!-- <ion-menu-button></ion-menu-button> -->
         <ion-icon name="arrow-back-outline" (click)="back()"></ion-icon>
-
       </ion-buttons>
     </ion-buttons>
     <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
-
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['']">        
+      <ion-button [routerLink]="['']">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content  class="bodybg">
   <ion-list *ngIf="type=='register'" lines="none" class="ion-text-left" >
     <h2 class="ion-text-center">Individual Register</h2>
-
     <p>
       <ion-input type="text" placeholder="Name" [(ngModel)]="usign.fullname"> <ion-icon class="icn" size="small" name="person"></ion-icon> </ion-input>
     </p>
@@ -50,7 +46,7 @@
       <ion-input type="password" placeholder="Confirm Password"  [(ngModel)]="usign.cpassword"> <ion-icon class="icn" size="small" name="lock-closed"></ion-icon> </ion-input>
     </p>
     <p>
-      <ion-select interface="popover"  [(ngModel)]="usign.question" name="usign.question" placeholder="Select fruit"> 
+      <ion-select interface="popover"  [(ngModel)]="usign.question" name="usign.question" placeholder="Select fruit">
         <ion-select-option value="" selected> -- Please select a hint question --</ion-select-option>
         <ion-select-option value="What is your pet's name?">What is your pet's name?</ion-select-option>
         <ion-select-option value="What is your favorite sports team?">What is your favorite sports team?</ion-select-option>
@@ -58,49 +54,46 @@
     </p>
     <p>
       <ion-input type="text" placeholder="Hint Answer" name="usign.answer" [(ngModel)]="usign.answer"> <ion-icon class="icn" size="small" name="newspaper"></ion-icon> </ion-input>
-    </p> 
+    </p>
     <p>
       <ion-input type="text" placeholder="Comments"  [(ngModel)]="usign.comments"> <ion-icon class="icn" size="small" name="chatbox-ellipses"></ion-icon> </ion-input>
-    </p> 
+    </p>
     <ion-item>
       <ion-checkbox slot="start" [(ngModel)]="usign.sendPass"  ></ion-checkbox>
       <ion-label>Send Password to my email</ion-label>
-    </ion-item>     
+    </ion-item>
     <div class="center text_white bdg">
       <div class="over">
         <div>
-          <ion-item lines="none" class="sm-5">            
+          <ion-item lines="none" class="sm-5">
             <ion-input type="tel" readonly value="{{rand_num1}}"> </ion-input>
           </ion-item>
         </div>
         <div class="ic">
           <ion-icon class="icn1" name="add-sharp"></ion-icon>
-        </div>          
+        </div>
         <div>
-          <ion-item lines="none" class="sm-5">            
+          <ion-item lines="none" class="sm-5">
             <ion-input type="tel" readonly value="{{rand_num2}}"> </ion-input>
           </ion-item>
-        </div>       
+        </div>
         <div class="ic">
-          <ion-icon class="icn1" name="reorder-two-sharp"></ion-icon>        
-        </div>           
+          <ion-icon class="icn1" name="reorder-two-sharp"></ion-icon>
+        </div>
         <div>
-          <ion-item lines="none" class="sm-5">            
+          <ion-item lines="none" class="sm-5">
             <ion-input type="tel" [(ngModel)]="usign.captcha">  </ion-input>
           </ion-item>
         </div>
-      </div>      
+      </div>
     </div>
     <p>
       <ion-button color="medium" expand="block" class="submit" (click)="SignUp(usign)">submit</ion-button>
-    </p> 
+    </p>
   </ion-list>
-
-   
     <ion-list *ngIf="type=='proctorregister'" lines="none" class="ion-text-left" >
       <h2 class="ion-text-center">Proctor Register</h2>
-
-      <p>        
+      <p>
         <ion-input type="text" placeholder="Name" [(ngModel)]="usign.fullname"> <ion-icon class="icn" size="small" name="person"></ion-icon> </ion-input>
       </p>
       <p>
@@ -115,7 +108,6 @@
       <p>
         <ion-input type="text" placeholder="City" [(ngModel)]="usign.city"> <ion-icon class="icn" size="small" name="navigate"></ion-icon> </ion-input>
       </p>
-   
       <p>
         <ion-input type="text" placeholder="State" [(ngModel)]="usign.state"> <ion-icon class="icn" size="small" name="flag"></ion-icon> </ion-input>
       </p>
@@ -124,43 +116,41 @@
       </p>
       <p>
         <ion-input type="text" placeholder="Zip code" [(ngModel)]="usign.zipcode"> <ion-icon class="icn" size="small" name="pin"></ion-icon> </ion-input>
-      </p> 
+      </p>
       <p>
         <ion-input type="text" placeholder="Certification"  [(ngModel)]="usign.certification"> <ion-icon class="icn" size="small" name="document-text"></ion-icon> </ion-input>
-      </p> 
+      </p>
       <div class="center text_white bdg">
         <div class="over">
           <div>
-            <ion-item lines="none" class="sm-5">            
+            <ion-item lines="none" class="sm-5">
               <ion-input type="tel" readonly value="{{rand_num1}}"> </ion-input>
             </ion-item>
           </div>
           <div class="ic">
             <ion-icon class="icn1" name="add-sharp"></ion-icon>
-          </div>          
+          </div>
           <div>
-            <ion-item lines="none" class="sm-5">            
+            <ion-item lines="none" class="sm-5">
               <ion-input type="tel" readonly value="{{rand_num2}}"> </ion-input>
             </ion-item>
-          </div>       
+          </div>
           <div class="ic">
-            <ion-icon class="icn1" name="reorder-two-sharp"></ion-icon>        
-          </div>           
+            <ion-icon class="icn1" name="reorder-two-sharp"></ion-icon>
+          </div>
           <div>
-            <ion-item lines="none" class="sm-5">            
+            <ion-item lines="none" class="sm-5">
               <ion-input type="tel" [(ngModel)]="usign.captcha">  </ion-input>
             </ion-item>
           </div>
-        </div>      
+        </div>
       </div>
       <p>
         <ion-button color="medium" expand="block" class="submit" (click)="SignUp(usign)">submit</ion-button>
-      </p> 
+      </p>
     </ion-list>
-
     <ion-list *ngIf="type=='groupregister'" lines="none" class="ion-text-left" >
       <h2 class="ion-text-center">Group Register</h2>
-
       <p>
         <ion-input type="text" placeholder="First Name" [(ngModel)]="usign.firstname"> <ion-icon class="icn" size="small" name="person"></ion-icon> </ion-input>
       </p>
@@ -186,8 +176,6 @@
         <ion-input type="password" placeholder="Confirm Password"  [(ngModel)]="usign.cpassword"> <ion-icon class="icn" size="small" name="lock-closed"></ion-icon> </ion-input>
       </p>
       <p>
-     
-      
         <ion-select interface="popover"  [(ngModel)]="usign.question" name="usign.question" placeholder="Select fruit">
           <ion-select-option value="" selected>-- Please select a hint question --</ion-select-option>
           <ion-select-option value="What is your pet's name?">What is your pet's name?</ion-select-option>
@@ -204,77 +192,69 @@
       </p>
       <p>
         <ion-input type="text" placeholder="Hint Answer" name="usign.answer" [(ngModel)]="usign.answer"> <ion-icon class="icn" size="small" name="newspaper"></ion-icon> </ion-input>
-      </p> 
-    
+      </p>
       <ion-item>
         <ion-checkbox slot="start" [(ngModel)]="usign.sendPass"  ></ion-checkbox>
         <ion-label>Send Password to my email</ion-label>
-      </ion-item> 
-
-
+      </ion-item>
       <div class="center">
         <h5 class="text_white cus-title">Employee-1 Details</h5>
-      </div>   
+      </div>
       <p>
         <ion-input type="text" placeholder="First Name" [(ngModel)]="usign.firstname1"> <ion-icon class="icn" size="small" name="person"></ion-icon> </ion-input>
       </p>
       <p>
         <ion-input type="text" placeholder="Last Name" [(ngModel)]="usign.lastname1"> <ion-icon class="icn" size="small" name="person"></ion-icon> </ion-input>
       </p>
-       
       <p>
         <ion-input type="password" placeholder="Password" [(ngModel)]="usign.password1"> <ion-icon class="icn" size="small" name="lock-closed"></ion-icon> </ion-input>
       </p>
-
       <p>
         <ion-input type="text" placeholder="Email" [(ngModel)]="usign.email1"> <ion-icon class="icn" size="small" name="mail"></ion-icon> </ion-input>
       </p>
-   
       <div class="center">
         <h5 class="text_white cus-title">Employee-2 Details</h5>
-      </div>   
+      </div>
       <p>
         <ion-input type="text" placeholder="First Name" [(ngModel)]="usign.firstname2"> <ion-icon class="icn" size="small" name="person"></ion-icon> </ion-input>
       </p>
       <p>
         <ion-input type="text" placeholder="Last Name" [(ngModel)]="usign.lastname2"> <ion-icon class="icn" size="small" name="person"></ion-icon> </ion-input>
       </p>
-       
       <p>
         <ion-input type="password" placeholder="Password" [(ngModel)]="usign.password2"> <ion-icon class="icn" size="small" name="lock-closed"></ion-icon> </ion-input>
       </p>
-
       <p>
         <ion-input type="text" placeholder="Email" [(ngModel)]="usign.email2"> <ion-icon class="icn" size="small" name="mail"></ion-icon> </ion-input>
       </p>
       <div class="center text_white bdg">
         <div class="over">
           <div>
-            <ion-item lines="none" class="sm-5">            
+            <ion-item lines="none" class="sm-5">
               <ion-input type="tel" readonly value="{{rand_num1}}"> </ion-input>
             </ion-item>
           </div>
           <div class="ic">
             <ion-icon class="icn1" name="add-sharp"></ion-icon>
-          </div>          
+          </div>
           <div>
-            <ion-item lines="none" class="sm-5">            
+            <ion-item lines="none" class="sm-5">
               <ion-input type="tel" readonly value="{{rand_num2}}"> </ion-input>
             </ion-item>
-          </div>       
+          </div>
           <div class="ic">
-            <ion-icon class="icn1" name="reorder-two-sharp"></ion-icon>        
-          </div>           
+            <ion-icon class="icn1" name="reorder-two-sharp"></ion-icon>
+          </div>
           <div>
-            <ion-item lines="none" class="sm-5">            
+            <ion-item lines="none" class="sm-5">
               <ion-input type="tel" [(ngModel)]="usign.captcha">  </ion-input>
             </ion-item>
           </div>
-        </div>      
+        </div>
       </div>
       <p>
         <ion-button color="medium" expand="block" class="submit" (click)="SignUp(usign)">submit</ion-button>
-      </p> 
+      </p>
     </ion-list>
     <div class="emptyheight70px"></div>
 </ion-content>

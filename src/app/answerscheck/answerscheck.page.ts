@@ -4,15 +4,12 @@ import { Key } from 'protractor';
 import { CommonService } from 'src/providers/common.service';
 import { LoginService } from '../../providers/login.service';
 import { WebService } from '../../providers/web.service';
-
 @Component({
     selector: 'app-answerscheck',
     templateUrl: './answerscheck.page.html',
     styleUrls: ['./answerscheck.page.scss'],
 })
-
 export class AnswersCheckPage implements OnInit {
-
     userid: any;
     sid: any;
     link: any;
@@ -27,24 +24,18 @@ export class AnswersCheckPage implements OnInit {
     testID: any;
     d: any;
     type: string;
-
     constructor(public router:Router, private commonService: CommonService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private webService: WebService) {
         this.activatedRoute.params.subscribe(params => {
-            // 
+            //
             this.sid=params['sid'];
-            
             this.link=params['link'];
-            
         });
     }
-
     ngOnInit() {
         this.testID = localStorage.getItem("testID");
         this.userid = localStorage.getItem("Userid");
         this.getanswersInfo();
-        
     }
-
     getanswersInfo(){
         var sid = this.sid;
         var link = this.link;
@@ -54,40 +45,26 @@ export class AnswersCheckPage implements OnInit {
         var c = this.count;
         this.d = c/(l)*100;
         var testResult = parseInt(this.d); //c/(l + 1)*100; // removed parseInt
-
-        
-        
-        
-        
-
         var id = this.userid;
         var stime = localStorage.getItem("stime");
         var etime = this.dayTime();
         var quesList = localStorage.getItem("quesList");
         this.testResult = testResult;
         this.infoQue = this.qInfo;
-        
         this.correctAnswer = c;
         this.wrongAnswer = l - c;
         this.STime = stime;
         this.ETime = etime;
-        
         var tid = this.testID;
         //need to call API
         var data = 'userId='+id+'&totalQues='+l+'&crctCount='+c+'&startTime='+stime+'&endTime='+etime+'&sectionid='+sid+'&testId='+tid+'&Questions='+quesList;
         this.webService.answersList(link,data).then((res) => {
-
             if (res.Status == 'Success') {
-
             } else {
-
             }
           }, err => {
-            
-
         });
     }
-
     dayTime()
     {
         var  conDate = new Date();
@@ -104,7 +81,6 @@ export class AnswersCheckPage implements OnInit {
         {
             dd='0'+dd;
         }
-
         if(MM<10)
         {
             MM='0'+MM;
@@ -112,15 +88,12 @@ export class AnswersCheckPage implements OnInit {
         var endmonth1 = yy+'-'+MM+'-'+dd+' '+HH+':'+MIN+':'+SEC;
         return endmonth1;
     }
-
     back(){
         this.type=localStorage.getItem('type');
-        
         if(this.type=="individual"){
         this.router.navigate([`/home/${this.type}`])
         }else if(this.type=="group"){
         this.router.navigate([`/home/${this.type}`])
-
         }else{
         this.router.navigate([`/home/common`])
         }

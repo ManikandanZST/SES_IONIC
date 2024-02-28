@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 #ifndef LOGGER_HPP_
 #define LOGGER_HPP_
-
 #include <string>
 #include <slog2.h>
-
 class Keyboard_JS;
-
 namespace webworks {
-
 class Logger {
 public:
 	explicit Logger(const char* name, Keyboard_JS *parent = NULL);
@@ -44,6 +39,5 @@ private:
 	slog2_buffer_t buffer_handle[2];
 	int log(slog2_buffer_t buffer, _Uint8t severity, const char* message);
 };
-
 } /* namespace webworks */
 #endif /* LOGGER_HPP_ */

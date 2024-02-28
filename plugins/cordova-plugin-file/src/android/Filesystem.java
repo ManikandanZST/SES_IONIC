@@ -6,9 +6,7 @@
        to you under the Apache License, Version 2.0 (the
        "License"); you may not use this file except in compliance
        with the License.  You may obtain a copy of the License at
-
          http://www.apache.org/licenses/LICENSE-2.0
-
        Unless required by applicable law or agreed to in writing,
        software distributed under the License is distributed on an
        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -17,9 +15,7 @@
        under the License.
  */
 package org.apache.cordova.file;
-
 import android.net.Uri;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilterInputStream;
@@ -28,36 +24,29 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import org.apache.cordova.CordovaResourceApi;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 public abstract class Filesystem {
-
     protected final Uri rootUri;
     protected final CordovaResourceApi resourceApi;
     public final String name;
     private JSONObject rootEntry;
-
     public Filesystem(Uri rootUri, String name, CordovaResourceApi resourceApi) {
         this.rootUri = rootUri;
         this.name = name;
         this.resourceApi = resourceApi;
     }
-
     public interface ReadFileCallback {
 		public void handleData(InputStream inputStream, String contentType) throws IOException;
 	}
-
     public static JSONObject makeEntryForURL(LocalFilesystemURL inputURL, Uri nativeURL) {
         try {
             String path = inputURL.path;
             int end = path.endsWith("/") ? 1 : 0;
             String[] parts = path.substring(0, path.length() - end).split("/+");
             String fileName = parts[parts.length - 1];
-
             JSONObject entry = new JSONObject();
             entry.put("isFile", !inputURL.isDirectory);
             entry.put("isDirectory", inputURL.isDirectory);
@@ -68,7 +57,6 @@ public abstract class Filesystem {
             entry.put("filesystemName", inputURL.fsName);
             // Backwards compatibility
             entry.put("filesystem", "temporary".equals(inputURL.fsName) ? 0 : 1);
-
             String nativeUrlStr = nativeURL.toString();
             if (inputURL.isDirectory && !nativeUrlStr.endsWith("/")) {
                 nativeUrlStr += "/";
@@ -80,34 +68,25 @@ public abstract class Filesystem {
             throw new RuntimeException(e);
         }
     }
-
     public JSONObject makeEntryForURL(LocalFilesystemURL inputURL) {
         Uri nativeUri = toNativeUri(inputURL);
         return nativeUri == null ? null : makeEntryForURL(inputURL, nativeUri);
     }
-
     public JSONObject makeEntryForNativeUri(Uri nativeUri) {
         LocalFilesystemURL inputUrl = toLocalUri(nativeUri);
         return inputUrl == null ? null : makeEntryForURL(inputUrl, nativeUri);
     }
-
     public JSONObject getEntryForLocalURL(LocalFilesystemURL inputURL) throws IOException {
         return makeEntryForURL(inputURL);
     }
-
     public JSONObject makeEntryForFile(File file) {
         return makeEntryForNativeUri(Uri.fromFile(file));
     }
-
     abstract JSONObject getFileForLocalURL(LocalFilesystemURL inputURL, String path,
 			JSONObject options, boolean directory) throws FileExistsException, IOException, TypeMismatchException, EncodingException, JSONException;
-
 	abstract boolean removeFileAtLocalURL(LocalFilesystemURL inputURL) throws InvalidModificationException, NoModificationAllowedException;
-
 	abstract boolean recursiveRemoveFileAtLocalURL(LocalFilesystemURL inputURL) throws FileExistsException, NoModificationAllowedException;
-
 	abstract LocalFilesystemURL[] listChildren(LocalFilesystemURL inputURL) throws FileNotFoundException;
-
     public final JSONArray readEntriesAtLocalURL(LocalFilesystemURL inputURL) throws FileNotFoundException {
         LocalFilesystemURL[] children = listChildren(inputURL);
         JSONArray entries = new JSONArray();
@@ -118,13 +97,10 @@ public abstract class Filesystem {
         }
         return entries;
     }
-
 	abstract JSONObject getFileMetadataForLocalURL(LocalFilesystemURL inputURL) throws FileNotFoundException;
-
     public Uri getRootUri() {
         return rootUri;
     }
-
     public boolean exists(LocalFilesystemURL inputURL) {
         try {
             getFileMetadataForLocalURL(inputURL);
@@ -133,7 +109,6 @@ public abstract class Filesystem {
         }
         return true;
     }
-
     public Uri nativeUriForFullPath(String fullPath) {
         Uri ret = null;
         if (fullPath != null) {
@@ -145,7 +120,6 @@ public abstract class Filesystem {
         }
         return ret;
     }
-
     public LocalFilesystemURL localUrlforFullPath(String fullPath) {
         Uri nativeUri = nativeUriForFullPath(fullPath);
         if (nativeUri != null) {
@@ -153,7 +127,6 @@ public abstract class Filesystem {
         }
         return null;
     }
-
     /**
      * Removes multiple repeated //s, and collapses processes ../s.
      */
@@ -184,7 +157,6 @@ public abstract class Filesystem {
             return normalizedPath.toString().substring(1);
         }
     }
-
     /**
      * Gets the free space in bytes available on this filesystem.
      * Subclasses may override this method to return nonzero free space.
@@ -192,17 +164,14 @@ public abstract class Filesystem {
     public long getFreeSpaceInBytes() {
         return 0;
     }
-
     public abstract Uri toNativeUri(LocalFilesystemURL inputURL);
     public abstract LocalFilesystemURL toLocalUri(Uri inputURL);
-
     public JSONObject getRootEntry() {
         if (rootEntry == null) {
             rootEntry = makeEntryForNativeUri(rootUri);
         }
         return rootEntry;
     }
-
 	public JSONObject getParentForLocalURL(LocalFilesystemURL inputURL) throws IOException {
         Uri parentUri = inputURL.uri;
         String parentPath = new File(inputURL.uri.getPath()).getParent();
@@ -211,13 +180,11 @@ public abstract class Filesystem {
 		}
 		return getEntryForLocalURL(LocalFilesystemURL.parse(parentUri));
 	}
-
     protected LocalFilesystemURL makeDestinationURL(String newName, LocalFilesystemURL srcURL, LocalFilesystemURL destURL, boolean isDirectory) {
         // I know this looks weird but it is to work around a JSON bug.
         if ("null".equals(newName) || "".equals(newName)) {
             newName = srcURL.uri.getLastPathSegment();;
         }
-
         String newDest = destURL.uri.toString();
         if (newDest.endsWith("/")) {
             newDest = newDest + newName;
@@ -229,7 +196,6 @@ public abstract class Filesystem {
         }
         return LocalFilesystemURL.parse(newDest);
     }
-
 	/* Read a source URL (possibly from a different filesystem, srcFs,) and copy it to
 	 * the destination URL on this filesystem, optionally with a new filename.
 	 * If move is true, then this method should either perform an atomic move operation
@@ -242,9 +208,7 @@ public abstract class Filesystem {
             throw new NoModificationAllowedException("Cannot move file at source URL");
         }
         final LocalFilesystemURL destination = makeDestinationURL(newName, srcURL, destURL, srcURL.isDirectory);
-
         Uri srcNativeUri = srcFs.toNativeUri(srcURL);
-
         CordovaResourceApi.OpenForReadResult ofrr = resourceApi.openForRead(srcNativeUri);
         OutputStream os = null;
         try {
@@ -255,17 +219,14 @@ public abstract class Filesystem {
         }
         // Closes streams.
         resourceApi.copyResource(ofrr, os);
-
         if (move) {
             srcFs.removeFileAtLocalURL(srcURL);
         }
         return getEntryForLocalURL(destination);
     }
-
     public OutputStream getOutputStreamForURL(LocalFilesystemURL inputURL) throws IOException {
         return resourceApi.openOutputStream(toNativeUri(inputURL));
     }
-
     public void readFileAtURL(LocalFilesystemURL inputURL, long start, long end,
                               ReadFileCallback readFileCallback) throws IOException {
         CordovaResourceApi.OpenForReadResult ofrr = resourceApi.openForRead(toNativeUri(inputURL));
@@ -286,20 +247,14 @@ public abstract class Filesystem {
             ofrr.inputStream.close();
         }
     }
-
 	abstract long writeToFileAtURL(LocalFilesystemURL inputURL, String data, int offset,
 			boolean isBinary) throws NoModificationAllowedException, IOException;
-
 	abstract long truncateFileAtURL(LocalFilesystemURL inputURL, long size)
 			throws IOException, NoModificationAllowedException;
-
 	// This method should return null if filesystem urls cannot be mapped to paths
 	abstract String filesystemPathForURL(LocalFilesystemURL url);
-
 	abstract LocalFilesystemURL URLforFilesystemPath(String path);
-
 	abstract boolean canRemoveFileAtLocalURL(LocalFilesystemURL inputURL);
-
     protected class LimitedInputStream extends FilterInputStream {
         long numBytesToRead;
         public LimitedInputStream(InputStream in, long numBytesToRead) {

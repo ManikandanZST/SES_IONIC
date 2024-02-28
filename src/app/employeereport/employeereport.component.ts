@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, IonInfiniteScroll, AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
   selector: 'app-employeereport',
   templateUrl: './employeereport.component.html',
@@ -9,15 +8,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EmployeereportComponent implements OnInit {
   type: any;
-
   constructor(public modalController: ModalController, private router: Router) { }
-
   ngOnInit() {
     this.type=localStorage.getItem("type")
   }
   Report(val){
     // this.type=val;
-  
     if(val=="training"){
       this.router.navigate([`/home/${this.type}/trainingreport`])
       this.close();
@@ -30,6 +26,4 @@ export class EmployeereportComponent implements OnInit {
     const closeModal: string = "Modal Closed";
     await this.modalController.dismiss(closeModal);
   }
-
-
 }

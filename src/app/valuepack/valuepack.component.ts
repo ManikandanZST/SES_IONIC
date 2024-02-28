@@ -1,17 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { LoginService } from 'src/providers/login.service';
-
 @Component({
   selector: 'app-valuepack',
   templateUrl: './valuepack.component.html',
   styleUrls: ['./valuepack.component.scss'],
 })
-
 export class ValuepackComponent implements OnInit {
   @Input("id") id;
   @Input("selectcourse") selectcourse;
-
   GroupId: string;
   groupusers: any;
   groupuser_NAMEs: any[];
@@ -31,56 +28,42 @@ export class ValuepackComponent implements OnInit {
   filterData: any[];
   searchTerm: any;
   subscription: any;
-
-  //multiselect fix code
   customindex: any;
   customMULTIlist: any=[];
-  //End multiselect fix code
-
   isTotalAmount : boolean = true;
-
   constructor(private loginService: LoginService,public modalController: ModalController, private platform: Platform) { }
-
   ngOnInit() {
     this.GroupId=localStorage.getItem("loginuserid");
     this.GetGroupUserModules();
     this.selected_user=localStorage.getItem("selecteduser");
-  }
 
+  }
   //To disable back button
   ionViewDidEnter() {
     this.subscription = this.platform.backButton.subscribeWithPriority(9999, () => {
       // do nothing
     });
   }
-
   ionViewWillLeave() {
     this.subscription.unsubscribe();
   }
   //End of disable back button
-
   GetGroupUser(){
     var lnk =  'GetGroupUser?GroupId='+this.GroupId;
     this.loginService.getData(lnk).then(
       (Response: any) => {
-
         if(Response)
         {
           this.info=Response.UserList;
           this.infouser=this.info[this.selected_user];
-          
           this.dynNames = 'USER'+this.infouser.userId;
         }else{
-
         }
       },
       err => {
-
       }
     );
   }
-
-
   GetGroupUserModules(){
     this.GetGroupUser();
     var lnk =  'GroupValuePackage?GroupId='+this.GroupId;
@@ -96,24 +79,25 @@ export class ValuepackComponent implements OnInit {
            if(this.selectcourse){
             this.groupusers.map((user)=>{
               let find=this.selectcourse.find((course)=> course.Valuepack_id==user.Valuepack_id );
-            if(find){
+                if(find){
               user.checked=true;
             }
           })
         }
 
       }else{
-
       }
       },
       err => {
-
       }
     );
-  }
 
+
+
+  }
   checkMultilist(as,ind,infouser,indexValue,listsS){
     this.inds=ind.target.checked;
+
     if(as.Prize != 0)
     {
       var temp   = [];
@@ -129,7 +113,6 @@ export class ValuepackComponent implements OnInit {
             Valuepack_Name   : as.Valuepack_Name,
             Prize   : as.Prize,
           }
-
           tmp = JSON.parse(tmp);
           for(i=0; i<tmp.length; i++)
           {
@@ -144,7 +127,6 @@ export class ValuepackComponent implements OnInit {
             Valuepack_Name   : as.Valuepack_Name,
             Prize   : as.Prize,
           }
-
           tmp = JSON.parse(tmp);
           temp.push(multiList);
           localStorage[dynName] = JSON.stringify(temp);
@@ -179,61 +161,40 @@ export class ValuepackComponent implements OnInit {
           // this.totalAmountChoosen = tt;
           if( k == listsS.length - 1){
             this.isTotalAmount = true;
-            
           }
         }
       },1000)
       localStorage.setItem(totalAmount,this.totalAmount[indexValue]);
       this.MULTIlist[indexValue] = JSON.parse(localStorage.getItem(dynName));
-
       // multiselect fix Code
       this.customindex = indexValue;
       this.customMULTIlist = this.MULTIlist[this.customindex];
-      
       //End multiselect fix Code
+
+
     }else
     {
-
     }
   }
-
   setFilteredLocations(){
     this.search=true;
     this.filterData = this.groupusers.filter((location) => {
       return location.Valuepack_Name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
     });
   }
-
   onCancel($event){
     this.search=false;
     this.filterData=this.groupuser_NAMEs
     $event.target.value = '';
   }
-
   async close(){
     if(this.isTotalAmount){
     let T =0;
-
-    // multiselect fix code - to calculate selected course amount
-    
-    
-    // let customtotal =0;
-    // if(this.customMULTIlist.length != 0){
-    //   for(var i=0; i<this.customMULTIlist.length; i++){
-    
-    //     customtotal = customtotal + +this.customMULTIlist[i].ModulePrice
-    //   }
-    // }
-    
-    //End multiselect fix code - to calculate selected course amount
-
-    
     if(this.MULTIlist[this.MULTIlist.length-1]){
       this.total = this.MULTIlist[this.MULTIlist.length-1].map((location) => {
         T=T+parseInt(location.Prize);
       });
       this.Total=T;
-      
     }
     else{
       if(this.selectcourse){
@@ -241,9 +202,10 @@ export class ValuepackComponent implements OnInit {
           T=T+parseInt(location.Prize);
         });
         this.Total=T;
-        
       }
     }
+
+
     await this.modalController.dismiss({
       data: this.MULTIlist[this.MULTIlist.length-1] ? this.customMULTIlist : this.selectcourse,
       data2:this.id,

@@ -6,9 +6,7 @@
        to you under the Apache License, Version 2.0 (the
        "License"); you may not use this file except in compliance
        with the License.  You may obtain a copy of the License at
-
          http://www.apache.org/licenses/LICENSE-2.0
-
        Unless required by applicable law or agreed to in writing,
        software distributed under the License is distributed on an
        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -16,23 +14,18 @@
        specific language governing permissions and limitations
        under the License.
 */
-
 package org.apache.cordova.whitelist;
-
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.ConfigXmlParser;
 import org.apache.cordova.LOG;
 import org.apache.cordova.Whitelist;
 import org.xmlpull.v1.XmlPullParser;
-
 import android.content.Context;
-
 public class WhitelistPlugin extends CordovaPlugin {
     private static final String LOG_TAG = "WhitelistPlugin";
     private Whitelist allowedNavigations;
     private Whitelist allowedIntents;
     private Whitelist allowedRequests;
-
     // Used when instantiated via reflection by PluginManager
     public WhitelistPlugin() {
     }
@@ -64,7 +57,6 @@ public class WhitelistPlugin extends CordovaPlugin {
             new CustomConfigXmlParser().parse(webView.getContext());
         }
     }
-
     private class CustomConfigXmlParser extends ConfigXmlParser {
         @Override
         public void handleStartTag(XmlPullParser xml) {
@@ -107,7 +99,6 @@ public class WhitelistPlugin extends CordovaPlugin {
         public void handleEndTag(XmlPullParser xml) {
         }
     }
-
     @Override
     public Boolean shouldAllowNavigation(String url) {
         if (allowedNavigations.isUrlWhiteListed(url)) {
@@ -115,7 +106,6 @@ public class WhitelistPlugin extends CordovaPlugin {
         }
         return null; // Default policy
     }
-
     @Override
     public Boolean shouldAllowRequest(String url) {
         if (Boolean.TRUE == shouldAllowNavigation(url)) {
@@ -126,7 +116,6 @@ public class WhitelistPlugin extends CordovaPlugin {
         }
         return null; // Default policy
     }
-
     @Override
     public Boolean shouldOpenExternalUrl(String url) {
         if (allowedIntents.isUrlWhiteListed(url)) {
@@ -134,27 +123,21 @@ public class WhitelistPlugin extends CordovaPlugin {
         }
         return null; // Default policy
     }
-
     public Whitelist getAllowedNavigations() {
         return allowedNavigations;
     }
-
     public void setAllowedNavigations(Whitelist allowedNavigations) {
         this.allowedNavigations = allowedNavigations;
     }
-
     public Whitelist getAllowedIntents() {
         return allowedIntents;
     }
-
     public void setAllowedIntents(Whitelist allowedIntents) {
         this.allowedIntents = allowedIntents;
     }
-
     public Whitelist getAllowedRequests() {
         return allowedRequests;
     }
-
     public void setAllowedRequests(Whitelist allowedRequests) {
         this.allowedRequests = allowedRequests;
     }

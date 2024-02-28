@@ -37,7 +37,7 @@ export class IndividualUserComponent implements OnInit {
     }
     this.loginService.getData(lnk).then(
       (Response: any) => {
-        
+   
 
         if(Response)
         {
@@ -59,7 +59,7 @@ export class IndividualUserComponent implements OnInit {
 
     this.loginService.getData(lnk).then(
       (Response: any) => {
-        
+        console.log(Response);
 
         if(Response)
         {
@@ -158,18 +158,18 @@ export class IndividualUserComponent implements OnInit {
   //       sendPass=0;
 
   //     }
-  
+  //     console.log("test");
   //     var data = 'First_Name='+usign.firstname+'&Last_Name='+usign.lastname+'&Company_Name='+usign.company+'&Email='+usign.email+'&EIN='+usign.ein+'&Phone='+usign.phone+'&Password='+usign.password+'&Hint_Question='+usign.question+'&Hint_Answer='+usign.answer+'&FirstName1='+usign.firstname1+'&LastName1='+usign.lastname1+'&Password1='+usign.password1+'&Email1='+usign.email1+'&FirstName2='+usign.firstname2+'&LastName2='+usign.lastname2+'&Password2='+usign.password2+'&Email2='+usign.email2;
   //     this.commonService.presentLoading();
   //     this.loginService.Signup_group(data,sendPass).then((Response: any) => {
   //       this.type_user="groupregister";
-  
+  //        console.log(Response);
   //        if(Response.Status == 'Success'){
-  
+  //         console.log(this.type_user);
 
   //          this.commonService.closeLoading();
   //             // this.signupdetails = Response.data[0];
-  
+  //             // console.log(this.signupdetails);
   //         //  this.commonService.presentToast(Response.Message);
   //          this.presentAlert(Response.Message,this.type_user);
   //        }else{

@@ -1,6 +1,6 @@
 .bodybg{
     --background: url('../../assets/images/background/forgetpass.jpg') no-repeat  center fixed;
-    background-size: cover;    
+    background-size: cover;
 }
 .bar-header {
     background: rgba(25,24,20,255) !important;
@@ -8,14 +8,14 @@
 }
 .text_white{
     color: #fff !important;
-    font-size: 14px !important;    
+    font-size: 14px !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
     margin: 10px 0px !important;
     text-align: center;
 }
 .text_label{
     color: #fff !important;
-    font-size: 16px !important;    
+    font-size: 16px !important;
     font-weight: bold;
     font-family: Helvetica, Arial, Sans-Serif;
 }
@@ -25,18 +25,18 @@
     padding: 0px 20px;
 }
 ion-item{
-    --background: transparent;    
+    --background: transparent;
     --inner-padding-end: 0px;
     padding: 0px;
 }
 ion-item::part(native) {
     //WRITE ALL YOUR CSS RULES HERE
-    padding: 0px;    
+    padding: 0px;
 }
 ion-input{
     --placeholder-color: #9c9c9c;
     font-family: Helvetica, Arial, Sans-Serif;
-    font-size: 14px !important;   
+    font-size: 14px !important;
 }
 .hintques{
     background: transparent;
@@ -51,26 +51,24 @@ ion-input{
     color: #000;
 }
 ion-fab-button::part(native) {
-    background-color: #ffffff;    
+    background-color: #ffffff;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,.3), 0px 1px 3px 1px rgba(0,0,0,.15);
     color: black;
 }
-    
 ion-fab-button::part(native):hover::after {
     background-color: #ffffff;
 }
-
 ion-fab-button::part(native):active::after {
     background-color: #ffffff;
 }
-//my-custom-class 
+//my-custom-class
 ::ng-deep .my-custom-class .alert-head.sc-ion-alert-md{
     padding: 10px !important;
     border-bottom: 1px solid #4c7101;
 }
 ::ng-deep .my-custom-class h2.alert-title.sc-ion-alert-md{
     padding: 15px 0px !important;
-    border-bottom: 1px solid #4c7101 !important;    
+    border-bottom: 1px solid #4c7101 !important;
     font-size: 15px !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
     color: #4c7101 !important;
@@ -90,24 +88,24 @@ ion-fab-button::part(native):active::after {
     background-color: #444 !important;
     color: #fff !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
-    padding: 10px 20px !important; 
+    padding: 10px 20px !important;
 }
 ::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-cancel:hover{
     border-color: transparent !important;
     background-color: #444 !important;
-    color: #fff !important;    
+    color: #fff !important;
 }
 ::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-confirm{
     border-color: transparent !important;
     background-color: #886aea !important;
     color: #fff !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
-    padding: 10px 20px !important; 
+    padding: 10px 20px !important;
 }
 ::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-confirm:hover{
     border-color: transparent !important;
     background-color: #444 !important;
-    color: #6b46e5 !important;    
+    color: #6b46e5 !important;
 }
 ::ng-deep .my-custom-class .alert-wrapper.sc-ion-alert-md{
     background: #fff !important;
@@ -118,4 +116,4 @@ ion-fab-button::part(native):active::after {
     font-weight: 500 !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
 }
-//end my-custom-class 
+//end my-custom-class

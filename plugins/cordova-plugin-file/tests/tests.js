@@ -17,21 +17,16 @@
  * under the License.
  *
  */
-
 /* jshint jasmine: true */
 /* global WebKitBlobBuilder */
-
 exports.defineAutoTests = function () {
     var isBrowser = (cordova.platformId === "browser");
     // Use feature detection to determine current browser instead of checking user-agent
     var isChrome = isBrowser && window.webkitRequestFileSystem && window.webkitResolveLocalFileSystemURL;
     var isIE = isBrowser && (window.msIndexedDB);
     var isIndexedDBShim = isBrowser && !isChrome;   // Firefox and IE for example
-
     var isWindows = (cordova.platformId === "windows" || cordova.platformId === "windows8");
-
     var MEDIUM_TIMEOUT = 15000;
-
     describe('File API', function () {
         // Adding a Jasmine helper matcher, to report errors when comparing to FileError better.
         var fileErrorMap = {
@@ -133,7 +128,6 @@ exports.defineAutoTests = function () {
             // entry.remove success callback is required: http://www.w3.org/TR/2011/WD-file-system-api-20110419/#the-entry-interface
             success = success || function() {};
             error = error || failed.bind(null, success, 'deleteEntry failed.');
-
             window.resolveLocalFileSystemURL(root.toURL() + '/' + name, function (entry) {
                 if (entry.isDirectory === true) {
                     entry.removeRecursively(success, error);
@@ -146,7 +140,6 @@ exports.defineAutoTests = function () {
         var deleteFile = function (fileName, callback) {
             // entry.remove success callback is required: http://www.w3.org/TR/2011/WD-file-system-api-20110419/#the-entry-interface
             callback = callback || function() {};
-
             root.getFile(fileName, null, // remove file system entry
                 function (entry) {
                 entry.remove(callback, function () {
@@ -233,10 +226,8 @@ exports.defineAutoTests = function () {
                         expect(fileSystem.root.toURL()).toMatch(/\/$/);
                         done();
                     };
-
                     // Request a little bit of space on the filesystem, unless we're running in a browser where that could cause a prompt.
                     var spaceRequired = isBrowser ? 0 : 1024;
-
                     // retrieve PERSISTENT file system
                     window.requestFileSystem(LocalFileSystem.PERSISTENT, spaceRequired, win, failed.bind(null, done, 'window.requestFileSystem - Error retrieving PERSISTENT file system'));
                 });
@@ -266,7 +257,6 @@ exports.defineAutoTests = function () {
                         So `size` parameter for `requestFileSystem` function does not affect on filesystem in Firefox and IE.*/
                         pending();
                     }
-
                     var fail = function (error) {
                         expect(error).toBeDefined();
                         expect(error).toBeFileError(FileError.QUOTA_EXCEEDED_ERR);
@@ -277,7 +267,6 @@ exports.defineAutoTests = function () {
                     window.requestFileSystem(LocalFileSystem.TEMPORARY, 1000000000000000, failed.bind(null, done, 'window.requestFileSystem - Error retrieving TEMPORARY file system'), fail);
                 });
                 it("file.spec.7 should error out if you request a file system that does not exist", function (done) {
-
                     var fail = function (error) {
                         expect(error).toBeDefined();
                         if (isChrome) {
@@ -368,7 +357,6 @@ exports.defineAutoTests = function () {
                     }
                     createDirectory(fileName, gotDirectory, failed.bind(null, done, 'createDirectory - Error creating directory: ' + fileName), failed.bind(null, done, 'createDirectory - Error creating directory: ' + fileName));
                 });
-
                 it("file.spec.9.7 should resolve a file with valid nativeURL", function (done) {
                     var fileName = "de.create.file",
                     win = function (entry) {
@@ -381,7 +369,6 @@ exports.defineAutoTests = function () {
                         create: true
                     }, win, succeed.bind(null, done, 'root.getFile - Error unexpected callback, file should not exists: ' + fileName));
                 });
-
                 it("file.spec.10 resolve valid file name with parameters", function (done) {
                     var fileName = "resolve.file.uri.params",
                     win = function (fileEntry) {
@@ -512,7 +499,6 @@ exports.defineAutoTests = function () {
             it("file.spec.19 getFile: create file that already exists", function (done) {
                 var fileName = "de.create.existing.file",
                 filePath = joinURL(root.fullPath, fileName);
-
                 function win(entry) {
                     expect(entry).toBeDefined();
                     expect(entry.isFile).toBe(true);
@@ -522,14 +508,12 @@ exports.defineAutoTests = function () {
                     // cleanup
                     deleteEntry(entry.name, done);
                 }
-
                 function getFile(file) {
                     // create:true, exclusive:false, file exists
                     root.getFile(fileName, {
                         create : true
                     }, win, failed.bind(null, done, 'root.getFile - Error creating file: ' + fileName));
                 }
-
                 // create file to kick off it
                 root.getFile(fileName, {
                     create : true
@@ -538,7 +522,6 @@ exports.defineAutoTests = function () {
             it("file.spec.20 getFile: create file that already exists (exclusive)", function (done) {
                 var fileName = "de.create.exclusive.existing.file",
                 existingFile;
-
                 function fail(error) {
                     expect(error).toBeDefined();
                     if (isChrome) {
@@ -551,7 +534,6 @@ exports.defineAutoTests = function () {
                     // cleanup
                     deleteEntry(existingFile.name, done);
                 }
-
                 function getFile(file) {
                     existingFile = file;
                     // create:true, exclusive:true, file exists
@@ -560,7 +542,6 @@ exports.defineAutoTests = function () {
                         exclusive : true
                     }, succeed.bind(null, done, 'root.getFile - getFile function - Error unexpected callback, file should exists: ' + fileName), fail);
                 }
-
                 // create file to kick off it
                 root.getFile(fileName, {
                     create : true
@@ -597,7 +578,6 @@ exports.defineAutoTests = function () {
                     (http://www.w3.org/TR/2011/WD-file-system-api-20110419/#naming-restrictions).*/
                     pending();
                 }
-
                 var fileName = "de:invalid:path",
                 fail = function (error) {
                     expect(error).toBeDefined();
@@ -623,7 +603,6 @@ exports.defineAutoTests = function () {
             });
             it("file.spec.24 DirectoryEntry.getDirectory: create new dir with space then resolveLocalFileSystemURL", function (done) {
                 var dirName = "de create dir";
-
                 function win(directory) {
                     expect(directory).toBeDefined();
                     expect(directory.isFile).toBe(false);
@@ -633,7 +612,6 @@ exports.defineAutoTests = function () {
                     // cleanup
                     deleteEntry(directory.name, done);
                 }
-
                 function getDir(dirEntry) {
                     expect(dirEntry.filesystem).toBeDefined();
                     expect(dirEntry.filesystem).toBe(root.filesystem);
@@ -641,7 +619,6 @@ exports.defineAutoTests = function () {
                     // now encode URI and try to resolve
                     window.resolveLocalFileSystemURL(dirURI, win, failed.bind(null, done, 'window.resolveLocalFileSystemURL - getDir function - Error resolving directory: ' + dirURI));
                 }
-
                 // create:true, exclusive:false, directory does not exist
                 root.getDirectory(dirName, {
                     create : true
@@ -656,7 +633,6 @@ exports.defineAutoTests = function () {
             xit("file.spec.25 DirectoryEntry.getDirectory: create new dir with space resolveLocalFileSystemURL with encoded URI", function (done) {
                 var dirName = "de create dir2",
                 dirPath = joinURL(root.fullPath, dirName);
-
                 function win(directory) {
                     expect(directory).toBeDefined();
                     expect(directory.isFile).toBe(false);
@@ -666,13 +642,11 @@ exports.defineAutoTests = function () {
                     // cleanup
                     deleteEntry(directory.name, done);
                 }
-
                 function getDir(dirEntry) {
                     var dirURI = dirEntry.toURL();
                     // now encode URI and try to resolve
                     window.resolveLocalFileSystemURL(encodeURI(dirURI), win, failed.bind(null, done, 'window.resolveLocalFileSystemURL - getDir function - Error resolving directory: ' + dirURI));
                 }
-
                 // create:true, exclusive:false, directory does not exist
                 root.getDirectory(dirName, {
                     create : true
@@ -739,7 +713,6 @@ exports.defineAutoTests = function () {
                 }, failed.bind(null, done, 'root.getDirectory - Error creating directory : ' + dirName));
             });
             it("file.spec.29 DirectoryEntry.getDirectory: create directory that already exists (exclusive)", function (done) {
-
                 var dirName = "de.create.exclusive.existing.dir",
                 existingDir,
                 fail = function (error) {
@@ -793,7 +766,6 @@ exports.defineAutoTests = function () {
                     (http://www.w3.org/TR/2011/WD-file-system-api-20110419/#naming-restrictions).*/
                     pending();
                 }
-
                 var dirName = "de:invalid:path",
                 fail = function (error) {
                     expect(error).toBeDefined();
@@ -873,7 +845,6 @@ exports.defineAutoTests = function () {
                 expect(typeof reader.readEntries).toBe('function');
             });
             it("file.spec.36 removeRecursively on root file system", function (done) {
-
                 var remove = function (error) {
                     expect(error).toBeDefined();
                     if (isChrome) {
@@ -927,7 +898,6 @@ exports.defineAutoTests = function () {
                                 else {
                                     expect(entries[0].filesystem instanceof FileSystem).toBe(true);
                                 }
-
                                 // cleanup
                                 deleteEntry(directory.name, done);
                             }, failed.bind(null, done, 'reader.readEntries - Error reading entries from directory: ' + dirName));
@@ -998,7 +968,6 @@ exports.defineAutoTests = function () {
         });
         //File
         describe('FileEntry', function () {
-
             it("file.spec.41 should be define FileEntry methods", function (done) {
                 var fileName = "fe.methods",
                 testFileEntry = function (fileEntry) {
@@ -1025,7 +994,6 @@ exports.defineAutoTests = function () {
                     else {
                         expect(writer instanceof FileWriter).toBe(true);
                     }
-
                     // cleanup
                     deleteEntry(testFile.name, done);
                 };
@@ -1049,7 +1017,6 @@ exports.defineAutoTests = function () {
                     else {
                         expect(file instanceof File).toBe(true);
                     }
-
                     // cleanup
                     deleteEntry(newFile.name, done);
                 };
@@ -1121,7 +1088,6 @@ exports.defineAutoTests = function () {
                     /* Does not support metadata for directories (Firefox, IE) */
                     pending();
                 }
-
                 var dirName = "entry.metadata.dir";
                 // create a new directory entry
                 createDirectory(dirName, function (entry) {
@@ -1253,7 +1219,6 @@ exports.defineAutoTests = function () {
                     along with contents instead (Firefox, IE)*/
                     pending();
                 }
-
                 var dirName = "ent y.rm.dir.not.empty",
                 fileName = "re ove.txt",
                 fullPath = joinURL(root.fullPath, dirName);
@@ -1276,7 +1241,6 @@ exports.defineAutoTests = function () {
                 }, failed.bind(null, done, 'createDirectory - Error creating directory : ' + dirName));
             });
             it("file.spec.56 remove on root file system", function (done) {
-
                 // remove entry that doesn't exist
                 root.remove(succeed.bind(null, done, 'entry.remove - Unexpected success callback, it should not remove entry that it does not exists'), function (error) {
                     expect(error).toBeDefined();
@@ -1340,7 +1304,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "file1",
                 srcDir = "entry.copy.srcDir",
                 dstDir = "entry.copy.dstDir",
@@ -1391,7 +1354,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "file1",
                 srcDir = "entry.copy srcDirSame",
                 dstDir = "entry.copy srcDirSame-backup",
@@ -1441,7 +1403,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "file1",
                 srcDir = "entry.copy.dos.srcDir",
                 srcPath = joinURL(root.fullPath, srcDir),
@@ -1479,7 +1440,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var srcDir = "entry.copy.dis.srcDir",
                 dstDir = "entry.copy.dis.dstDir",
                 srcPath = joinURL(root.fullPath, srcDir);
@@ -1522,7 +1482,6 @@ exports.defineAutoTests = function () {
                     (http://www.w3.org/TR/2011/WD-file-system-api-20110419/#naming-restrictions*/
                     pending();
                 }
-
                 var file1 = "entry.copy.itn.file1",
                 file2 = "bad:file:name";
                 // create a new file entry
@@ -1616,7 +1575,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "file1",
                 srcDir = "entry.move.dsp.srcDir",
                 dstDir = "entry.move.dsp.dstDir",
@@ -1665,7 +1623,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "file1",
                 srcDir = "entry.move.dsp.srcDir",
                 dstDir = "entry.move.dsp.srcDir-backup",
@@ -1714,7 +1671,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "file1",
                 srcDir = "entry.move.dnp.srcDir",
                 dstDir = "entry.move.dnp.dstDir",
@@ -1758,18 +1714,15 @@ exports.defineAutoTests = function () {
                     }, failed.bind(null, done, 'createDirectory - Error creating directory : ' + srcDir));
                 }, failed.bind(null, done, 'deleteEntry - Error removing directory : ' + dstDir));
             });
-
             it("file.spec.131 moveTo: directories tree to new parent", function (done) {
                 if (isIndexedDBShim) {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var srcDir = "entry.move.dnp.srcDir";
                 var srcDirNestedFirst = "entry.move.dnp.srcDir.Nested1";
                 var srcDirNestedSecond = "entry.move.dnp.srcDir.Nested2";
                 var dstDir = "entry.move.dnp.dstDir";
-
                 createDirectory(dstDir, function (dstDirectory) {
                     createDirectory(srcDir, function (srcDirectory) {
                         srcDirectory.getDirectory(srcDirNestedFirst, { create: true }, function () {
@@ -1788,13 +1741,11 @@ exports.defineAutoTests = function () {
                     }, failed.bind(null, done, 'createDirectory - Error creating source directory : ' + srcDir));
                 }, failed.bind(null, done, 'createDirectory - Error creating dest directory : ' + dstDir));
             });
-
             it("file.spec.70 moveTo: directory onto itself", function (done) {
                 if (isIndexedDBShim) {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "file1",
                 srcDir = "entry.move.dos.srcDir",
                 srcPath = joinURL(root.fullPath, srcDir),
@@ -1834,7 +1785,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var srcDir = "entry.move.dis.srcDir",
                 dstDir = "entry.move.dis.dstDir",
                 srcPath = joinURL(root.fullPath, srcDir);
@@ -1861,7 +1811,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var srcDir = "entry.move.dis.srcDir",
                 dstDir = "entry.move.dis.srcDir-backup";
                 // create a new directory entry to kick off it
@@ -1949,7 +1898,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "entry.move.dof.file1",
                 srcDir = "entry.move.dof.srcDir",
                 dirPath = joinURL(root.fullPath, srcDir),
@@ -1992,7 +1940,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "entry.copy.dof.file1",
                 srcDir = "entry.copy.dof.srcDir",
                 dirPath = joinURL(root.fullPath, srcDir),
@@ -2035,7 +1982,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var srcDir = "entry.move.dod.srcDir",
                 dstDir = "entry.move.dod.dstDir",
                 subDir = "subDir",
@@ -2126,7 +2072,6 @@ exports.defineAutoTests = function () {
                     /* `copyTo` and `moveTo` functions do not support directories (Firefox, IE) */
                     pending();
                 }
-
                 var file1 = "file1",
                 srcDir = "entry.move.drd.srcDir",
                 dstDir = "entry.move.drd.dstDir",
@@ -2176,7 +2121,6 @@ exports.defineAutoTests = function () {
                 }, failed.bind(null, done, 'deleteEntry - Error removing directory : ' + dstDir));
             });
             it("file.spec.79 moveTo: directory that does not exist", function (done) {
-
                 var file1 = "entry.move.dnf.file1",
                 dstDir = "entry.move.dnf.dstDir",
                 dstPath = joinURL(root.fullPath, dstDir);
@@ -2206,7 +2150,6 @@ exports.defineAutoTests = function () {
                     (http://www.w3.org/TR/2011/WD-file-system-api-20110419/#naming-restrictions*/
                     pending();
                 }
-
                 var file1 = "entry.move.itn.file1",
                 file2 = "bad:file:name";
                 // create a new file entry to kick off it
@@ -2305,12 +2248,10 @@ exports.defineAutoTests = function () {
                     '\u20AC\xEB - There is an exception to every rule. Except this one.',
                 fileDataAsBinaryString = fileContents !== undefined ? fileContents :
                     '\xe2\x82\xac\xc3\xab - There is an exception to every rule. Except this one.';
-
                 function createWriter(fe) {
                     fileEntry = fe;
                     fileEntry.createWriter(writeFile, failed.bind(null, done, 'fileEntry.createWriter - Error reading file: ' + fileName));
                 }
-
                 // writes file and reads it back in
                 function writeFile(writer) {
                     writer.onwriteend = function () {
@@ -2320,7 +2261,6 @@ exports.defineAutoTests = function () {
                     };
                     writer.write(fileData);
                 }
-
                 fileData += writeBinary ? 'bin:\x01\x00' : '';
                 fileDataAsBinaryString += writeBinary ? 'bin:\x01\x00' : '';
                 // create a file, write to it, and read it in again
@@ -2375,14 +2315,11 @@ exports.defineAutoTests = function () {
                         For example, if the content is `abcdefg` then Firefox returns `data:application/octet-stream;base64,YWJjZGVmZw==`,
                         IE returns `data:;base64,YWJjZGVmZw==`, Chrome returns `data:<mediatype depending on extension of entry name>;base64,YWJjZGVmZw==`. */
                     expect(evt.target.result).toBeDataUrl();
-
                     //The atob function it is completely ignored during mobilespec execution, besides the returned object: evt
                     //it is encoded and the atob function is aimed to decode a string. Even with btoa (encode) the function it gets stucked
                     //because of the Unicode characters that contains the fileData object.
                     //Issue reported at JIRA with all the details: CB-7095
-
                     //expect(evt.target.result.slice(23)).toBe(atob(fileData));
-
                     done();
                 });
             });
@@ -2391,7 +2328,6 @@ exports.defineAutoTests = function () {
                     /*`readAsBinaryString` function is not supported by IE and has not the stub.*/
                     pending();
                 }
-
                 runReaderTest('readAsBinaryString', true, done, null, function (evt, fileData, fileDataAsBinaryString) {
                     expect(evt.target.result).toBe(fileDataAsBinaryString);
                     done();
@@ -2440,14 +2376,11 @@ exports.defineAutoTests = function () {
                         For example, if the content is `abcdefg` then Firefox returns `data:application/octet-stream;base64,YWJjZGVmZw==`,
                         IE returns `data:;base64,YWJjZGVmZw==`, Chrome returns `data:<mediatype depending on extension of entry name>;base64,YWJjZGVmZw==`. */
                     expect(evt.target.result).toBeDataUrl();
-
                     //The atob function it is completely ignored during mobilespec execution, besides the returned object: evt
                     //it is encoded and the atob function is aimed to decode a string. Even with btoa (encode) the function it gets stucked
                     //because of the Unicode characters that contains the fileData object.
                     //Issue reported at JIRA with all the details: CB-7095
-
                     //expect(evt.target.result.slice(23)).toBe(atob(fileDataAsBinaryString.slice(10, -3)));
-
                     done();
                 }, 10, -3);
             });
@@ -2456,7 +2389,6 @@ exports.defineAutoTests = function () {
                     /*`readAsBinaryString` function is not supported by IE and has not the stub.*/
                     pending();
                 }
-
                 runReaderTest('readAsBinaryString', true, done, null, function (evt, fileData, fileDataAsBinaryString) {
                     expect(evt.target.result).toBe(fileDataAsBinaryString.slice(-10, -5));
                     done();
@@ -2479,30 +2411,24 @@ exports.defineAutoTests = function () {
                     expect(true).toFailWithMessage('Platform does not supported this feature');
                     done();
                 }
-
                 var largeText = "";
                 for (var i = 0; i < 1000; i++) {
                     largeText += "Test " + i + "\n";
                 }
-
                 // Set the chunk size so that the read will take 5 chunks
                 FileReader.READ_CHUNK_SIZE = Math.floor(largeText.length / 4) + 1;
-
                 var chunkCount = 0;
                 var lastProgressValue = -1;
                 var progressFunc = function (evt) {
                     expect(evt.loaded).toBeDefined();
                     expect(evt.total).toBeDefined();
-
                     expect(evt.total >= largeText.length).toBe(true);
                     expect(evt.total <= largeText.length + 5).toBe(true);
                     expect(evt.loaded > lastProgressValue).toBe(true);
                     expect(evt.loaded <= evt.total).toBe(true);
-
                     lastProgressValue = evt.loaded;
                     chunkCount++;
                 };
-
                 runReaderTest(
                     'readAsArrayBuffer', true, done, progressFunc,
                     function (evt, fileData, fileDataAsBinaryString) {
@@ -2519,22 +2445,17 @@ exports.defineAutoTests = function () {
                 for (var i = 0; i < 10; i++) {
                     largeText += "Test " + i + "\n";
                 }
-
                 // Set the chunk size so that the read will take 5 chunks
                 FileReader.READ_CHUNK_SIZE = Math.floor(largeText.length / 4) + 1;
-
                 var lastProgressValue = 0;
                 var progressFunc = function (evt) {
                     expect(evt.total).toBeDefined();
                     expect(evt.total).toEqual(largeText.length);
-
                     expect(evt.loaded).toBeDefined();
                     expect(evt.loaded).toBeGreaterThan(lastProgressValue);
                     expect(evt.loaded).toBeLessThan(evt.total + 1);
-
                     lastProgressValue = evt.loaded;
                 };
-
                 runReaderTest('readAsDataURL', false, done, progressFunc,
                     function (evt, fileData, fileDataAsBinaryString) {
                         expect(function () {
@@ -2542,7 +2463,6 @@ exports.defineAutoTests = function () {
                             var base64Data = evt.target.result.substring(evt.target.result.indexOf(',') + 1);
                             expect(window.atob(base64Data)).toEqual(fileData);
                         }).not.toThrow();
-
                         expect(lastProgressValue).toEqual(largeText.length);
                         done();
                     },
@@ -2601,7 +2521,6 @@ exports.defineAutoTests = function () {
                             // cleanup
                             deleteFile(fileName, done);
                         }
-
                         //Write process
                         writer.onwriteend = verifier;
                         writer.write(content);
@@ -2640,7 +2559,6 @@ exports.defineAutoTests = function () {
                             // cleanup
                             deleteFile(fileName, done);
                         }
-
                         //Write process
                         writer.onwriteend = verifier;
                         writer.write(content);
@@ -2678,7 +2596,6 @@ exports.defineAutoTests = function () {
                             // cleanup
                             deleteFile(fileName, done);
                         }
-
                         //Write process
                         writer.onwriteend = verifier;
                         writer.write(content);
@@ -2691,7 +2608,6 @@ exports.defineAutoTests = function () {
                        i.e. the length is not being changed from content.length and writer length will be equal 21 */
                     pending();
                 }
-
                 var fileName = "writer.seek.write2", // file content
                 content = "This is our sentence.", // for checking file length
                 exception = "new.",
@@ -2722,7 +2638,6 @@ exports.defineAutoTests = function () {
                             // cleanup
                             deleteFile(fileName, done);
                         }
-
                         //Write process
                         writer.onwriteend = verifier;
                         writer.write(content);
@@ -2802,7 +2717,6 @@ exports.defineAutoTests = function () {
                     /* `abort` and `truncate` functions are not supported (Firefox, IE) */
                     pending();
                 }
-
                 var fileName = "writer.truncate",
                 content = "There is an exception to every rule. Except this one.";
                 // creates file, writes to it, then truncates it
@@ -3530,14 +3444,12 @@ exports.defineAutoTests = function () {
                 } else {
                     pending();
                 }
-
                 resolveLocalFileSystemURL('cdvfile://localhost/' + cdvfileApplicationDirectoryFsRootName + '/', function(applicationDirectoryRoot) {
                     expect(applicationDirectoryRoot.isFile).toBe(false);
                     expect(applicationDirectoryRoot.isDirectory).toBe(true);
                     expect(applicationDirectoryRoot.name).toCanonicallyMatch('');
                     expect(applicationDirectoryRoot.fullPath).toCanonicallyMatch('/');
                     expect(applicationDirectoryRoot.filesystem.name).toEqual(cdvfileApplicationDirectoryFsRootName);
-
                     // Requires HelloCordova www assets, <allow-navigation href="cdvfile:*" /> in config.xml or
                     // cdvfile: in CSP and <access origin="cdvfile://*" /> in config.xml
                     resolveLocalFileSystemURL('cdvfile://localhost/' + cdvfileApplicationDirectoryFsRootName + '/www/img/logo.png', function(entry) {
@@ -3546,7 +3458,6 @@ exports.defineAutoTests = function () {
                         expect(entry.name).toCanonicallyMatch('logo.png');
                         expect(entry.fullPath).toCanonicallyMatch('/www/img/logo.png');
                         expect(entry.filesystem.name).toEqual(cdvfileApplicationDirectoryFsRootName);
-
                         var img = new Image();
                         img.onerror = function(err) {
                             expect(err).not.toBeDefined();
@@ -3566,7 +3477,6 @@ exports.defineAutoTests = function () {
                 var parentDirName = 'deletedDir131',
                     nestedDirName = 'nestedDir131',
                     nestedFileName = 'nestedFile131.txt';
-
                 createDirectory(parentDirName, function (parent) {
                     parent.getDirectory(nestedDirName, { create: true}, function () {
                         parent.getFile(nestedFileName, { create: true}, function () {
@@ -3588,7 +3498,6 @@ exports.defineAutoTests = function () {
                 var parentName = 'parentName132';
                 var nestedName = 'nestedName132';
                 var path = parentName + '/' + nestedName;
-
                 var win = function(directory){
                     expect(directory).toBeDefined();
                     expect(directory.isFile).toBe(false);
@@ -3598,18 +3507,15 @@ exports.defineAutoTests = function () {
                     deleteEntry(directory.name);
                     deleteEntry(parentName, done);
                 };
-
                 createDirectory(parentName, function() {
                     root.getDirectory(parentName + '/' + nestedName, {create:true}, win,
                         failed.bind(this, done, 'root.getDirectory - Error getting directory : ' + path));
                 }, failed.bind(this, done, 'root.getDirectory - Error getting directory : ' + parentName));
             });
             it("file.spec.133 A file being removed should not affect another file with name being a prefix of the removed file name.", function (done) {
-
                 // Names include special symbols so that we check the IndexedDB range used
                 var deletedFileName = 'deletedFile.0',
                 secondFileName = 'deletedFile.0.1';
-
                 var win = function(fileEntry){
                     expect(fileEntry).toBeDefined();
                     expect(fileEntry.isFile).toBe(true);
@@ -3617,7 +3523,6 @@ exports.defineAutoTests = function () {
                     expect(fileEntry.name).toCanonicallyMatch(secondFileName);
                     deleteEntry(fileEntry.name, done);
                 };
-
                 createFile(deletedFileName, function (deletedFile) {
                     createFile(secondFileName, function () {
                         deletedFile.remove(function() {
@@ -3629,11 +3534,9 @@ exports.defineAutoTests = function () {
                 }, failed.bind(this, done, 'getFile - Error creating file : ' + deletedFileName));
             });
             it("file.spec.134 A directory being removed should not affect another directory with name being a prefix of the removed directory name.", function (done) {
-
                 // Names include special symbols so that we check the IndexedDB range used
                 var deletedDirName = 'deletedDir.0',
                 secondDirName = 'deletedDir.0.1';
-
                 var win = function(directory){
                     expect(directory).toBeDefined();
                     expect(directory.isFile).toBe(false);
@@ -3641,7 +3544,6 @@ exports.defineAutoTests = function () {
                     expect(directory.name).toCanonicallyMatch(secondDirName);
                     deleteEntry(directory.name, done);
                 };
-
                 createDirectory(deletedDirName, function (deletedDir) {
                     createDirectory(secondDirName, function () {
                         deletedDir.remove(function() {
@@ -3653,10 +3555,8 @@ exports.defineAutoTests = function () {
                 }, failed.bind(this, done, 'root.getDirectory - Error creating directory : ' + deletedDirName));
             });
             it("file.spec.135 Deletion of a child directory should not affect the parent directory.", function (done) {
-
                 var parentName = 'parentName135';
                 var childName = 'childName135';
-
                 var win = function(directory){
                     expect(directory).toBeDefined();
                     expect(directory.isFile).toBe(false);
@@ -3664,7 +3564,6 @@ exports.defineAutoTests = function () {
                     expect(directory.name).toCanonicallyMatch(parentName);
                     deleteEntry(directory.name, done);
                 };
-
                 createDirectory(parentName, function(parent){
                     parent.getDirectory(childName, {create: true}, function(child){
                         child.removeRecursively(function(){
@@ -3675,9 +3574,7 @@ exports.defineAutoTests = function () {
                 }, failed.bind(this, done, 'root.getDirectory - Error creating directory : ' + parentName));
             });
             it("file.spec.136 Paths should support Unicode symbols.", function (done) {
-
                 var dirName = '文件插件';
-
                 var win = function(directory){
                     expect(directory).toBeDefined();
                     expect(directory.isFile).toBe(false);
@@ -3685,7 +3582,6 @@ exports.defineAutoTests = function () {
                     expect(directory.name).toCanonicallyMatch(dirName);
                     deleteEntry(directory.name, done);
                 };
-
                 createDirectory(dirName, function(){
                     root.getDirectory(dirName, {create: false}, win,
                         failed.bind(this, done, 'root.getDirectory - Error getting directory : ' + dirName));
@@ -3732,7 +3628,6 @@ exports.defineAutoTests = function () {
                     }, failed.bind(null, done, 'resolveLocalFileSystemURL failed for content provider'));
                 });
             });
-
             // these tests ensure that you can read and copy from android_asset folder
             // for details see https://issues.apache.org/jira/browse/CB-6428
             // and https://mail-archives.apache.org/mod_mbox/cordova-dev/201508.mbox/%3C782154441.8406572.1440182722528.JavaMail.yahoo%40mail.yahoo.com%3E
@@ -3836,14 +3731,11 @@ exports.defineAutoTests = function () {
             }, MEDIUM_TIMEOUT);
         }
     });
-
 };
 //******************************************************************************************
 //***************************************Manual Tests***************************************
 //******************************************************************************************
-
 exports.defineManualTests = function (contentEl, createActionButton) {
-
     function resolveFs(fsname) {
         var fsURL = "cdvfile://localhost/" + fsname + "/";
         logMessage("Resolving URL: " + fsURL);
@@ -3859,7 +3751,6 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             }, logError("resolveLocalFileSystemURL"));
         }, logError("resolveLocalFileSystemURL"));
     }
-
     function testPrivateURL() {
         requestFileSystem(LocalFileSystem.TEMPORARY, 0, function (fileSystem) {
             logMessage("Temporary root is at " + fileSystem.root.toNativeURL());
@@ -3881,7 +3772,6 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             }, logError("getFile"));
         }, logError("requestFileSystem"));
     }
-
     function resolveFsContactImage() {
         navigator.contacts.pickContact(function(contact) {
             var logBox = document.getElementById("logContactBox");
@@ -3891,33 +3781,31 @@ exports.defineManualTests = function (contentEl, createActionButton) {
                 var photoURL = contact.photos[0].value;
                 resolveLocalFileSystemURL(photoURL, function(entry) {
                     var contactImage = document.createElement("img");
-                    var contactLabelImage = document.createElement("p");                       
-                    contactLabelImage.innerHTML = "Result contact image";                   
+                    var contactLabelImage = document.createElement("p");
+                    contactLabelImage.innerHTML = "Result contact image";
                     contactImage.setAttribute("src", entry.toURL());
                     resolveResult.innerHTML = "Success resolve\n" + entry.toURL();
                     logBox.appendChild(contactLabelImage);
                     logBox.appendChild(contactImage);
                     logBox.appendChild(resolveResult);
-                }, 
+                },
                 function(err) {
                     console.log("resolve error" + err);
-                }); 
+                });
             }
             else {
                 resolveResult.innerHTML = "Contact has no photos";
                 logBox.appendChild(resolveResult);
             }
-        }, 
+        },
         function(err) {
             console.log("contact pick error" + err);
         });
-    }    
-
+    }
     function clearLog() {
         var log = document.getElementById("info");
         log.innerHTML = "";
     }
-
     function logMessage(message, color) {
         var log = document.getElementById("info");
         var logLine = document.createElement('div');
@@ -3927,13 +3815,11 @@ exports.defineManualTests = function (contentEl, createActionButton) {
         logLine.innerHTML = message;
         log.appendChild(logLine);
     }
-
     function logError(serviceName) {
         return function (err) {
             logMessage("ERROR: " + serviceName + " " + JSON.stringify(err), "red");
         };
     }
-
     var fsRoots = {
         "ios" : "library,library-nosync,documents,documents-nosync,cache,bundle,root,private",
         "osx" : "library,library-nosync,documents,documents-nosync,cache,bundle,root,private",
@@ -3941,18 +3827,15 @@ exports.defineManualTests = function (contentEl, createActionButton) {
         "amazon-fireos" : "files,files-external,documents,sdcard,cache,cache-external,root",
         "windows": "temporary,persistent"
     };
-
     //Add title and align to content
     var div = document.createElement('h2');
     div.appendChild(document.createTextNode('File Systems'));
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
-
     div = document.createElement('h3');
     div.appendChild(document.createTextNode('Results are displayed in yellow status box below with expected results noted under that'));
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
-
     div = document.createElement('div');
     div.setAttribute("id", "button");
     div.setAttribute("align", "center");
@@ -3972,41 +3855,33 @@ exports.defineManualTests = function (contentEl, createActionButton) {
             }
         });
     }
-
-
     div = document.createElement('div');
     div.setAttribute("id", "info");
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
-
     div = document.createElement('h3');
     div.appendChild(document.createTextNode('For each test above, file or directory should be successfully found. ' +
         'Status box should say Resolving URL was Success. The first URL resolved is the internal URL. ' +
         'The second URL resolved is the absolute URL. Blue URLs must match.'));
     contentEl.appendChild(div);
-
     div = document.createElement('h3');
     div.appendChild(document.createTextNode('For Test private URL (iOS), the private URL (first blue URL in status box) ' +
         'should be successfully resolved. Status box should say Successfully resolved. Both blue URLs below ' +
         'that should match.'));
     contentEl.appendChild(div);
-
     div = document.createElement('h2');
     div.appendChild(document.createTextNode('Resolving content urls'));
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
-
     div = document.createElement('div');
     div.setAttribute("id", "contactButton");
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
-
     div = document.createElement('div');
     div.setAttribute("id", "logContactBox");
     div.setAttribute("align", "center");
     contentEl.appendChild(div);
-
     createActionButton('show-contact-image', function () {
         resolveFsContactImage();
-    }, 'contactButton');    
+    }, 'contactButton');
 };

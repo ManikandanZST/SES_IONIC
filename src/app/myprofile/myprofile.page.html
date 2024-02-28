@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-title>My Profile</ion-title>
     <ion-buttons slot="end" (click)="showPopover($event)">
-      <!-- <ion-button [routerLink]="['']">        
+      <!-- <ion-button [routerLink]="['']">
       </ion-button> -->
       <ion-button>
         <ion-icon name="ellipsis-vertical-outline" slot="icon-only" style="color: #fff;"></ion-icon>
@@ -15,18 +15,16 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content  class="bodybg">
   <!-- #region Group User -->
   <div *ngIf="type=='group'">
-
     <!-- #region Group Profile View  -->
     <div *ngIf="!editprofile" style="margin-top:20px">
       <!-- <p class="pt-30 text-center"><img alt="" src="assets/images/user.png" style="width:100px"><ion-icon class="editprofile"  (click)="Editprofile($event)"  name="create-outline"></ion-icon></p> -->
       <ion-item>
         <ion-avatar slot="start">
           <ion-icon name="person-outline"></ion-icon>
-        </ion-avatar>          
+        </ion-avatar>
         <ion-label *ngIf="type=='group'" >
           <p><b>{{FullName}}</b><br>I'm a Group User</p>
         </ion-label>
@@ -68,11 +66,9 @@
       </p>
     </div>
     <!-- #endregion -->
-
     <!-- #region Edit - Group User Profile -->
     <div *ngIf="editprofile">
       <h2 class="ion-text-center"></h2>
-
           <!-- <ion-item style="margin-bottom:0px !important" class="field">
             <ion-icon name="person-outline"></ion-icon><span class="label">First Name</span><br>
           </ion-item> -->
@@ -86,35 +82,33 @@
             <ion-input type="text" placeholder="Last Name" name="last" value="" [(ngModel)]="CustomersForm.lastname" ></ion-input>
           </p>
           <!-- <ion-item style="margin-bottom:0px !important" class="field">
-            <ion-icon name="mail-outline"></ion-icon><span class="label">Email</span><br> 
+            <ion-icon name="mail-outline"></ion-icon><span class="label">Email</span><br>
           </ion-item>  -->
           <p>
             <ion-input type="text"  placeholder="Email Address" name="email" value="" [(ngModel)]="CustomersForm.email"></ion-input>
           </p>
           <!-- <ion-item style="margin-bottom:0px !important" class="field">
-            <ion-icon name="call-outline"></ion-icon><span class="label">Phone</span><br> 
+            <ion-icon name="call-outline"></ion-icon><span class="label">Phone</span><br>
           </ion-item> -->
           <p>
             <ion-input type="text" placeholder="Phone Number" name="latname" value="" [(ngModel)]="CustomersForm.phone"></ion-input>
           </p>
-
           <!-- <ion-item style="margin-bottom:0px !important" class="field">
-            <ion-icon name="call-outline"></ion-icon><span class="label">Company Name</span><br> 
+            <ion-icon name="call-outline"></ion-icon><span class="label">Company Name</span><br>
           </ion-item> -->
           <p>
             <ion-input type="text" [disabled]="true" placeholder="Company Name" name="latname" value="" [(ngModel)]="CustomersForm.Company_Name"></ion-input>
           </p>
             <!-- <ion-item style="margin-bottom:0px !important" class="field">
-            <ion-icon name="call-outline"></ion-icon><span class="label">EIN</span><br> 
+            <ion-icon name="call-outline"></ion-icon><span class="label">EIN</span><br>
           </ion-item> -->
           <p>
             <ion-input type="text" placeholder="EIN" name="latname" value="" [(ngModel)]="CustomersForm.Ein"></ion-input>
           </p>
             <!-- <ion-item style="margin-bottom:0px !important" class="field">
-            <ion-icon name="call-outline"></ion-icon><span class="label">Select Hint Question</span><br> 
+            <ion-icon name="call-outline"></ion-icon><span class="label">Select Hint Question</span><br>
           </ion-item> -->
           <p>
-           
           <ion-select interface="popover" cssClass="my-select"   [(ngModel)]="CustomersForm.Hint_Question"  placeholder="-- Please select a hint question --" [interfaceOptions]="{ cssClass: 'my-custom-popover' }" scrollbar="true">
             <ion-select-option value="What is your pet's name?">What is your pet's name?</ion-select-option>
             <ion-select-option value="What is your favorite sports team?">What is your favorite sports team?</ion-select-option>
@@ -127,27 +121,21 @@
             <ion-select-option value="Where did you first meet your spouse?">Where did you first meet your spouse?</ion-select-option>
             <ion-select-option value="What was your mother''s maiden name?">What was your mother's maiden name?</ion-select-option>
           </ion-select>
-         
         </p>
           <!-- <ion-item style="margin-bottom:0px !important" class="field">
-            <ion-icon name="call-outline"></ion-icon><span class="label">Answer</span><br> 
+            <ion-icon name="call-outline"></ion-icon><span class="label">Answer</span><br>
           </ion-item> -->
           <p>
             <ion-input type="text" placeholder="Answer" name="latname" value="" [(ngModel)]="CustomersForm.Hint_Answer"></ion-input>
           </p>
-
           <ion-button color="medium" expand="block" (click)="customerRegistration()" class="login">Update Profile</ion-button>&nbsp;
           <ion-button expand="block"   color="medium" (click)="cancelevent()" class="cancelbutton">Cancel</ion-button>
     </div>
     <!-- #endregion -->
-
   </div>
   <!-- #endregion -->
-
-
   <!-- #region Individual User -->
   <div *ngIf="type=='individual'">
-
     <!-- #region Individual Profile View  -->
     <div *ngIf="!editprofile" style="margin-top:20px">
       <ion-item>
@@ -156,7 +144,7 @@
         </ion-avatar>
         <ion-label *ngIf="type=='individual'" >
           <p><b>{{FullName}}</b><br>I'm a Individual User</p>
-        </ion-label>        
+        </ion-label>
       </ion-item>
       <ion-item >
         <ion-avatar slot="start">
@@ -195,36 +183,28 @@
       </p>
     </div>
     <!-- #endregion -->
-    
     <!-- #region Edit - Individual User Profile -->
     <div *ngIf="editprofile">
       <h2 class="ion-text-center">Edit Profile</h2>
       <p>
         <ion-input type="text" placeholder="Name" name="first" value="" [(ngModel)]="CustomersForm.firstname" ></ion-input>
       </p>
-
       <p>
         <ion-input type="text" placeholder="Email Address" name="email" value="" [(ngModel)]="CustomersForm.email"></ion-input>
       </p>
-      
       <p>
         <ion-input type="text" placeholder="Phone Number" name="phone" value="" [(ngModel)]="CustomersForm.phone"></ion-input>
       </p>
-
       <p>
         <ion-input type="text" placeholder="Comment" name="comment" value="" [(ngModel)]="CustomersForm.Comment"></ion-input>
       </p>
-      
       <p>
         <ion-input type="text" placeholder="Company Name" name="companyname" value="" [(ngModel)]="CustomersForm.Company_Name"></ion-input>
       </p>
-        
       <p>
         <ion-input type="text" placeholder="SSN" name="SSN" value="" [(ngModel)]="CustomersForm.SSN"></ion-input>
       </p>
-        
       <p >
-       
         <ion-select interface="popover" cssClass="my-select"   [(ngModel)]="CustomersForm.Hint_Question"  placeholder="-- Please select a hint question --" [interfaceOptions]="{ cssClass: 'my-custom-popover'}"  scrollbar="true">
           <ion-select-option value="What is your pet's name?">What is your pet's name?</ion-select-option>
           <ion-select-option value="What is your favorite sports team?">What is your favorite sports team?</ion-select-option>
@@ -237,22 +217,14 @@
           <ion-select-option value="Where did you first meet your spouse?">Where did you first meet your spouse?</ion-select-option>
           <ion-select-option value="What was your mother''s maiden name?">What was your mother's maiden name?</ion-select-option>
         </ion-select>
-      
       </p>
-
-      
-
-      
       <p>
         <ion-input type="text" placeholder="Answer" name="latname" value="" [(ngModel)]="CustomersForm.Hint_Answer"></ion-input>
       </p>
-
       <ion-button color="medium" expand="block" (click)="customerRegistration()" class="login">Update Profile</ion-button>
       <ion-button color="medium" expand="block" (click)="cancelevent()" class="cancelbutton">Cancel</ion-button>
     </div>
     <!-- #endregion -->
-
   </div>
   <!-- #endregion -->
-
 </ion-content>

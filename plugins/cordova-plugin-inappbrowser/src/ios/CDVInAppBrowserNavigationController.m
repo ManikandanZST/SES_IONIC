@@ -6,9 +6,7 @@
  to you under the Apache License, Version 2.0 (the
  "License"); you may not use this file except in compliance
  with the License.  You may obtain a copy of the License at
-
  http://www.apache.org/licenses/LICENSE-2.0
-
  Unless required by applicable law or agreed to in writing,
  software distributed under the License is distributed on an
  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -16,21 +14,16 @@
  specific language governing permissions and limitations
  under the License.
  */
-
 #import "CDVInAppBrowserNavigationController.h"
-
 @implementation CDVInAppBrowserNavigationController : UINavigationController
-
 - (void) dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
     if ( self.presentedViewController) {
         [super dismissViewControllerAnimated:flag completion:completion];
     }
 }
-
 - (void) viewDidLoad {
     [super viewDidLoad];
 }
-
 - (CGRect) invertFrameIfNeeded:(CGRect)rect {
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         CGFloat temp = rect.size.width;
@@ -40,9 +33,7 @@
     rect.origin = CGPointZero;
     return rect;
 }
-
 #pragma mark CDVScreenOrientationDelegate
-
 - (BOOL)shouldAutorotate
 {
     if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(shouldAutorotate)]) {
@@ -50,14 +41,11 @@
     }
     return YES;
 }
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         return [self.orientationDelegate supportedInterfaceOrientations];
     }
-
     return 1 << UIInterfaceOrientationPortrait;
 }
-
 @end

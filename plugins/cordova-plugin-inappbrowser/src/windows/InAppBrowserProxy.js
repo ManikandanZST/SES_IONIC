@@ -18,13 +18,10 @@
  * under the License.
  *
  */
-
 /* eslint-disable standard/no-callback-literal */
 /* global Windows, setImmediate */
-
 var cordova = require('cordova');
 var urlutil = require('cordova/urlutil');
-
 var browserWrap,
     popup,
     navigationButtonsDiv,
@@ -35,17 +32,14 @@ var browserWrap,
     bodyOverflowStyle,
     navigationEventsCallback,
     hardwareBackCallback;
-
 // x-ms-webview is available starting from Windows 8.1 (platformId is 'windows')
 // http://msdn.microsoft.com/en-us/library/windows/apps/dn301831.aspx
 var isWebViewAvailable = cordova.platformId === 'windows';
-
 function attachNavigationEvents (element, callback) {
     if (isWebViewAvailable) {
         element.addEventListener('MSWebViewNavigationStarting', function (e) {
             callback({ type: 'loadstart', url: e.uri }, { keepCallback: true });
         });
-
         element.addEventListener('MSWebViewNavigationCompleted', function (e) {
             if (e.isSuccess) {
                 callback({ type: 'loadstop', url: e.uri }, { keepCallback: true });
@@ -61,7 +55,6 @@ function attachNavigationEvents (element, callback) {
                 );
             }
         });
-
         element.addEventListener('MSWebViewUnviewableContentIdentified', function (e) {
             // WebView found the content to be not HTML.
             // http://msdn.microsoft.com/en-us/library/windows/apps/dn609716.aspx
@@ -70,7 +63,6 @@ function attachNavigationEvents (element, callback) {
                 { keepCallback: true }
             );
         });
-
         element.addEventListener('MSWebViewContentLoading', function (e) {
             if (navigationButtonsDiv && popup) {
                 if (popup.canGoBack) {
@@ -78,7 +70,6 @@ function attachNavigationEvents (element, callback) {
                 } else {
                     backButton.setAttribute('disabled', 'true');
                 }
-
                 if (popup.canGoForward) {
                     forwardButton.removeAttribute('disabled');
                 } else {
@@ -90,20 +81,16 @@ function attachNavigationEvents (element, callback) {
         var onError = function () {
             callback({ type: 'loaderror', url: this.contentWindow.location }, { keepCallback: true });
         };
-
         element.addEventListener('unload', function () {
             callback({ type: 'loadstart', url: this.contentWindow.location }, { keepCallback: true });
         });
-
         element.addEventListener('load', function () {
             callback({ type: 'loadstop', url: this.contentWindow.location }, { keepCallback: true });
         });
-
         element.addEventListener('error', onError);
         element.addEventListener('abort', onError);
     }
 }
-
 var IAB = {
     close: function (win, lose) {
         setImmediate(function () {
@@ -111,13 +98,11 @@ var IAB = {
                 if (navigationEventsCallback) {
                     navigationEventsCallback({ type: 'exit' });
                 }
-
                 browserWrap.parentNode.removeChild(browserWrap);
                 // Reset body overflow style to initial value
                 document.body.style.msOverflowStyle = bodyOverflowStyle;
                 browserWrap = null;
                 popup = null;
-
                 document.removeEventListener('backbutton', hardwareBackCallback, false);
             }
         });
@@ -141,9 +126,7 @@ var IAB = {
             var target = args[1];
             var features = args[2];
             var url;
-
             navigationEventsCallback = win;
-
             if (target === '_system') {
                 url = new Windows.Foundation.Uri(strUrl);
                 Windows.System.Launcher.launchUriAsync(url);
@@ -156,34 +139,26 @@ var IAB = {
                     browserWrapStyle.rel = 'stylesheet';
                     browserWrapStyle.type = 'text/css';
                     browserWrapStyle.href = urlutil.makeAbsolute('/www/css/inappbrowser.css');
-
                     document.head.appendChild(browserWrapStyle);
-
                     browserWrap = document.createElement('div');
                     browserWrap.className = 'inAppBrowserWrap';
-
                     if (features.indexOf('fullscreen=yes') > -1) {
                         browserWrap.classList.add('inAppBrowserWrapFullscreen');
                     }
-
                     // Save body overflow style to be able to reset it back later
                     bodyOverflowStyle = document.body.style.msOverflowStyle;
-
                     browserWrap.onclick = function () {
                         setTimeout(function () {
                             IAB.close(navigationEventsCallback);
                         }, 0);
                     };
-
                     document.body.appendChild(browserWrap);
                     // Hide scrollbars for the whole body while inappbrowser's window is open
                     document.body.style.msOverflowStyle = 'none';
                 }
-
                 if (features.indexOf('hidden=yes') !== -1) {
                     browserWrap.style.display = 'none';
                 }
-
                 popup = document.createElement(isWebViewAvailable ? 'x-ms-webview' : 'iframe');
                 if (popup instanceof HTMLIFrameElement) {
                     // eslint-disable-line no-undef
@@ -194,15 +169,12 @@ var IAB = {
                 popup.style.borderWidth = '0px';
                 popup.style.width = '100%';
                 popup.style.marginBottom = '-5px';
-
                 browserWrap.appendChild(popup);
-
                 var closeHandler = function (e) {
                     setTimeout(function () {
                         IAB.close(navigationEventsCallback);
                     }, 0);
                 };
-
                 if (features.indexOf('hardwareback=yes') > -1 || features.indexOf('hardwareback') === -1) {
                     hardwareBackCallback = function () {
                         if (browserWrap.style.display === 'none') {
@@ -212,7 +184,6 @@ var IAB = {
                             // which is to exit the app if the navigation stack is empty.
                             throw 'Exit the app'; // eslint-disable-line no-throw-literal
                         }
-
                         if (popup.canGoBack) {
                             popup.goBack();
                         } else {
@@ -225,28 +196,22 @@ var IAB = {
                             // See comment above
                             throw 'Exit the app'; // eslint-disable-line no-throw-literal
                         }
-
                         closeHandler();
                     };
                 }
-
                 document.addEventListener('backbutton', hardwareBackCallback, false);
-
                 if (features.indexOf('location=yes') !== -1 || features.indexOf('location') === -1) {
                     popup.style.height = 'calc(100% - 70px)';
-
                     navigationButtonsDiv = document.createElement('div');
                     navigationButtonsDiv.className = 'inappbrowser-app-bar';
                     navigationButtonsDiv.onclick = function (e) {
                         e.cancelBubble = true;
                     };
-
                     navigationButtonsDivInner = document.createElement('div');
                     navigationButtonsDivInner.className = 'inappbrowser-app-bar-inner';
                     navigationButtonsDivInner.onclick = function (e) {
                         e.cancelBubble = true;
                     };
-
                     backButton = document.createElement('div');
                     backButton.innerText = 'back';
                     backButton.className = 'app-bar-action action-back';
@@ -255,7 +220,6 @@ var IAB = {
                             popup.goBack();
                         }
                     });
-
                     forwardButton = document.createElement('div');
                     forwardButton.innerText = 'forward';
                     forwardButton.className = 'app-bar-action action-forward';
@@ -264,31 +228,25 @@ var IAB = {
                             popup.goForward();
                         }
                     });
-
                     closeButton = document.createElement('div');
                     closeButton.innerText = 'close';
                     closeButton.className = 'app-bar-action action-close';
                     closeButton.addEventListener('click', closeHandler);
-
                     if (!isWebViewAvailable) {
                         // iframe navigation is not yet supported
                         backButton.setAttribute('disabled', 'true');
                         forwardButton.setAttribute('disabled', 'true');
                     }
-
                     navigationButtonsDivInner.appendChild(backButton);
                     navigationButtonsDivInner.appendChild(forwardButton);
                     navigationButtonsDivInner.appendChild(closeButton);
                     navigationButtonsDiv.appendChild(navigationButtonsDivInner);
-
                     browserWrap.appendChild(navigationButtonsDiv);
                 } else {
                     popup.style.height = '100%';
                 }
-
                 // start listening for navigation events
                 attachNavigationEvents(popup, navigationEventsCallback);
-
                 if (isWebViewAvailable) {
                     strUrl = strUrl.replace('ms-appx://', 'ms-appx-web://');
                 }
@@ -296,12 +254,10 @@ var IAB = {
             }
         });
     },
-
     injectScriptCode: function (win, fail, args) {
         setImmediate(function () {
             var code = args[0];
             var hasCallback = args[1];
-
             if (isWebViewAvailable && browserWrap && popup) {
                 var op = popup.invokeScriptAsync('eval', code);
                 op.oncomplete = function (e) {
@@ -316,16 +272,13 @@ var IAB = {
             }
         });
     },
-
     injectScriptFile: function (win, fail, args) {
         setImmediate(function () {
             var filePath = args[0];
             var hasCallback = args[1];
-
             if (filePath) {
                 filePath = urlutil.makeAbsolute(filePath);
             }
-
             if (isWebViewAvailable && browserWrap && popup) {
                 // CB-12364 getFileFromApplicationUriAsync does not support ms-appx-web
                 var uri = new Windows.Foundation.Uri(filePath.replace('ms-appx-web:', 'ms-appx:'));
@@ -345,25 +298,20 @@ var IAB = {
             }
         });
     },
-
     injectStyleCode: function (win, fail, args) {
         setImmediate(function () {
             var code = args[0];
             var hasCallback = args[1];
-
             if (isWebViewAvailable && browserWrap && popup) {
                 injectCSS(popup, code, hasCallback && win);
             }
         });
     },
-
     injectStyleFile: function (win, fail, args) {
         setImmediate(function () {
             var filePath = args[0];
             var hasCallback = args[1];
-
             filePath = filePath && urlutil.makeAbsolute(filePath);
-
             if (isWebViewAvailable && browserWrap && popup) {
                 // CB-12364 getFileFromApplicationUriAsync does not support ms-appx-web
                 var uri = new Windows.Foundation.Uri(filePath.replace('ms-appx-web:', 'ms-appx:'));
@@ -383,7 +331,6 @@ var IAB = {
         });
     }
 };
-
 function injectCSS (webView, cssCode, callback) {
     // This will automatically escape all thing that we need (quotes, slashes, etc.)
     var escapedCode = JSON.stringify(cssCode);
@@ -391,7 +338,6 @@ function injectCSS (webView, cssCode, callback) {
         '%s',
         escapedCode
     );
-
     var op = webView.invokeScriptAsync('eval', evalWrapper);
     op.oncomplete = function () {
         if (callback) {
@@ -401,7 +347,5 @@ function injectCSS (webView, cssCode, callback) {
     op.onerror = function () {};
     op.start();
 }
-
 module.exports = IAB;
-
 require('cordova/exec/proxy').add('InAppBrowser', module.exports);

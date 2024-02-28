@@ -1,5 +1,4 @@
 #import "NSString+SSURLEncoding.h"
-
 @implementation NSString (SSURLEncoding)
 - (NSString*)SSURLEncodedString
 {
@@ -12,7 +11,6 @@
                                 kCFStringEncodingUTF8
                           )
                      );
-  
   // we may have a URL with more than one '#' now - which iOS doesn't allow, so escape all but the first one
   NSArray *parts = [result componentsSeparatedByString:@"#"];
   NSString *finalResult = parts[0];

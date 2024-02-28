@@ -13,18 +13,13 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-
 #ifndef Keyboard_JS_HPP_
 #define Keyboard_JS_HPP_
-
 #include <string>
 #include "../public/plugin.h"
 #include "keyboard_ndk.hpp"
 #include "Logger.hpp"
-
-
 class Keyboard_JS: public JSExt {
-
 public:
     explicit Keyboard_JS(const std::string& id);
     virtual ~Keyboard_JS();
@@ -36,7 +31,5 @@ private:
     std::string m_id;
     webworks::Keyboard_NDK *m_pKeyboardController;
     webworks::Logger *m_pLogger;
-
 };
-
 #endif /* Keyboard_JS_HPP_ */

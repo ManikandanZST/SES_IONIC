@@ -1,25 +1,22 @@
 <ion-header class="bar-stable bg-trans bar bar-header">
-    <ion-toolbar>        
+    <ion-toolbar>
         <ion-buttons slot="start">
             <ion-icon name="arrow-back-outline" (click)="close()"></ion-icon>
-        </ion-buttons>        
+        </ion-buttons>
         <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
         <ion-buttons slot="end">
           <ion-button></ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
 <ion-content class="bodybg">
     <h2 class="title text_white">{{utype}} Forgot Password</h2>
-
     <div class="over">
         <h2 class="title text_label">Email Address</h2>
-        <ion-item lines="none">            
+        <ion-item lines="none">
             <ion-input class="username" type="email" placeholder="Enter your email address" [(ngModel)]="ulogin.email"></ion-input>
         </ion-item>
     </div>
-
     <ion-fab horizontal="end" vertical="bottom">
         <ion-fab-button (click)="nextPass(ulogin)">
             <ion-icon class="icn" name="arrow-forward"></ion-icon>

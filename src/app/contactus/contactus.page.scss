@@ -1,7 +1,6 @@
 .bodybg{
     --background: url('../../assets/images/background/bg-contact.jpg') no-repeat center fixed;
     // background-size: cover;
-
 }
 h2{
     color: #fff!important;
@@ -13,12 +12,9 @@ h2{
     // /* text-transform: uppercase;
     // font-family: Helvetica, Arial, Sans-Serif !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
-
-
-
 }
 ion-button{
-    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;  
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
 }
 ion-content p{
     padding: 20px;
@@ -34,13 +30,11 @@ ion-content p{
     color: rgba(255, 255, 255, 0.59) !important;
     text-align: center;
 }
-
 ion-button{
     --ion-color-base: rgba(0, 0, 0, 0.67)!important;
     --ion-color-contrast: none !important;
     text-transform: none !important;
 }
-
 .bar-header{
     background: url('../../assets/images/background/bg-contact.jpg') no-repeat center fixed;
 }

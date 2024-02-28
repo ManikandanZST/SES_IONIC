@@ -1,18 +1,12 @@
-
 .bodybg{
     --background: url('../../../assets/images/background/bg-group-1.jpg') no-repeat center fixed;
     background-size: cover;
-
 }
 ion-list{
     background: transparent;
-    // border: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow: 0 1px 3px #020200;
     padding-right: 10px;
-    // margin-top: 32px;
 	padding: 11px;
-	// color: #;
-
 }
 .amount{
 	color: #aaa;
@@ -33,9 +27,7 @@ h2,h1{
     font-size: 14px !important;
     text-align: center !important;
     width: 100% !important;
-    // margin: 0 !important;
     padding: 0 !important;
-    // line-height: 30px !important;
 }
 p{
     padding: 10px !important;

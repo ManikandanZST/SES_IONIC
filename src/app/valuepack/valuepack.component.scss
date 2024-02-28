@@ -1,18 +1,10 @@
-
 .horizontal-align {
 	display: inline-block;
 	vertical-align: top;
-	
-	
-	
-	
 	.item {
 		display: inline-block;
 		vertical-align: top;
         margin: 5px;
-	// margin-top: 18px;
-		// padding: 36px;
-	
 	}
     .item_bac{
         background-color: #0d6c09;
@@ -31,7 +23,6 @@
 .bodybg{
     --background: url('../../assets/images/background/bg-group-1.jpg') no-repeat center fixed;
     background-size: cover;
-
 }
 ion-grid{
     background: #555558;
@@ -42,23 +33,12 @@ ion-grid{
 	padding: 11px;
     color:#fff
 	// color: #;
-
 }
 .amount{
 	color: #fff;
     font-size: 15px;
 }
 .badge{
-    // padding: 3px 8px;
-    // min-width: 10px;
-    // border-radius: 10px;
-    // vertical-align: baseline;
-    // text-align: center;
-    // white-space: nowrap;
-    // font-weight: bold;
-    // font-size: 14px;
-    // line-height: 16px;
-    // background-color: #ef473a;
     color: #fff;
     text-align: center;
 }

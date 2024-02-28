@@ -2,20 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { PopoverController, ModalController, AlertController } from "@ionic/angular";
 import { CommonService } from 'src/providers/common.service';
-
 @Component({
   selector: 'app-popover',
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
 })
-
 export class PopoverComponent implements OnInit {
-
     GroupId: string;
     IndividualId: string;
     type: any;
     user_type: string;
-
     constructor(
         public router: Router,
         public popOver: PopoverController,
@@ -24,18 +20,12 @@ export class PopoverComponent implements OnInit {
         private activatedRoute: ActivatedRoute
     ) {
         this.activatedRoute.params.subscribe(params => {
-            
             this.type=params['type'];
-            
         });
     }
-
     async GotoSettings(page) {
         this.type=localStorage.getItem('type');
-        
-        
         if(this.type=="individual"){
-            
             this.router.navigate([`/`+page+`/${this.type}`])
         }else if(this.type=="group"){
             this.router.navigate([`/`+page+`/${this.type}`])
@@ -47,7 +37,6 @@ export class PopoverComponent implements OnInit {
         //this.router.navigate(["/" + page, {}]);
         this.popOver.dismiss();
     }
-
     ngOnInit(): void {
         this.GroupId=localStorage.getItem("loginuserid");
         this.IndividualId=localStorage.getItem("Userid");
@@ -55,11 +44,9 @@ export class PopoverComponent implements OnInit {
     }
     logout(){
         this.type=localStorage.getItem('type');
-        
           if(this.type=="individual"){
             this.router.navigate([`/login/${this.type}`]).then(() => {
               localStorage.clear();
-
               window.location.reload();
             });
           }else if(this.type=="group"){
@@ -67,8 +54,6 @@ export class PopoverComponent implements OnInit {
               localStorage.clear();
               window.location.reload();
             });
-
           }
-
         }
 }

@@ -1,7 +1,5 @@
 // included by json_value.cpp
 // everything is within Json namespace
-
-
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -9,7 +7,6 @@
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
-
 ValueIteratorBase::ValueIteratorBase()
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
    : current_()
@@ -23,8 +20,6 @@ ValueIteratorBase::ValueIteratorBase()
    iterator_.array_ = ValueInternalArray::IteratorState();
 }
 #endif
-
-
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
 ValueIteratorBase::ValueIteratorBase( const Value::ObjectValues::iterator &current )
    : current_( current )
@@ -37,15 +32,12 @@ ValueIteratorBase::ValueIteratorBase( const ValueInternalArray::IteratorState &s
 {
    iterator_.array_ = state;
 }
-
-
 ValueIteratorBase::ValueIteratorBase( const ValueInternalMap::IteratorState &state )
    : isArray_( false )
 {
    iterator_.map_ = state;
 }
 #endif
-
 Value &
 ValueIteratorBase::deref() const
 {
@@ -57,9 +49,7 @@ ValueIteratorBase::deref() const
    return ValueInternalMap::value( iterator_.map_ );
 #endif
 }
-
-
-void 
+void
 ValueIteratorBase::increment()
 {
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -70,9 +60,7 @@ ValueIteratorBase::increment()
    ValueInternalMap::increment( iterator_.map_ );
 #endif
 }
-
-
-void 
+void
 ValueIteratorBase::decrement()
 {
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -83,9 +71,7 @@ ValueIteratorBase::decrement()
    ValueInternalMap::decrement( iterator_.map_ );
 #endif
 }
-
-
-ValueIteratorBase::difference_type 
+ValueIteratorBase::difference_type
 ValueIteratorBase::computeDistance( const SelfType &other ) const
 {
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -94,15 +80,13 @@ ValueIteratorBase::computeDistance( const SelfType &other ) const
 # else
    // Iterator for null value are initialized using the default
    // constructor, which initialize current_ to the default
-   // std::map::iterator. As begin() and end() are two instance 
+   // std::map::iterator. As begin() and end() are two instance
    // of the default std::map::iterator, they can not be compared.
    // To allow this, we handle this comparison specifically.
    if ( isNull_  &&  other.isNull_ )
    {
       return 0;
    }
-
-
    // Usage of std::distance is not portable (does not compile with Sun Studio 12 RogueWave STL,
    // which is the one used by default).
    // Using a portable hand-made version for non random iterator instead:
@@ -120,9 +104,7 @@ ValueIteratorBase::computeDistance( const SelfType &other ) const
    return ValueInternalMap::distance( iterator_.map_, other.iterator_.map_ );
 #endif
 }
-
-
-bool 
+bool
 ValueIteratorBase::isEqual( const SelfType &other ) const
 {
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -137,9 +119,7 @@ ValueIteratorBase::isEqual( const SelfType &other ) const
    return ValueInternalMap::equals( iterator_.map_, other.iterator_.map_ );
 #endif
 }
-
-
-void 
+void
 ValueIteratorBase::copy( const SelfType &other )
 {
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -150,9 +130,7 @@ ValueIteratorBase::copy( const SelfType &other )
    iterator_.map_ = other.iterator_.map_;
 #endif
 }
-
-
-Value 
+Value
 ValueIteratorBase::key() const
 {
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -174,9 +152,7 @@ ValueIteratorBase::key() const
    return Value( memberName );
 #endif
 }
-
-
-UInt 
+UInt
 ValueIteratorBase::index() const
 {
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -190,8 +166,6 @@ ValueIteratorBase::index() const
    return Value::UInt( -1 );
 #endif
 }
-
-
 const char *
 ValueIteratorBase::memberName() const
 {
@@ -204,8 +178,6 @@ ValueIteratorBase::memberName() const
    return "";
 #endif
 }
-
-
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -213,12 +185,9 @@ ValueIteratorBase::memberName() const
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
-
 ValueConstIterator::ValueConstIterator()
 {
 }
-
-
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
 ValueConstIterator::ValueConstIterator( const Value::ObjectValues::iterator &current )
    : ValueIteratorBase( current )
@@ -229,21 +198,17 @@ ValueConstIterator::ValueConstIterator( const ValueInternalArray::IteratorState 
    : ValueIteratorBase( state )
 {
 }
-
 ValueConstIterator::ValueConstIterator( const ValueInternalMap::IteratorState &state )
    : ValueIteratorBase( state )
 {
 }
 #endif
-
 ValueConstIterator &
 ValueConstIterator::operator =( const ValueIteratorBase &other )
 {
    copy( other );
    return *this;
 }
-
-
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -251,12 +216,9 @@ ValueConstIterator::operator =( const ValueIteratorBase &other )
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
-
 ValueIterator::ValueIterator()
 {
 }
-
-
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
 ValueIterator::ValueIterator( const Value::ObjectValues::iterator &current )
    : ValueIteratorBase( current )
@@ -267,23 +229,19 @@ ValueIterator::ValueIterator( const ValueInternalArray::IteratorState &state )
    : ValueIteratorBase( state )
 {
 }
-
 ValueIterator::ValueIterator( const ValueInternalMap::IteratorState &state )
    : ValueIteratorBase( state )
 {
 }
 #endif
-
 ValueIterator::ValueIterator( const ValueConstIterator &other )
    : ValueIteratorBase( other )
 {
 }
-
 ValueIterator::ValueIterator( const ValueIterator &other )
    : ValueIteratorBase( other )
 {
 }
-
 ValueIterator &
 ValueIterator::operator =( const SelfType &other )
 {

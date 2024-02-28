@@ -6,7 +6,6 @@ import { AddexistuserComponent } from './addexistuser/addexistuser.component';
 import { AddnewuserComponent } from './addnewuser/addnewuser.component';
 import { DeactiveUserslistComponentComponent } from './deactive-userslist-component/deactive-userslist-component.component';
 import { GrouptrainingreportComponent } from './grouptrainingreport/grouptrainingreport.component';
-
 import { HomePage } from './home.page';
 import { OverallvalueComponent } from './overallvalue/overallvalue.component';
 import { PaymentModalComponent } from './payment-modal/payment-modal.component';
@@ -14,7 +13,6 @@ import { PurchasecourseComponent } from './purchasecourse/purchasecourse.compone
 import { PurchaseexamComponent } from './purchaseexam/purchaseexam.component';
 import { PurchasevaluepackComponent } from './purchasevaluepack/purchasevaluepack.component';
 import { UserslistComponent } from './userslist/userslist.component';
-
 const routes: Routes = [
   {
     path: '',
@@ -61,7 +59,6 @@ const routes: Routes = [
     component: GrouptrainingreportComponent
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)      ],
   exports: [RouterModule],

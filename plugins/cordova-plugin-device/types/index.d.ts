@@ -3,7 +3,6 @@
 // Definitions by: Microsoft Open Technologies Inc <http://msopentech.com>
 //                 Tim Brust <https://github.com/timbru31>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
 /**
  * This plugin defines a global device object, which describes the device's hardware and software.
  * Although the object is in the global scope, it is not available until after the deviceready event.
@@ -31,5 +30,4 @@ interface Device {
     /** Get the device hardware serial number. */
     serial: string;
 }
-
 declare var device: Device;

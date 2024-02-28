@@ -13,7 +13,6 @@ table, th, td {
     padding: 5px !important;
     text-align: left !important;
   }
-  
   td{
     color: #f1f1f1 !important;
     padding: 5px !important;
@@ -25,12 +24,9 @@ table, th, td {
     margin-top: 43px !important;
     margin-bottom: 43px;
   }
-
-
  .bodybg{
   --background: url('../../../assets/images/background/bg-money.jpg') no-repeat center fixed;
   background-size: cover;
-
 }
 ion-item{
   --background: transparent;
@@ -38,7 +34,6 @@ ion-item{
   box-shadow: 0 1px 3px #020200;
   padding-right: 10px;
   margin-top: 32px;
-
 }
 ion-menu-button{
   color:#fff !important

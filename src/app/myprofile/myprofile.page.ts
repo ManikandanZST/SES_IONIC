@@ -5,7 +5,6 @@ import { LoginService } from '../../providers/login.service';
 import { PopoverController } from "@ionic/angular";
 import { PopoverComponent } from '../popover/popover.component';
 // import { PopoverComponent } from '../popover/popover.component';
-
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.page.html',
@@ -28,38 +27,29 @@ export class MyprofilePage implements OnInit {
   Hint_Question: any;
   IndividualId: string;
   SSN: any;
-
   constructor(private activatedRoute: ActivatedRoute,private loginService: LoginService,private common: CommonService,public popOver: PopoverController) {
     this.activatedRoute.params.subscribe(params => {
-      
       this.type=params['type'];
-      
-
  });
   }
-
   ngOnInit() {
     this.GroupId=localStorage.getItem("loginuserid");
     this.IndividualId=localStorage.getItem("Userid");
     this.GetGroupUser();
   }
-
   GetGroupUser(){
     this.common.presentLoading();
     if(this.type=="group"){
       var lnk =  'GetGroupUser?GroupId='+this.GroupId;
-
     }else
     {
         var lnk =  'GetUser/'+this.IndividualId;
     }
     this.loginService.getData(lnk).then(
       (Response: any) => {
-        
         this.common.closeLoading();
         if(this.type=="individual")
         {
-          
           this.info=Response;
           this.FullName=this.info.fullName;
           this.Email=this.info.email;
@@ -70,7 +60,6 @@ export class MyprofilePage implements OnInit {
           this.Hint_Answer=this.info.answer;
           this.Hint_Question=this.info.question;
         }else{
-          
           this.info=Response.Group;
           this.FullName=this.info.First_Name + this.info.Last_Name;
           this.Email=this.info.Email;
@@ -82,16 +71,13 @@ export class MyprofilePage implements OnInit {
         }
       },
       err => {
-
       }
     );
   }
-
   Editprofile(event:any){
     this.editprofile = true;
     if(this.type == "individual")
     {
-      
       this.CustomersForm.firstname=this.info.fullName;
       this.CustomersForm.email=this.info.email;
       this.CustomersForm.phone=this.info.phone;
@@ -103,7 +89,6 @@ export class MyprofilePage implements OnInit {
     }
     else
     {
-      
       this.CustomersForm.firstname=this.info.First_Name;
       this.CustomersForm.lastname=this.info.Last_Name;
       this.CustomersForm.email=this.info.Email;
@@ -113,11 +98,7 @@ export class MyprofilePage implements OnInit {
       this.CustomersForm.Hint_Answer=this.info.Hint_Answer ;
       this.CustomersForm.Hint_Question=this.info.Hint_Question ;
     }
-
-    
-
   }
-
   async customerRegistration() {
     if (this.CustomersForm.firstname == null || this.CustomersForm.firstname == '') {
       this.common.presentToast('Enter your First name')
@@ -143,17 +124,12 @@ export class MyprofilePage implements OnInit {
       this.common.presentToast('Enter your Answer');
     }
     else {
-
       if(this.type == "individual")
       {
         this.common.presentLoading();
-        
         this.CustomersForm.IndividualId = this.IndividualId;
-
         var data = 'fullName='+this.CustomersForm.firstname+'&company='+this.CustomersForm.Company_Name+'&SSN='+this.CustomersForm.SSN+'&email='+this.CustomersForm.email+'&question='+this.CustomersForm.Hint_Question+'&answer='+this.CustomersForm.Hint_Answer+'&userId='+this.CustomersForm.IndividualId+'&comment='+this.CustomersForm.Comment+'&phone='+this.CustomersForm.phone;
-
         this.loginService.profile_individual(data).then((res) => {
-          
           if (res.Status == 'Success') {
             this.common.closeLoading();
             this.common.presentToast('Updated Successfully');
@@ -166,7 +142,6 @@ export class MyprofilePage implements OnInit {
             this.common.presentToast(`Connection error`);
           }
         }, err => {
-          
           this.common.closeLoading();
           this.common.presentToast(`Connection error`);
           // this.alert.errorMsg('Connection Error', '');
@@ -175,13 +150,9 @@ export class MyprofilePage implements OnInit {
       else
       {
         this.common.presentLoading();
-        
         this.CustomersForm.groupid = this.GroupId;
-
         var data= 'Group_Id='+this.GroupId+'&First_Name='+this.CustomersForm.firstname+'&Last_Name='+this.CustomersForm.lastname+'&Email='+this.CustomersForm.email+'&EIN='+this.CustomersForm.Ein+'&Phone='+this.CustomersForm.phone+'&Hint_Question='+this.CustomersForm.Hint_Question+'&Hint_Answer='+this.CustomersForm.Hint_Answer;
-
         this.loginService.profile_group(data).then((res) => {
-
           if (res.Status == 'Success') {
             this.common.closeLoading();
             this.common.presentToast('Updated Successfully');
@@ -193,23 +164,17 @@ export class MyprofilePage implements OnInit {
             this.common.closeLoading();
           }
         }, err => {
-          
           this.common.closeLoading();
           this.common.presentToast(`Connection error`);
           // this.alert.errorMsg('Connection Error', '');
         });
       }
-
     }
   }
-
   // popoverOptions = {
   //   cssClass: 'my-select',
   //   height: '200px'
   // };
-
-
-
   async showPopover(ev: any) {
     const popover = await this.popOver.create({
       component: PopoverComponent,
@@ -218,12 +183,10 @@ export class MyprofilePage implements OnInit {
     });
     popover.onDidDismiss().then(data=>{
       if(data !=null){
-
       }
     })
     await popover.present();
   }
-
   cancelevent(){
     this.editprofile = false;
     this.ngOnInit();

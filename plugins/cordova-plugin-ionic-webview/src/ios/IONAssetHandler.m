@@ -1,13 +1,10 @@
 #import "IONAssetHandler.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "CDVWKWebViewEngine.h"
-
 @implementation IONAssetHandler
-
 -(void)setAssetPath:(NSString *)assetPath {
     self.basePath = assetPath;
 }
-
 - (instancetype)initWithBasePath:(NSString *)basePath andScheme:(NSString *)scheme {
     self = [super init];
     if (self) {
@@ -16,14 +13,12 @@
     }
     return self;
 }
-
 - (void)webView:(WKWebView *)webView startURLSchemeTask:(id <WKURLSchemeTask>)urlSchemeTask
 {
     NSString * startPath = @"";
     NSURL * url = urlSchemeTask.request.URL;
     NSString * stringToLoad = url.path;
     NSString * scheme = url.scheme;
-
     if ([scheme isEqualToString:self.scheme]) {
         if ([stringToLoad hasPrefix:@"/_app_file_"]) {
             startPath = [stringToLoad stringByReplacingOccurrencesOfString:@"/_app_file_" withString:@""];
@@ -57,18 +52,14 @@
         NSDictionary * headers = @{ @"Content-Type" : mimeType, @"Cache-Control": @"no-cache"};
         response = [[NSHTTPURLResponse alloc] initWithURL:localUrl statusCode:statusCode HTTPVersion:nil headerFields:headers];
     }
-    
     [urlSchemeTask didReceiveResponse:response];
     [urlSchemeTask didReceiveData:data];
     [urlSchemeTask didFinish];
-
 }
-
 - (void)webView:(nonnull WKWebView *)webView stopURLSchemeTask:(nonnull id<WKURLSchemeTask>)urlSchemeTask
 {
     NSLog(@"stop");
 }
-
 -(NSString *) getMimeType:(NSString *)fileExtension {
     if (fileExtension && ![fileExtension isEqualToString:@""]) {
         NSString *UTI = (__bridge_transfer NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)fileExtension, NULL);
@@ -78,7 +69,6 @@
         return @"text/html";
     }
 }
-
 -(BOOL) isMediaExtension:(NSString *) pathExtension {
     NSArray * mediaExtensions = @[@"m4v", @"mov", @"mp4",
                            @"aac", @"ac3", @"aiff", @"au", @"flac", @"m4a", @"mp3", @"wav"];
@@ -87,6 +77,4 @@
     }
     return NO;
 }
-
-
 @end

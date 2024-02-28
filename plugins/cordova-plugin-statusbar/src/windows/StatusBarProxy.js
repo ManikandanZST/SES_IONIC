@@ -17,34 +17,28 @@
  * under the License.
  *
  */
-
 /* global Windows */
-
 var _supported = null; // set to null so we can check first time
-
 function isSupported() {
     // if not checked before, run check
     if (_supported === null) {
-        var viewMan = Windows.UI.ViewManagement; 
+        var viewMan = Windows.UI.ViewManagement;
         _supported = (viewMan.StatusBar && viewMan.StatusBar.getForCurrentView);
     }
     return _supported;
 }
-
 function getViewStatusBar() {
     if (!isSupported()) {
         throw new Error("Status bar is not supported");
     }
     return Windows.UI.ViewManagement.StatusBar.getForCurrentView();
 }
-
 function hexToRgb(hex) {
     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, function (m, r, g, b) {
         return r + r + g + g + b + b;
     });
-
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
         r: parseInt(result[1], 16),
@@ -52,7 +46,6 @@ function hexToRgb(hex) {
         b: parseInt(result[3], 16)
     } : null;
 }
-
 module.exports = {
     _ready: function(win, fail) {
         if(isSupported()) {
@@ -63,31 +56,26 @@ module.exports = {
     overlaysWebView: function () {
         // not supported
     },
-
     styleDefault: function () {
         // dark text ( to be used on a light background )
         if (isSupported()) {
             getViewStatusBar().foregroundColor = { a: 0, r: 0, g: 0, b: 0 };
         }
     },
-
     styleLightContent: function () {
         // light text ( to be used on a dark background )
         if (isSupported()) {
             getViewStatusBar().foregroundColor = { a: 0, r: 255, g: 255, b: 255 };
         }
     },
-
     styleBlackTranslucent: function () {
         // #88000000 ? Apple says to use lightContent instead
         return module.exports.styleLightContent();
     },
-
     styleBlackOpaque: function () {
         // #FF000000 ? Apple says to use lightContent instead
         return module.exports.styleLightContent();
     },
-
     backgroundColorByHexString: function (win, fail, args) {
         var rgb = hexToRgb(args[0]);
         if(isSupported()) {
@@ -96,14 +84,12 @@ module.exports = {
             statusBar.backgroundOpacity = 1;
         }
     },
-
     show: function (win, fail) {
         // added support check so no error thrown, when calling this method
         if (isSupported()) {
             getViewStatusBar().showAsync().done(win, fail);
         }
     },
-
     hide: function (win, fail) {
         // added support check so no error thrown, when calling this method
         if (isSupported()) {

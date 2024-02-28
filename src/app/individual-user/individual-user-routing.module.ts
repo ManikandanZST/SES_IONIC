@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { IndividualUserComponent } from './individual-user/individual-user.component';
 import { PurchaseEntirePackageComponent } from './purchase-entire-package/purchase-entire-package.component';
 import { PurchaseinformationformComponent } from './purchaseinformationform/purchaseinformationform.component';
-
 const routes: Routes = [
   {
     path: '',
@@ -17,9 +16,7 @@ const routes: Routes = [
     path: 'PurchaseIF',
     component: PurchaseinformationformComponent
   },
- 
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

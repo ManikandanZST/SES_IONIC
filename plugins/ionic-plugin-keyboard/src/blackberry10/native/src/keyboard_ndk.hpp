@@ -13,10 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-
 #ifndef Keyboard_NDK_HPP_
 #define Keyboard_NDK_HPP_
-
 #include <string>
 #include <pthread.h>
 #include <bb/AbstractBpsEventHandler>
@@ -28,33 +26,18 @@
 #include <bps/event.h>
 #include <string>
 #include <sstream>
-
 class Keyboard_JS;
-
 namespace webworks {
-
 class Keyboard_NDK  {
 public:
 	explicit Keyboard_NDK(Keyboard_JS *parent = NULL);
 	virtual ~Keyboard_NDK();
     virtual void event(bps_event_t *event);
-
     void callKeyboardEmail(); // Method Calls the Keyboard style Email (default)
-
     void callKeyboardNumber(); // Method Calls the Keyboard style number
-
     void cancelKeyboard(); // Method cancel the keyboard
-
 	std::string keyboardStartThread();
-
-
-
-
-
-
-
 private:
-
 	Keyboard_JS *m_pParent;
 	int keyboardProperty;
 	int keyboardThreadCount;
@@ -63,9 +46,6 @@ private:
 	pthread_t m_thread;
 	pthread_cond_t cond;
 	pthread_mutex_t mutex;
-
 };
-
 } // namespace webworks
-
 #endif /* Keyboard_NDK_HPP_ */

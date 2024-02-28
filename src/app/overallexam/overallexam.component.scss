@@ -1,18 +1,12 @@
-
 .horizontal-align {
 	display: inline-block;
 	vertical-align: top;
-	
-	
-	
-	
 	.item {
 		display: inline-block;
 		vertical-align: top;
         margin: 5px;
 	// margin-top: 18px;
 		// padding: 36px;
-	
 	}
     .item_bac{
         background-color: #0d6c09;
@@ -28,12 +22,9 @@
     line-height: 16px;
     }
 }
-
-
 .bodybg{
     --background: url('../../assets/images/background/bg-group-1.jpg') no-repeat center fixed;
     background-size: cover;
-
 }
 ion-grid{
     background: #555558;
@@ -44,7 +35,6 @@ ion-grid{
 	padding: 11px;
     color:#fff
 	// color: #;
-
 }
 .amount{
 	color: #fff;

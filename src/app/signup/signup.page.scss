@@ -8,29 +8,22 @@ ion-checkbox{
     margin-right:10px;
     --ion-color-base:rgba(74, 255, 0, 0.3)!important;
 }
-
 ion-input, ion-select{
     border: 0px;
     border-bottom: 1px solid #ddd;
     border-radius: 30px;
     --padding-start: 0px !important;
-    --placeholder-color: darkgrey !important; 
+    --placeholder-color: darkgrey !important;
     --placeholder-opacity: 1 !important;
     font-size: 14px !important;
     color: #fff !important;
 }
-
 .bodybg{
     --background: url('../../assets/images/background/bg-register.jpg') no-repeat center fixed;
     background-size: cover;
-
 }
 ion-item{
     --background: transparent;
-    // border: 1px solid rgba(255, 255, 255, 0.4);
-    // box-shadow: 0 1px 3px #020200;
-    // padding-right: 10px;
-
 }
 ion-menu-button,ion-label{
     color:#fff !important
@@ -56,14 +49,13 @@ h2{
     color: rgba(74, 255, 0, 0.3)!important;
     padding: 10px 0px 10px 10px !important;
 }
-//my-custom-class 
 ::ng-deep .my-custom-class .alert-head.sc-ion-alert-md{
     padding: 10px !important;
     border-bottom: 1px solid #4c7101;
 }
 ::ng-deep .my-custom-class h2.alert-title.sc-ion-alert-md{
     padding: 15px 0px !important;
-    border-bottom: 1px solid #4c7101 !important;    
+    border-bottom: 1px solid #4c7101 !important;
     font-size: 15px !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
     color: #4c7101 !important;
@@ -83,24 +75,24 @@ h2{
     background-color: #444 !important;
     color: #fff !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
-    padding: 10px 20px !important; 
+    padding: 10px 20px !important;
 }
 ::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-cancel:hover{
     border-color: transparent !important;
     background-color: #444 !important;
-    color: #fff !important;    
+    color: #fff !important;
 }
 ::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-confirm{
     border-color: transparent !important;
     background-color: #886aea !important;
     color: #fff !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
-    padding: 10px 20px !important; 
+    padding: 10px 20px !important;
 }
 ::ng-deep .my-custom-class .alert-button.sc-ion-alert-md.alert-button-confirm:hover{
     border-color: transparent !important;
     background-color: #444 !important;
-    color: #6b46e5 !important;    
+    color: #6b46e5 !important;
 }
 ::ng-deep .my-custom-class .alert-wrapper.sc-ion-alert-md{
     background: #fff !important;
@@ -111,7 +103,6 @@ h2{
     font-weight: 500 !important;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important;
 }
-//end my-custom-class 
 .ic{
     position: relative;
 }
@@ -133,7 +124,6 @@ h2{
 .over{
     display: flex;
     justify-content: space-between;
-    //max-width: 50% !important;
     margin: 0px 15%;
 }
 .bar-header{

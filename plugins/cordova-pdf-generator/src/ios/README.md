@@ -1,153 +1,95 @@
 # BNHtmlPdfKit
-
 BNHtmlPdfKit easily turns HTML data from an HTML string or URL into a PDF file on iOS. Feel free to fork this project and help make it better!
-
 If you are using BNHtmlPdfKit in your app I would love to [hear about it](mailto:brentnycum@gmail.com)!
-
 ## Adding BNHtmlPdfKit To Your Project
-
 Just copy `BNHtmlPdfKit.h` and `BNHtmlPdfKit.m` into your project.
-
 ### CocoaPods
-
 ```ruby
 pod 'BNHtmlPdfKit', :git => 'https://github.com/brentnycum/BNHtmlPdfKit'
 ```
-
 ## Background
-
 This all started with a [post of mine](http://itsbrent.net/2011/06/printing-converting-uiwebview-to-pdf/) back in June of 2011, when I was trying to save Html data to a PDF and copy the PDF data to an email as an attachment. I had always wanted to make the code better and was finally able to. The post of mine generates a bunch of traffic to my blog to this day, by an order of 10 fold to the next top page and is still a very popular problem that people are working on.
-
 ## Usage
-
 You can either use blocks based or delegate based calling.
-
 ### Blocks
-
 There are quite a few block methods provided for convenience.
-
 ```objective-c
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url customPageSize:(CGSize)pageSize success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url customPageSize:(CGSize)pageSize topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename customPageSize:(CGSize)pageSize success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
-
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename customPageSize:(CGSize)pageSize topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
 ```
-
 To use them simply call:
-
 ```objective-c
-
 htmlPdfKit = [BNHtmlPdfKit saveUrlAsPdf:[NSURL URLWithString:@"http://itsbrent.net"] toFile:@"...itsbrent.pdf" pageSize:BNPageSizeA6 success:^(NSString *pdfFileName) {
-
 	NSLog(@"Done");
-
 } failure:^(NSError *err) {
-
 	NSLog(@"Failure");
-
 }];
-
 ```
-
-
 ### Delegates
-
 Be sure to retain a reference to the `BNHtmlPdfKit` object outside the scope of the calling method. Otherwise, no delegate methods will be called:
-
 ```objective-c
 - (void) createPdf:(id)sender {
     _htmlPdfKit = [[BNHtmlPdfKit alloc] init];
     _htmlPdfKit.delegate = self;
     [_htmlPdfKit saveUrlAsPdf:[NSURL URLWithString:@"http://itsbrent.net/index.html"]];
 }
-
 ...
-
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfData:(NSData *)data {
 	...
 }
-
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfFile:(NSString *)file {
 	...
 }
-
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didFailWithError:(NSError *)error {
 	...
 }
-
 ```
-
 ### Initializers
-
 ```objective-c
 - (id)init;
 - (id)initWithPageSize:(BNPageSize)pageSize;
 - (id)initWithCustomPageSize:(CGSize)pageSize;
 ```
-
 Default initializer has default page size based on locale (thanks Pierre Bernard) and 1/4" margins.
-
 ### Saving a URL
-
 ```objective-c
 BNHtmlPdfKit *htmlPdfKit = [[BNHtmlPdfKit alloc] init];
 htmlPdfKit.delegate = self;
 [htmlPdfKit saveUrlAsPdf:[NSURL URLWithString:@"http://itsbrent.net"] toFile:@"...itsbrent.pdf"];
 ```
-
 To just save PDF data.
-
 ```objective-c
 [htmlPdfKit saveUrlAsPdf:[NSURL URLWithString:@"http://itsbrent.net"]];
 ```
-
 ### Saving an HTML String
-
 ```objective-c
 BNHtmlPdfKit *htmlPdfKit = [[BNHtmlPdfKit alloc] init];
 htmlPdfKit.delegate = self;
 [htmlPdfKit saveHtmlAsPdf:@"<html>..." toFile:@"...itsbrent.pdf"];
 ```
-
 To just save PDF data.
-
 ```objective-c
 [htmlPdfKit saveHtmlAsPdf:@"<html>..."];
 ```
-
 ### Delegate Methods
-
 ```objective-c
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfData:(NSData *)data;
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfFile:(NSString *)file;
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didFailWithError:(NSError *)error;
 ```
-
 `didSavePdfData` is called whenever PDF data is generated for an Html string or URL. `didSavePdfFile` is called whenever a PDF file was saved using the `toFile` methods.
-
 ### Page Sizes
-
 BNHtmlPdfKit has support for many of the top [paper sizes](http://en.wikipedia.org/wiki/Paper_size).
-
  * Letter - `BNPageSizeLetter`
  * Government Letter - `BNPageSizeGovernmentLetter`
  * Legal - `BNPageSizeLegal`
@@ -200,44 +142,29 @@ BNHtmlPdfKit has support for many of the top [paper sizes](http://en.wikipedia.o
  * Japanese B10 - `BNPageSizeJapaneseB10`
  * Japanese B11 - `BNPageSizeJapaneseB11`
  * Japanese B12 - `BNPageSizeJapaneseB12`
-
 ### Custom Page Sizes
-
 BNHtmlPdfKit also supports custom page sizes by using the `customPageSize` property. Specify your page size in inches * 72.0f.
-
 ```objective-c
 htmlPdfKit.customPageSize = CGSizeMake(8.5f * 72.0f, 11.0f * 72.0f);
 ```
-
 ### Landscape Support
-
 Support for setting a paper size and setting as landscape is available by either using the `landscape` property or by using the custom init method below.
-
 ```objective-c
 - (id)initWithPageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape;
 ```
-
 ### Margin Sizes
-
 Default margin size is set to 1/4".
-
 ```objective-c
 htmlPdfKit.topAndBottomMarginSize = 0.25f * 72.0f;
 htmlPdfKit.leftAndRightMarginSize = 0.25f * 72.0f;
 ```
-
 ## Todo
-
  * Fix page sizes to not use rounded inch values.
  * Custom Top, Left, Bottom, and Right margins
-
 ## Contact
-
  * [http://itsbrent.net](http://itsbrent.net)
  * [@BrentNycum](http://twitter.com/brentnycum)
-
 ## Thanks
-
  * [Brent Anderson](https://github.com/brentjanderson) for commit [6767874ecd](https://github.com/brentnycum/BNHtmlPdfKit/commit/6767874ecd381f1659aaed57a40531b757385e43).
  * [Pierre Bernard](https://github.com/gloubibou) who also has his own fork [gloubibou/BNHtmlPdfKit](https://github.com/gloubibou/BNHtmlPdfKit).
  * [Laurent Denoue](https://twitter.com/ldenoue) for finding [this bug](https://github.com/brentnycum/BNHtmlPdfKit/commit/77b5d51ae3f297bc69f52a9ec7b1db3e19b19786).

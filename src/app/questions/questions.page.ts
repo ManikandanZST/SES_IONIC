@@ -5,13 +5,11 @@ import { CommonService } from 'src/providers/common.service';
 import { LoginService } from '../../providers/login.service';
 import { WebService } from '../../providers/web.service';
 import { IonSlides } from '@ionic/angular';
-
 @Component({
     selector: 'app-questions',
     templateUrl: './questions.page.html',
     styleUrls: ['./questions.page.scss'],
 })
-
 export class QuestionsPage implements OnInit {
     public options = {
         initialSlide: 0,
@@ -33,33 +31,25 @@ export class QuestionsPage implements OnInit {
     @ViewChild('mySlider') slides: IonSlides;
     module_id: any;
     CourseId: any;
-
     constructor(public router:Router, private commonService: CommonService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private webService: WebService) {
         this.activatedRoute.params.subscribe(params => {
             this.sectionId=params['sectionId'];
-            
             localStorage.setItem("sectinoID",this.sectionId);
             this.testID=params['testID'];
             localStorage.setItem("testID",this.testID);
-            
             this.sectionName=params['sectionName'];
-            
             this.timer=params['timer'];
             this.module_id=params['module'];
             this.CourseId=params['back']
             //this.timer='01';    //To change timer for testing
-            
         });
     }
-
     ngOnInit() {
         this.userid = localStorage.getItem("Userid");
-        
         var stime = this.startTime();
         localStorage.setItem("stime",this.dayTime());
         this.GetQuestions();
     }
-
     startTime()
     {
         var  conDate = new Date();
@@ -76,7 +66,6 @@ export class QuestionsPage implements OnInit {
         {
             dd='0'+dd;
         }
-
         if(MM<10)
         {
             MM='0'+MM;
@@ -84,7 +73,6 @@ export class QuestionsPage implements OnInit {
         var endmonth1 = dd+'.'+MM+'.'+yy+' '+HH+':'+MIN+':'+SEC;
         return endmonth1;
     }
-
     dayTime()
     {
         var  conDate = new Date();
@@ -101,7 +89,6 @@ export class QuestionsPage implements OnInit {
         {
             dd='0'+dd;
         }
-
         if(MM<10)
         {
             MM='0'+MM;
@@ -109,37 +96,28 @@ export class QuestionsPage implements OnInit {
         var endmonth1 = yy+'-'+MM+'-'+dd+' '+HH+':'+MIN+':'+SEC;
         return endmonth1;
     }
-
     GetQuestions(){
         this.commonService.presentLoading();
         var id = this.sectionId;
         var testID = this.testID;
         var minutes = this.timer;
-
         if(testID == 0){
            localStorage.setItem("testID",'1');
         }
         else{
             localStorage.setItem("testID",this.testID);
         }
-
         this.title = this.sectionName;
-
-        
-
         var stime = localStorage.getItem("stime");
         var lnk = 'GetQuestions/?sectionid='+id+'&userId='+this.userid+'&starttime='+stime+'&testID='+testID;
         this.commonService.closeLoading();
         this.webService.GetQuestions(lnk).then(
             (Response: any) => {
-
                 this.Questions = Response;
                 this.Questions.forEach((value, key) => {
                     this.questionsOver[key] = value;
                 });
-
                 var element, endTime, hours, mins, msLeft, time, seconds=0;
-
                 function updateTimer()
                 {
                     msLeft = endTime - (+new Date);
@@ -167,7 +145,6 @@ export class QuestionsPage implements OnInit {
                         }, time.getUTCMilliseconds() + 500 );
                     }
                     //$scope.showSlide.div = showSlide;
-
                 }
                 element = document.getElementById( "countdown2" );
                 endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
@@ -179,30 +156,22 @@ export class QuestionsPage implements OnInit {
             }
         );
     }
-
     next(){
-        
         this.slides.slideNext();
-
         this.slides.getActiveIndex().then(index => {
-            
             if(index == 0 || index == undefined){
                 this.cancel = true;
             }
             else if ((index+1) == this.questionsOver.length){
                 this.nextbtn = false;
             }else{
-                
                 this.cancel = false;
             }
-
         });
     }
-
     prev(){
         this.slides.slidePrev();
         this.slides.getActiveIndex().then(index => {
-            
             if(index == 0){
                 this.cancel = true;
             }
@@ -211,18 +180,12 @@ export class QuestionsPage implements OnInit {
             }
         });
     }
-
     close(){
         // this.router.navigate([`/trainingcenter/`])
         this.router.navigate([`/home-details/${this.module_id}`],{queryParams: {back: this.CourseId}});
-
     }
-
     answerCheck(questionsOver,sectinoID){
-        
-        
         this.qInfo = questionsOver;
-        
         localStorage.setItem("qInfo",JSON.stringify(this.qInfo));
         this.count = 0;
         var qList = '';

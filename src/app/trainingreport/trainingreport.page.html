@@ -13,22 +13,19 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
 <ion-content class="bodybg">
-
     <div class="trainingreport">
         <h4>Profile Info</h4>
         <ion-item class="usrprof">
             <ion-label>
-                <p><b>User ID/Name : </b> {{userId}} - {{FullName}}</p>    
+                <p><b>User ID/Name : </b> {{userId}} - {{FullName}}</p>
             </ion-label>
         </ion-item>
         <ion-item class="usrprof">
             <ion-label>
-                <p><b>Proctor ID/Name : </b> {{proctorId}} - {{proctorName}}</p>    
+                <p><b>Proctor ID/Name : </b> {{proctorId}} - {{proctorName}}</p>
             </ion-label>
         </ion-item>
-
         <div class="Outstanding">
             <h4>Outstanding Training Courses</h4>
             <div class="list invoice-label" *ngFor="let e of trainingreportinfo.Exam">
@@ -39,37 +36,35 @@
                 <div *ngIf="ishidden">
                     <div *ngIf="e.length != 0">
                         <ion-item class="item item-input item-row item-text-wrap outsub" *ngFor="let l of e">
-                            <p>{{l.SectionName}}</p>                    
+                            <p>{{l.SectionName}}</p>
                         </ion-item>
                     </div>
                     <div *ngIf="e.length == 0">
                         <ion-item class="item item-input item-row item-text-wrap outsub">
-                            <p>No Records</p>                    
+                            <p>No Records</p>
                         </ion-item>
                     </div>
-                </div> 
+                </div>
             </div>
-
             <div class="list invoice-label">
                 <ion-item class="item item-input item-title outmain" (click)="toggle_overall()">
                     <p>Over All Exams</p>
                     <ion-icon class="icon" name="caret-down-outline"></ion-icon>
                 </ion-item>
                 <div *ngIf="overallhidden">
-                    <div *ngIf="trainingreportinfo.OverAllExam.length != 0">                    
+                    <div *ngIf="trainingreportinfo.OverAllExam.length != 0">
                     <ion-item class="item item-input item-row item-text-wrap outsub" *ngFor="let o of trainingreportinfo.OverAllExam">
-                    <p>{{o}}</p>                    
+                    <p>{{o}}</p>
                     </ion-item>
                     </div>
-                    <div *ngIf="trainingreportinfo.OverAllExam.length == 0">                    
+                    <div *ngIf="trainingreportinfo.OverAllExam.length == 0">
                         <ion-item class="item item-input item-row item-text-wrap outsub">
                             <p>No Records</p>
                         </ion-item>
-                    </div>                      
-                </div> 
+                    </div>
+                </div>
             </div>
         </div>
-
         <div class="completed">
             <h4> Completed Training Courses</h4>
             <div class="list invoice-label" *ngFor="let s of trainingreportinfo.SectionList; let i = index">
@@ -77,88 +72,76 @@
                     <p>{{s[0].ModuleName}}</p>
                     <ion-icon class="icon" name="caret-down-outline"></ion-icon>
                 </ion-item>
-            
                 <div *ngIf="completedcoursehidden == i">
                     <ion-grid class="ion-text-center">
                         <ion-row class="header-row">
                             <ion-col size="5"><ion-text>Module Name</ion-text></ion-col>
-                            <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>                        
+                            <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>
                             <ion-col><ion-text>Score</ion-text></ion-col>
                             <ion-col><ion-text>P/F</ion-text></ion-col>
                         </ion-row>
-                        
                         <ion-row *ngFor="let l of s" class="body-row">
-                            <ion-col size="5"><ion-text>{{l.SectionName}}</ion-text></ion-col>        
-                            <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>                    
+                            <ion-col size="5"><ion-text>{{l.SectionName}}</ion-text></ion-col>
+                            <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>
                             <ion-col><ion-text>{{l.Result}}</ion-text></ion-col>
                             <ion-col><ion-text>{{l.PResult}}</ion-text></ion-col>
                         </ion-row>
-
                         <ion-row *ngIf="s.length == 0" class="body-row">
-                            <ion-col class="ion-text-center">No Records</ion-col>                            
+                            <ion-col class="ion-text-center">No Records</ion-col>
                         </ion-row>
-                    </ion-grid>                    
+                    </ion-grid>
                 </div>
             </div>
-
             <div class="list invoice-label" *ngFor="let r of trainingreportinfo.RadWokerList; let i = index">
                 <ion-item class="item item-input item-title item-text-wrap outmain" (click)="toggle_radworker(i)">
                     <p>{{r[0].ModuleName}}</p>
                     <ion-icon class="icon" name="caret-down-outline"></ion-icon>
                 </ion-item>
-            
                 <div *ngIf="radworkerhidden == i">
                     <ion-grid class="ion-text-center">
                         <ion-row class="header-row">
                             <ion-col size="5"><ion-text>Module Name</ion-text></ion-col>
-                            <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>                        
+                            <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>
                             <ion-col><ion-text>Score</ion-text></ion-col>
                             <ion-col><ion-text>P/F</ion-text></ion-col>
                         </ion-row>
-                        
                         <ion-row *ngFor="let l of r" class="body-row">
-                            <ion-col size="5"><ion-text>{{l.SectionName}}</ion-text></ion-col>        
-                            <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>                    
+                            <ion-col size="5"><ion-text>{{l.SectionName}}</ion-text></ion-col>
+                            <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>
                             <ion-col><ion-text>{{l.Result}}</ion-text></ion-col>
                             <ion-col><ion-text>{{l.PResult}}</ion-text></ion-col>
                         </ion-row>
-
                         <ion-row *ngIf="r.length == 0" class="body-row">
-                            <ion-col class="ion-text-center">No Records</ion-col>                            
+                            <ion-col class="ion-text-center">No Records</ion-col>
                         </ion-row>
-                    </ion-grid>                    
+                    </ion-grid>
                 </div>
             </div>
-
             <div class="list invoice-label">
                 <ion-item class="item item-input item-title item-text-wrap outmain" (click)="toggle_purchased()">
                     <p>Over All Exams</p>
                     <ion-icon class="icon" name="caret-down-outline"></ion-icon>
                 </ion-item>
-
                 <div *ngIf="purchasedhidden">
                     <ion-grid class="ion-text-center">
                         <ion-row class="header-row">
                             <ion-col size="5"><ion-text>Module Name</ion-text></ion-col>
-                            <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>                        
+                            <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>
                             <ion-col><ion-text>Score</ion-text></ion-col>
                             <ion-col><ion-text>P/F</ion-text></ion-col>
                         </ion-row>
-
                         <ion-row *ngFor="let l of trainingreportinfo.OverAllList" class="body-row">
-                            <ion-col size="5"><ion-text>{{l.ModuleName}}</ion-text></ion-col>        
-                            <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>                    
+                            <ion-col size="5"><ion-text>{{l.ModuleName}}</ion-text></ion-col>
+                            <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>
                             <ion-col><ion-text>{{l.Result}}</ion-text></ion-col>
                             <ion-col><ion-text>{{l.PResult}}</ion-text></ion-col>
                         </ion-row>
-
                         <ion-row *ngIf="trainingreportinfo.OverAllList.length == 0" class="body-row">
-                            <ion-col class="ion-text-center">No Records</ion-col>                            
+                            <ion-col class="ion-text-center">No Records</ion-col>
                         </ion-row>
                     </ion-grid>
                 </div>
             </div>
         </div>
     </div>
-
 </ion-content>

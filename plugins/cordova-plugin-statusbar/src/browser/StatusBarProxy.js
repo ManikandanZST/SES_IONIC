@@ -17,7 +17,6 @@
  * under the License.
  *
  */
-
 function notSupported(win,fail) {
     //
     console.log('StatusBar is not supported');
@@ -30,7 +29,6 @@ function notSupported(win,fail) {
         // and if we fail, then their app might as well. -jm
     },0);
 }
-
 module.exports = {
     isVisible: false,
     styleBlackTranslucent:notSupported,
@@ -45,6 +43,4 @@ module.exports = {
     show: notSupported,
     _ready:notSupported
 };
-
 require("cordova/exec/proxy").add("StatusBar", module.exports);
-

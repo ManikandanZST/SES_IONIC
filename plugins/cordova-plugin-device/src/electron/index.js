@@ -18,15 +18,12 @@
  * under the License.
  *
  */
-
 const { system, osInfo } = require('systeminformation');
-
 module.exports = {
     getDeviceInfo: async () => {
         try {
             const { manufacturer, model, uuid } = await system();
             const { platform, distro, codename, build: version } = await osInfo();
-
             return {
                 manufacturer,
                 model,

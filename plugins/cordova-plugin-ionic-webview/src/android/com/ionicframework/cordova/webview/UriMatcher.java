@@ -1,5 +1,4 @@
 package com.ionicframework.cordova.webview;
-
 /*
  * Copyright (C) 2006 The Android Open Source Project
  *
@@ -16,13 +15,10 @@ package com.ionicframework.cordova.webview;
  * limitations under the License.
  */
 //package com.google.webviewlocalserver.third_party.android;
-
 import android.net.Uri;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-
 public class UriMatcher {
   /**
    * Creates the root node of the URI tree.
@@ -35,14 +31,12 @@ public class UriMatcher {
     mChildren = new ArrayList<UriMatcher>();
     mText = null;
   }
-
   private UriMatcher() {
     mCode = null;
     mWhich = -1;
     mChildren = new ArrayList<UriMatcher>();
     mText = null;
   }
-
   /**
    * Add a URI to match, and the code to return when this URI is
    * matched. URI nodes may be exact match string, the token "*"
@@ -62,7 +56,6 @@ public class UriMatcher {
     if (code == null) {
       throw new IllegalArgumentException("Code can't be null");
     }
-
     String[] tokens = null;
     if (path != null) {
       String newPath = path;
@@ -72,7 +65,6 @@ public class UriMatcher {
       }
       tokens = PATH_SPLIT_PATTERN.split(newPath);
     }
-
     int numTokens = tokens != null ? tokens.length : 0;
     UriMatcher node = this;
     for (int i = -2; i < numTokens; i++) {
@@ -111,9 +103,7 @@ public class UriMatcher {
     }
     node.mCode = code;
   }
-
   static final Pattern PATH_SPLIT_PATTERN = Pattern.compile("/");
-
   /**
    * Try to match against the path in a url.
    *
@@ -124,13 +114,10 @@ public class UriMatcher {
   public Object match(Uri uri) {
     final List<String> pathSegments = uri.getPathSegments();
     final int li = pathSegments.size();
-
     UriMatcher node = this;
-
     if (li == 0 && uri.getAuthority() == null) {
       return this.mCode;
     }
-
     for (int i = -2; i < li; i++) {
       String u;
       if (i == -2)
@@ -168,14 +155,11 @@ public class UriMatcher {
         return null;
       }
     }
-
     return node.mCode;
   }
-
   private static final int EXACT = 0;
   private static final int TEXT = 1;
   private static final int REST = 2;
-
   private Object mCode;
   private int mWhich;
   private String mText;

@@ -4,21 +4,18 @@
       <ion-buttons slot="start">
         <!-- <ion-menu-button></ion-menu-button> -->
         <ion-icon name="arrow-back-outline" (click)="back()"></ion-icon>
-
       </ion-buttons>
     </ion-buttons>
     <h2 class="center header">Value Pack Info</h2>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['']">        
+      <ion-button [routerLink]="['']">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-<ion-content  class="bodybg"> 
+<ion-content  class="bodybg">
   <h2>{{courseheading.ValuePack.Valuepack_Name}}</h2>
   <div  class="para"  [innerHTML]="courseheading.ValuePack.Description"></div>
-
   <div *ngFor="let u of subcourse; let i=index">
     <ion-card class="mb-20">
       <div class="horizontal-align three-items">
@@ -29,13 +26,7 @@
       </div>
     </ion-card>
   </div>
-  
-
   <ion-button expand="block"  color="medium" class="purchase" (click)="showPayment(courseheading.ValuePack.Valuepack_Id,courseheading.ValuePack.Prize)">Purchase Now ( $ {{courseheading.ValuePack.Prize}} )</ion-button>
-
   <ion-button expand="block"  color="white" class="create" (click)="generatepdfALL(courseheading.ModuleList,courseheading.ValuePack.Prize,courseheading.ValuePack.Valuepack_Name)">Create Invoice</ion-button>
-
-  <ion-button   color="medium" *ngIf="courseheading.IsPurchased != 0" expand="block" class="purchase"  disabled>Purchased ( $ {{courseheading.ValuePack.Prize}} )</ion-button> 
-
-
+  <ion-button   color="medium" *ngIf="courseheading.IsPurchased != 0" expand="block" class="purchase"  disabled>Purchased ( $ {{courseheading.ValuePack.Prize}} )</ion-button>
 </ion-content>

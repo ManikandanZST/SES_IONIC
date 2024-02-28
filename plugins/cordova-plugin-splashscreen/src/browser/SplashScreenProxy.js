@@ -18,11 +18,10 @@
  * under the License.
  *
 */
-
 // Default parameter values including image size can be changed in `config.xml`
 var splashImageWidth = 170;
 var splashImageHeight = 200;
-var position = { x: 0, y: 0, width: splashImageWidth, height: splashImageHeight }; 
+var position = { x: 0, y: 0, width: splashImageWidth, height: splashImageHeight };
 var localSplash; // the image to display
 var localSplashImage;
 var bgColor = "#464646";
@@ -32,16 +31,13 @@ var showSplashScreen = true; // show splashcreen by default
 var cordova = require('cordova');
 var configHelper = cordova.require('cordova/confighelper');
 var autoHideSplashScreen = true;
-
 function updateImageLocation() {
     position.width = Math.min(splashImageWidth, window.innerWidth);
     position.height = position.width * (splashImageHeight / splashImageWidth);
-
     localSplash.style.width = window.innerWidth + "px";
     localSplash.style.height = window.innerHeight + "px";
     localSplash.style.top = "0px";
     localSplash.style.left = "0px";
-
     localSplashImage.style.top = "50%";
     localSplashImage.style.left = "50%";
     localSplashImage.style.height = position.height + "px";
@@ -49,11 +45,9 @@ function updateImageLocation() {
     localSplashImage.style.marginTop = (-position.height / 2) + "px";
     localSplashImage.style.marginLeft = (-position.width / 2) + "px";
 }
-
 function onResize() {
     updateImageLocation();
 }
-
 var SplashScreen = {
     setBGColor: function (cssBGColor) {
         bgColor = cssBGColor;
@@ -68,16 +62,12 @@ var SplashScreen = {
             localSplash.style.backgroundColor = bgColor;
             localSplash.style.position = "absolute";
             localSplash.style["z-index"] = "99999";
-
             localSplashImage = document.createElement("img");
             localSplashImage.src = imageSrc;
             localSplashImage.style.position = "absolute";
-
             updateImageLocation();
-
             localSplash.appendChild(localSplashImage);
             document.body.appendChild(localSplash);
-
             // deviceready fires earlier than the plugin init on cold-start
             if (SplashScreen.shouldHideImmediately) {
                 SplashScreen.shouldHideImmediately = false;
@@ -92,13 +82,11 @@ var SplashScreen = {
             var innerLocalSplash = localSplash;
             localSplash = null;
             window.removeEventListener("resize", onResize, false);
-
             innerLocalSplash.style.opacity = '0';
             innerLocalSplash.style["-webkit-transition"] = "opacity 1s ease-in-out";
             innerLocalSplash.style["-moz-transition"] = "opacity 1s ease-in-out";
             innerLocalSplash.style["-ms-transition"] = "opacity 1s ease-in-out";
             innerLocalSplash.style["-o-transition"] = "opacity 1s ease-in-out";
-
             window.setTimeout(function () {
                 document.body.removeChild(innerLocalSplash);
                 innerLocalSplash = null;
@@ -108,7 +96,6 @@ var SplashScreen = {
         }
     }
 };
-
 /**
  * Reads preferences via ConfigHelper and substitutes default parameters.
  */
@@ -118,10 +105,8 @@ function readPreferencesFromCfg(cfg) {
         if(typeof value != 'undefined') {
             showSplashScreen = value === 'true';
         }
-
         splashScreenDelay = cfg.getPreferenceValue('SplashScreenDelay') || splashScreenDelay;
         splashScreenDelay = parseInt(splashScreenDelay, 10);
-
         imageSrc = cfg.getPreferenceValue('SplashScreen') || imageSrc;
         bgColor = cfg.getPreferenceValue('SplashScreenBackgroundColor') || bgColor;
         splashImageWidth = cfg.getPreferenceValue('SplashScreenWidth') || splashImageWidth;
@@ -133,20 +118,17 @@ function readPreferencesFromCfg(cfg) {
         console.error(msg);
     }
 }
-
 /**
  * Shows and hides splashscreen if it is enabled, with a delay according the current preferences.
  */
 function showAndHide() {
     if(showSplashScreen) {
         SplashScreen.show();
-
         window.setTimeout(function() {
             SplashScreen.hide();
         }, splashScreenDelay);
     }
 }
-
 /**
  * Tries to read config.xml and override default properties and then shows and hides splashscreen if it is enabled.
  */
@@ -158,13 +140,9 @@ function showAndHide() {
         } else {
             SplashScreen.show();
         }
-
     }, function(err) {
         console.error(err);
     });
 })();
-
 module.exports = SplashScreen;
-
 require("cordova/exec/proxy").add("SplashScreen", SplashScreen);
-

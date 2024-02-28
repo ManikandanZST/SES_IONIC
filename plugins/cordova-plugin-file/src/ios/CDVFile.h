@@ -6,9 +6,7 @@
  to you under the Apache License, Version 2.0 (the
  "License"); you may not use this file except in compliance
  with the License.  You may obtain a copy of the License at
-
  http://www.apache.org/licenses/LICENSE-2.0
-
  Unless required by applicable law or agreed to in writing,
  software distributed under the License is distributed on an
  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -16,13 +14,10 @@
  specific language governing permissions and limitations
  under the License.
  */
-
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVPlugin.h>
-
 extern NSString* const kCDVAssetsLibraryPrefix;
 extern NSString* const kCDVFilesystemURLPrefix;
-
 enum CDVFileError {
     NO_ERROR = 0,
     NOT_FOUND_ERR = 1,
@@ -39,29 +34,22 @@ enum CDVFileError {
     PATH_EXISTS_ERR = 12
 };
 typedef int CDVFileError;
-
 @interface CDVFilesystemURL : NSObject  {
     NSURL *_url;
     NSString *_fileSystemName;
     NSString *_fullPath;
 }
-
 - (id) initWithString:(NSString*)strURL;
 - (id) initWithURL:(NSURL*)URL;
 + (CDVFilesystemURL *)fileSystemURLWithString:(NSString *)strURL;
 + (CDVFilesystemURL *)fileSystemURLWithURL:(NSURL *)URL;
-
 - (NSString *)absoluteURL;
-
 @property (atomic) NSURL *url;
 @property (atomic) NSString *fileSystemName;
 @property (atomic) NSString *fullPath;
-
 @end
-
 @interface CDVFilesystemURLProtocol : NSURLProtocol
 @end
-
 @protocol CDVFileSystem
 - (CDVPluginResult *)entryForLocalURI:(CDVFilesystemURL *)url;
 - (CDVPluginResult *)getFileForURL:(CDVFilesystemURL *)baseURI requestedPath:(NSString *)requestedPath options:(NSDictionary *)options;
@@ -75,40 +63,30 @@ typedef int CDVFileError;
 - (void)copyFileToURL:(CDVFilesystemURL *)destURL withName:(NSString *)newName fromFileSystem:(NSObject<CDVFileSystem> *)srcFs atURL:(CDVFilesystemURL *)srcURL copy:(BOOL)bCopy callback:(void (^)(CDVPluginResult *))callback;
 - (void)readFileAtURL:(CDVFilesystemURL *)localURL start:(NSInteger)start end:(NSInteger)end callback:(void (^)(NSData*, NSString* mimeType, CDVFileError))callback;
 - (void)getFileMetadataForURL:(CDVFilesystemURL *)localURL callback:(void (^)(CDVPluginResult *))callback;
-
 - (NSDictionary *)makeEntryForLocalURL:(CDVFilesystemURL *)url;
 - (NSDictionary*)makeEntryForPath:(NSString*)fullPath isDirectory:(BOOL)isDir;
-
 @property (nonatomic,strong) NSString *name;
 @property (nonatomic, copy) NSURL*(^urlTransformer)(NSURL*);
-
 @optional
 - (NSString *)filesystemPathForURL:(CDVFilesystemURL *)localURI;
 - (CDVFilesystemURL *)URLforFilesystemPath:(NSString *)path;
-
 @end
-
 @interface CDVFile : CDVPlugin {
     NSString* rootDocsPath;
     NSString* appDocsPath;
     NSString* appLibraryPath;
     NSString* appTempPath;
-
     NSMutableArray* fileSystems_;
     BOOL userHasAllowed;
 }
-
 - (NSNumber*)checkFreeDiskSpace:(NSString*)appPath;
 - (NSDictionary*)makeEntryForPath:(NSString*)fullPath fileSystemName:(NSString *)fsName isDirectory:(BOOL)isDir;
 - (NSDictionary *)makeEntryForURL:(NSURL *)URL;
 - (CDVFilesystemURL *)fileSystemURLforLocalPath:(NSString *)localPath;
-
 - (NSObject<CDVFileSystem> *)filesystemForURL:(CDVFilesystemURL *)localURL;
-
 /* Native Registration API */
 - (void)registerFilesystem:(NSObject<CDVFileSystem> *)fs;
 - (NSObject<CDVFileSystem> *)fileSystemByName:(NSString *)fsName;
-
 /* Exec API */
 - (void)requestFileSystem:(CDVInvokedUrlCommand*)command;
 - (void)resolveLocalFileSystemURI:(CDVInvokedUrlCommand*)command;
@@ -130,17 +108,13 @@ typedef int CDVFileError;
 - (void)getFreeDiskSpace:(CDVInvokedUrlCommand*)command;
 - (void)truncate:(CDVInvokedUrlCommand*)command;
 - (void)doCopyMove:(CDVInvokedUrlCommand*)command isCopy:(BOOL)bCopy;
-
 /* Compatibilty with older File API */
 - (NSString*)getMimeTypeFromPath:(NSString*)fullPath;
 - (NSDictionary *)getDirectoryEntry:(NSString *)target isDirectory:(BOOL)bDirRequest;
-
 /* Conversion between filesystem paths and URLs */
 - (NSString *)filesystemPathForURL:(CDVFilesystemURL *)URL;
-
 /* Internal methods for testing */
 - (void)_getLocalFilesystemPath:(CDVInvokedUrlCommand*)command;
-
 @property (nonatomic, strong) NSString* rootDocsPath;
 @property (nonatomic, strong) NSString* appDocsPath;
 @property (nonatomic, strong) NSString* appLibraryPath;
@@ -148,10 +122,7 @@ typedef int CDVFileError;
 @property (nonatomic, strong) NSString* persistentPath;
 @property (nonatomic, strong) NSString* temporaryPath;
 @property (nonatomic, strong) NSMutableArray* fileSystems;
-
 @property BOOL userHasAllowed;
-
 @end
-
 #define kW3FileTemporary @"temporary"
 #define kW3FilePersistent @"persistent"

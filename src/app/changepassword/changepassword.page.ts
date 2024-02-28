@@ -2,15 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/providers/common.service';
 import { LoginService } from '../../providers/login.service';
-
 @Component({
   selector: 'app-changepassword',
   templateUrl: './changepassword.page.html',
   styleUrls: ['./changepassword.page.scss'],
 })
-
 export class ChangepasswordPage implements OnInit {
-
     GroupId: string;
     IndividualId: string;
     CustomersForm: any={
@@ -21,15 +18,11 @@ export class ChangepasswordPage implements OnInit {
     type: any;
     info: any={};
     currentpassword: any;
-
     constructor(public router:Router, private commonService: CommonService, private common: CommonService, private loginService: LoginService,private activatedRoute: ActivatedRoute) {
         this.activatedRoute.params.subscribe(params => {
-            
             this.type=params['type'];
-            
         });
     }
-
     ngOnInit() {
         this.GroupId=localStorage.getItem("loginuserid");
         this.IndividualId=localStorage.getItem("Userid");
@@ -38,7 +31,6 @@ export class ChangepasswordPage implements OnInit {
         this.CustomersForm.confirmpassword = '';
         this.GetUser();
     }
-
     GetUser()
     {
         if(this.type=="group"){
@@ -47,13 +39,12 @@ export class ChangepasswordPage implements OnInit {
         {
             var lnk =  'GetUser/'+this.IndividualId;
         }
-
         this.loginService.getData(lnk).then(
             (Response: any) => {
               //
               if(this.type=="individual")
               {
-                // 
+                //
                 this.info=Response;
                 this.currentpassword=this.info.password;
               }else{
@@ -63,11 +54,9 @@ export class ChangepasswordPage implements OnInit {
               }
             },
             err => {
-
             }
         );
     }
-
     customerchangepassword(CustomersForm)
     {
         if (CustomersForm.oldpassword == "" || CustomersForm.oldpassword == undefined) {
@@ -91,41 +80,33 @@ export class ChangepasswordPage implements OnInit {
                 var data = 'userId='+id+'&password='+CustomersForm.newpassword;
                 //
                 this.loginService.changepassword_individual(data).then((res) => {
-
                     if (res.Status == 'Success') {
                         this.logout();
                     } else {
                     // this.alert.errorMsg(res.error, '');
                     }
                   }, err => {
-                    
                     // this.alert.errorMsg('Connection Error', '');
                 });
             }
             else{
                 var id = this.GroupId;
                 var data = 'Group_Id='+id+'&password='+CustomersForm.newpassword;
-                
                 this.loginService.changepassword_group(data).then((res) => {
-
                     if (res.Status == 'Success') {
                         this.logout();
                     } else {
                     // this.alert.errorMsg(res.error, '');
                     }
                   }, err => {
-                    
                     // this.alert.errorMsg('Connection Error', '');
                 });
             }
         }
     }
-
     logout(){
         this.type=localStorage.getItem('type');
-        
         if(this.type=="individual"){
-
             this.router.navigate([`/login/${this.type}`]).then(() => {
                 localStorage.clear();
                 //
@@ -134,7 +115,6 @@ export class ChangepasswordPage implements OnInit {
                     //
                     window.location.reload();
                 }, 2000);
-
             });
         }else if(this.type=="group"){
             this.common.presentToast('Updated Successfully');
@@ -149,7 +129,6 @@ export class ChangepasswordPage implements OnInit {
             });
         }
     }
-
     cancelevent(){
         this.type=localStorage.getItem('type');
         //

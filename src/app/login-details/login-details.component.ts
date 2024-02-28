@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, IonInfiniteScroll, AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
   selector: 'app-login-details',
   templateUrl: './login-details.component.html',
@@ -9,14 +8,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginDetailsComponent implements OnInit {
   type: any;
-
   constructor(public modalController: ModalController, private router: Router, ) { }
-
   ngOnInit() {}
-
     SignIn(val){
       this.type=val;
-
       if(this.type=="individual"){
         this.router.navigate([`/login/${this.type}`])
         this.close();
@@ -29,5 +24,4 @@ export class LoginDetailsComponent implements OnInit {
       const closeModal: string = "Modal Closed";
       await this.modalController.dismiss(closeModal);
     }
-
 }

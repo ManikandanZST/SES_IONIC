@@ -5,7 +5,6 @@
 //
 // Copyright (c) Microsoft Open Technologies, Inc.
 // Licensed under the MIT license.
-
 interface Window {
     /**
      * Requests a filesystem in which to store application data.
@@ -40,7 +39,6 @@ interface Window {
     TEMPORARY: number;
     PERSISTENT: number;
 }
-
 /** This interface represents a file system. */
 interface FileSystem {
     /* The name of the file system, unique across the list of exposed file systems. */
@@ -48,7 +46,6 @@ interface FileSystem {
     /** The root directory of the file system. */
     root: DirectoryEntry;
 }
-
 /**
  * An abstract interface representing entries in a file system,
  * each of which may be a File or DirectoryEntry.
@@ -135,7 +132,6 @@ interface Entry {
     getParent(successCallback: (entry: Entry) => void,
         errorCallback?: (error: FileError) => void): void;
 }
-
 /** This interface supplies information about the state of a file or directory. */
 interface Metadata {
     /** This is the time at which the file or directory was last modified. */
@@ -143,7 +139,6 @@ interface Metadata {
     /** The size of the file, in bytes. This must return 0 for directories. */
     size: number;
 }
-
 /** This interface represents a directory on a file system. */
 interface DirectoryEntry extends Entry {
     /**
@@ -192,7 +187,6 @@ interface DirectoryEntry extends Entry {
     removeRecursively(successCallback: () => void,
         errorCallback?: (error: FileError) => void): void;
 }
-
 /**
  * This dictionary is used to supply arguments to methods
  * that look up or create files or directories.
@@ -203,7 +197,6 @@ interface Flags {
     /** By itself, exclusive must have no effect. Used with create, it must cause getFile and getDirectory to fail if the target path already exists. */
     exclusive?: boolean;
 }
-
 /**
  * This interface lets a user list files and directories in a directory. If there are
  * no additions to or deletions from a directory between the first and last call to
@@ -226,7 +219,6 @@ interface DirectoryReader {
         successCallback: (entries: Entry[]) => void,
         errorCallback?: (error: FileError) => void): void;
 }
-
 /** This interface represents a file on a file system. */
 interface FileEntry extends Entry {
     /**
@@ -245,7 +237,6 @@ interface FileEntry extends Entry {
     file(successCallback: (file: File) => void,
         errorCallback?: (error: FileError) => void): void;
 }
-
 /**
  * This interface provides methods to monitor the asynchronous writing of blobs
  * to disk using progress events and event handler attributes.
@@ -276,7 +267,6 @@ interface FileSaver extends EventTarget {
     /** The last error that occurred on the FileSaver. */
     error: Error;
 }
-
 /**
  * This interface expands on the FileSaver interface to allow for multiple write
  * actions, rather than just saving a single Blob.
@@ -310,19 +300,16 @@ interface FileWriter extends FileSaver {
      */
     truncate(size: number): void;
 }
-
 /* FileWriter states */
 declare var FileWriter: {
     INIT: number;
     WRITING: number;
     DONE: number
 };
-
 interface FileError {
     /** Error code */
     code: number;
 }
-
 declare var FileError: {
     new (code: number): FileError;
     NOT_FOUND_ERR: number;
@@ -338,7 +325,6 @@ declare var FileError: {
     TYPE_MISMATCH_ERR: number;
     PATH_EXISTS_ERR: number;
 };
-
 /*
  * Constants defined in fileSystemPaths
  */
@@ -370,8 +356,6 @@ interface Cordova {
         sharedDirectory: string
     }
 }
-
-
 declare enum LocalFileSystem {
     PERSISTENT=0,
     TEMPORARY=1

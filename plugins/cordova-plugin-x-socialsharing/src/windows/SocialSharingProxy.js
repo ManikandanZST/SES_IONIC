@@ -1,37 +1,29 @@
 ﻿﻿var cordova = require('cordova');
-
 module.exports = {
     share: function (win, fail, args) {
         //Text Message
         var message = args[0];
-        //Title 
+        //Title
         var subject = args[1];
         //File(s) Path
         var fileOrFileArray = args[2];
         //Web link
         var url = args[3];
-
 		var folder = Windows.Storage.ApplicationData.current.temporaryFolder;
-
         var getExtension = function (strBase64) {
             return strBase64.substring(strBase64.indexOf("/") + 1, strBase64.indexOf(";base64"));
         };
-
         var replaceAll = function (str, find, replace) {
             return str.replace(new RegExp(find, 'g'), replace);
         };
-
         var sanitizeFilename = function (name) {
             return replaceAll(name, "[:\\\\/*?|<> ]", "_");
         };
-
         var getFileName = function (position, fileExtension) {
             var fileName = (subject ? sanitizeFilename(subject) : "file") + (position == 0 ? "" : "_" + position) + "." + fileExtension;
             return fileName;
         };
-
         var createTemporalFile = function (fileName, buffer) {
-
             var filePath = "";
             return folder.createFileAsync(fileName, Windows.Storage.CreationCollisionOption.replaceExisting).then(function (file) {
                 filePath = file.path;
@@ -40,7 +32,6 @@ module.exports = {
                 return Windows.Storage.StorageFile.getFileFromPathAsync(filePath);
             });
         };
-
         var doShare = function (e) {
             e.request.data.properties.title = subject?subject: "Sharing";
             if (message) e.request.data.setText(message);
@@ -49,16 +40,13 @@ module.exports = {
                 var deferral = e.request.getDeferral();
                 var storageItems = [];
                 var filesCount = fileOrFileArray.length;
-
                 var completeFile = function () {
                     if (!--filesCount) {
                         storageItems.length && e.request.data.setStorageItems(storageItems);
                         deferral.complete();
                     }
                 };
-
                 for (var i = 0; i < fileOrFileArray.length; i++) {
-
                     var file = fileOrFileArray[i];
                     if (file.indexOf("data:") >= 0) {
                         var fileName = getFileName(i, getExtension(file));
@@ -92,12 +80,8 @@ module.exports = {
                 }
             }
         };
-
-
         var dataTransferManager = Windows.ApplicationModel.DataTransfer.DataTransferManager.getForCurrentView();
-
         dataTransferManager.addEventListener("datarequested", doShare);
-
         try {
             Windows.ApplicationModel.DataTransfer.DataTransferManager.showShareUI();
             win(true);
@@ -105,26 +89,22 @@ module.exports = {
             fail(err);
         }
     },
-
     canShareViaEmail: function (win, fail, args) {
         win(true);
     },
-
     shareViaEmail: function (win, fail, args) {
         //Text Message
         var message = args[0];
-        //Title 
+        //Title
         var subject = args[1];
         //File(s) Path
         var fileOrFileArray = args[5];
-
         var doShare = function (e) {
             e.request.data.properties.title = subject ? subject : "Sharing";
             if (message) {
                 var htmlFormat = Windows.ApplicationModel.DataTransfer.HtmlFormatHelper.createHtmlFormat(message);
                 e.request.data.setHtmlFormat(htmlFormat);
             }
-
             if (fileOrFileArray.length > 0) {
                 var deferral = e.request.getDeferral();
                 var storageItems = [];
@@ -151,11 +131,8 @@ module.exports = {
                 }
             }
         };
-
         var dataTransferManager = Windows.ApplicationModel.DataTransfer.DataTransferManager.getForCurrentView();
-
         dataTransferManager.addEventListener("datarequested", doShare);
-
         try {
             Windows.ApplicationModel.DataTransfer.DataTransferManager.showShareUI();
             win(true);
@@ -163,7 +140,6 @@ module.exports = {
             fail(err);
         }
     },
-
     shareViaSMS: function (win, fail, args) {
         var chatMessage = new Windows.ApplicationModel.Chat.ChatMessage();
         chatMessage.body = args[0].message;
@@ -173,5 +149,4 @@ module.exports = {
         Windows.ApplicationModel.Chat.ChatMessageManager.showComposeSmsMessageAsync(chatMessage).done(win, fail);
     }
 };
-
 require("cordova/exec/proxy").add("SocialSharing", module.exports);

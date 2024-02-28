@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { CommonService } from 'src/providers/common.service';
 import { LoginService } from 'src/providers/login.service';
-
 @Component({
   selector: 'app-editgroupuser',
   templateUrl: './editgroupuser.component.html',
@@ -15,7 +14,6 @@ export class EditgroupuserComponent implements OnInit {
   type: string;
   constructor(private loginService:LoginService,private commonService:CommonService,
     public modalctrl:ModalController,public router:Router) { }
-
   ngOnInit() {
     this.GetGroupUser();
     this.type=localStorage.getItem("type")
@@ -24,21 +22,17 @@ export class EditgroupuserComponent implements OnInit {
     var lnk =  'GetUser/'+this.id;
     this.loginService.getData(lnk).then(
     (Response: any) => {
-
       if(Response)
       {
       this.edituser=Response;
       }else{
-
       }
     },
     err => {
-
     }
   );
 }
 async updateUserInfo(dusers){
-  
   var name   = dusers.fullName;
   var company    = dusers.company;
   var ssn    = dusers.SSN;
@@ -50,9 +44,7 @@ async updateUserInfo(dusers){
 var url="UpdateNormalUser/"
   if (dusers.fullName == "" || dusers.fullName == undefined) {
     this.commonService.presentToast("Enter Name");
-    
   } else if(dusers.password == "" || dusers.password == undefined) {
-    
     this.commonService.presentToast("Enter Password");
   }else if (dusers.email == "" || dusers.email == undefined){
     this.commonService.presentToast("Enter Email");
@@ -63,7 +55,6 @@ var url="UpdateNormalUser/"
     var data = 'fullName='+name+'&company='+company+'&SSN='+ssn+'&email='+email+'&question='+hint+'&answer='+answer+'&userId='+this.id+'&comment='+comment+'&phone='+phone;
     this.commonService.presentLoading();
     this.loginService.postdata(data,url).then((Response: any) => {
-       
        if(Response.Status == 'Success'){
          this.commonService.closeLoading();
          this.commonService.presentToast(Response.Message);
@@ -86,7 +77,6 @@ var url="UpdateNormalUser/"
     await this.modalctrl.dismiss();
   }
   back(){
-    
 this.modalctrl.dismiss();
   }
 }

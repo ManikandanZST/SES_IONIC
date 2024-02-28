@@ -7,9 +7,9 @@
 # to you under the Apache License, Version 2.0 (the
 # "License"); you may not use this file except in compliance
 # with the License.  You may obtain a copy of the License at
-# 
+#
 # http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -19,17 +19,14 @@
 #
 -->
 # Release Notes
-
 ### 4.3.3 (Apr 27, 2017)
 * [CB-12622](https://issues.apache.org/jira/browse/CB-12622) Added **Android 6.0** build badge to `README`
 * [CB-12685](https://issues.apache.org/jira/browse/CB-12685) added `package.json` to tests folder
-
 ### 4.3.2 (Feb 28, 2017)
 * [CB-12353](https://issues.apache.org/jira/browse/CB-12353) Corrected merges usage in `plugin.xml`
 * [CB-12369](https://issues.apache.org/jira/browse/CB-12369) Add plugin typings from `DefinitelyTyped`
 * [CB-12363](https://issues.apache.org/jira/browse/CB-12363) Added build badges for **iOS 9.3** and **iOS 10.0**
 * [CB-12230](https://issues.apache.org/jira/browse/CB-12230) Removed **Windows 8.1** build badges
-
 ### 4.3.1 (Dec 07, 2016)
 * [CB-12224](https://issues.apache.org/jira/browse/CB-12224) Updated version and RELEASENOTES.md for release 4.3.1
 * [CB-12112](https://issues.apache.org/jira/browse/CB-12112) windows: Make available to move folder trees
@@ -38,7 +35,6 @@
 * [CB-11917](https://issues.apache.org/jira/browse/CB-11917) - Remove pull request template checklist item: "iCLA has been submitted…"
 * [CB-11947](https://issues.apache.org/jira/browse/CB-11947) fixed typo that occurs when adding file-transfer plugin
 * [CB-11832](https://issues.apache.org/jira/browse/CB-11832) Incremented plugin version.
-
 ### 4.3.0 (Sep 08, 2016)
 * [CB-11795](https://issues.apache.org/jira/browse/CB-11795) Add 'protective' entry to cordovaDependencies
 * Add handling for `SecurityException`
@@ -57,7 +53,6 @@
 * [CB-11003](https://issues.apache.org/jira/browse/CB-11003) Adding samples to Readme.
 * [CB-10996](https://issues.apache.org/jira/browse/CB-10996) Adding front matter to README.md
 * [CB-11115](https://issues.apache.org/jira/browse/CB-11115) **android**: Removing dependency on FileDescriptor toString in content provider tests
-
 ### 4.2.0 (Apr 15, 2016)
 * [CB-10960](https://issues.apache.org/jira/browse/CB-10960) Uncaught `#<FileError>` in `write()` when `readyState != WRITING ?`
 * Replace `PermissionHelper.java` with `cordova-plugin-compat`
@@ -71,17 +66,14 @@
 * Remove `warning` emoji, as it doesn't correctly display in the docs website: cordova.apache.org/docs/en/dev/cordova-plugin-file/index.html. This closes #166
 * [CB-10636](https://issues.apache.org/jira/browse/CB-10636) Add `JSHint` for plugins
 * [CB-10411](https://issues.apache.org/jira/browse/CB-10411) Error in `file.spec.129` of `cordova-plugin-file`
-
 ### 4.1.1 (Feb 09, 2016)
 * Edit package.json license to match SPDX id
 * [CB-10419](https://issues.apache.org/jira/browse/CB-10419) cordova-plugin-file 4.0.0 error with browserify workflow
-
 ### 4.1.0 (Jan 15, 2016)
 * added `.ratignore` file
 * [CB-10319](https://issues.apache.org/jira/browse/CB-10319) **android** Adding reflective helper methods for permission requests
 * [CB-10023](https://issues.apache.org/jira/browse/CB-10023) Fix `proxy not found error` on Chrome.
 * [CB-8863](https://issues.apache.org/jira/browse/CB-8863) **ios** Fix block usage of self
-
 ### 4.0.0 (Nov 18, 2015)
 * [CB-10035](https://issues.apache.org/jira/browse/CB-10035) Updated `RELEASENOTES` to be newest to oldest
 * [CB-8497](https://issues.apache.org/jira/browse/CB-8497) Fix handling of file paths with `#` character
@@ -104,13 +96,11 @@
 * [CB-9539](https://issues.apache.org/jira/browse/CB-9539) Fixed test failure on **Android** emulator
 * Added docs on `CSP` rules needed for using `cdvfile` in DOM src. This closes #120
 * Added `cdvfile` protocol purpose description and examples
-
 ### 3.0.0 (Aug 18, 2015)
 * Make Android default persistent file location internal
 * Fixed issue with file paths not existing when using browserify
 * [CB-9251](https://issues.apache.org/jira/browse/CB-9251): Changed from Intents to Preferences object as per the issue
 * [CB-9215](https://issues.apache.org/jira/browse/CB-9215) Add cordova-plugin-file manual test for windows platform
-
 ### 2.1.0 (Jun 17, 2015)
 * added missing license header
 * [CB-9128](https://issues.apache.org/jira/browse/CB-9128) cordova-plugin-file documentation translation: cordova-plugin-file
@@ -119,7 +109,6 @@
 * Updated resolveFileSystem.js so it can be parsed by uglifyJS
 * [CB-8860](https://issues.apache.org/jira/browse/CB-8860) cordova-plugin-file documentation translation: cordova-plugin-file
 * [CB-8792](https://issues.apache.org/jira/browse/CB-8792) Fixes reading of json files using readAsText
-
 ### 2.0.0 (Apr 15, 2015)
 * [CB-8849](https://issues.apache.org/jira/browse/CB-8849) Fixed ReadAsArrayBuffer to return ArrayBuffer and not Array on WP8
 * [CB-8819](https://issues.apache.org/jira/browse/CB-8819) Fixed FileReader's readAsBinaryString on wp8
@@ -166,7 +155,6 @@
 * [CB-8459](https://issues.apache.org/jira/browse/CB-8459) Fixes spec 111 failure due to incorrect relative paths handling
 * Code cleanup, whitespace
 * Added nativeURL property to FileEntry, implemented readAsArrayBuffer and readAsBinaryString
-
 ### 1.3.3 (Feb 04, 2015)
 * [CB-7927](https://issues.apache.org/jira/browse/CB-7927) Encoding data to bytes instead of chars when writing a file.
 * ios: Fix compile warning about implicit int conversion
@@ -179,7 +167,6 @@
 * android: Simplify code a bit by making makeEntryForPath not throw JSONException
 * [CB-6431](https://issues.apache.org/jira/browse/CB-6431) android: Fix plugin breaking content: URLs
 * [CB-7375](https://issues.apache.org/jira/browse/CB-7375) Never create new FileSystem instances (except on windows since they don't implement requestAllFileSystems())
-
 ### 1.3.2 (Dec 02, 2014)
 * Gets rid of thread block error in File plugin
 * [CB-7917](https://issues.apache.org/jira/browse/CB-7917) Made tests file.spec.114 - 116 pass for **Windows** platform
@@ -197,7 +184,6 @@
 * [CB-7487](https://issues.apache.org/jira/browse/CB-7487) **Android** Broadcast file write This allows MTP USB shares to show the file immediately without reboot/manual refresh using 3rd party app.
 * [CB-7700](https://issues.apache.org/jira/browse/CB-7700) cordova-plugin-file documentation translation: cordova-plugin-file
 * [CB-7571](https://issues.apache.org/jira/browse/CB-7571) Bump version of nested plugin to match parent plugin
-
 ### 1.3.1 (Sep 17, 2014)
 * [CB-7471](https://issues.apache.org/jira/browse/CB-7471) cordova-plugin-file documentation translation
 * [CB-7272](https://issues.apache.org/jira/browse/CB-7272) Replace confusing "r/o" abbreviation with just "r"
@@ -229,7 +215,6 @@
 * [CB-6923](https://issues.apache.org/jira/browse/CB-6923) Adding support to handle relative paths
 * Style improvements on Manual tests
 * [CB-7094](https://issues.apache.org/jira/browse/CB-7094) Ported File manual tests
-
 ### 1.3.0 (Aug 06, 2014)
 * **FFOS** Remove unsupported paths from requestAllPaths
 * **FFOS** Support for resolve URI, request all paths and local app directory.
@@ -265,11 +250,9 @@
 * [CB-6922](https://issues.apache.org/jira/browse/CB-6922): Use getFileMetadata consistently to get metadata
 * changed fullPath to self.rootDocsPath
 * [CB-6890](https://issues.apache.org/jira/browse/CB-6890): Fix pluginManager access for 4.0.x branch
-
 ### 1.2.1
 * [CB-6922](https://issues.apache.org/jira/browse/CB-6922) Fix inconsistent handling of lastModifiedDate and modificationTime
 * [CB-285](https://issues.apache.org/jira/browse/CB-285): Document filesystem root properties
-
 ### 1.2.0 (Jun 05, 2014)
 * [CB-6127](https://issues.apache.org/jira/browse/CB-6127) Spanish and French Translations added. Github close #31
 * updated this reference to window
@@ -299,7 +282,6 @@
 * Add NOTICE file
 * [CB-6114](https://issues.apache.org/jira/browse/CB-6114) Updated version and RELEASENOTES.md for release 1.0.1
 * [CB-5980](https://issues.apache.org/jira/browse/CB-5980) Updated version and RELEASENOTES.md for release 1.0.0
-
 ### 1.1.0 (Apr 17, 2014)
 * [CB-4965](https://issues.apache.org/jira/browse/CB-4965): Remove tests from file plugin
 * Android: Allow file:/ URLs
@@ -327,7 +309,6 @@
 * [CB-4952](https://issues.apache.org/jira/browse/CB-4952): ios: Resolve symlinks in file:// URLs
 * Add docs about the extraFileSystems preference
 * [CB-6460](https://issues.apache.org/jira/browse/CB-6460): Update license headers
-
 ### 1.0.1 (Feb 28, 2014)
 * [CB-6116](https://issues.apache.org/jira/browse/CB-6116) Fix error where resolveLocalFileSystemURL would fail
 * [CB-6106](https://issues.apache.org/jira/browse/CB-6106) Add support for nativeURL attribute on Entry objects
@@ -348,7 +329,6 @@
 * [CB-6012](https://issues.apache.org/jira/browse/CB-6012) Preserve query strings on cdvfile:// URLs where necessary
 * [CB-6010](https://issues.apache.org/jira/browse/CB-6010) Test properly for presence of URLforFilesystemPath method
 * [CB-5959](https://issues.apache.org/jira/browse/CB-5959) Entry.getMetadata should return size attribute
-
 ### 1.0.0 (Feb 05, 2014)
 * [CB-5974](https://issues.apache.org/jira/browse/CB-5974): Use safe 'Compatibilty' mode by default
 * [CB-5915](https://issues.apache.org/jira/browse/CB-5915): [CB-5916](https://issues.apache.org/jira/browse/CB-5916): Reorganize preference code to make defaults possible
@@ -423,18 +403,15 @@
 * [CB-5406](https://issues.apache.org/jira/browse/CB-5406): Update iOS native code to use filesystem URLs internally
 * [CB-5405](https://issues.apache.org/jira/browse/CB-5405): Update JS code to use URLs exclusively
 * [CB-4816](https://issues.apache.org/jira/browse/CB-4816) Fix file creation outside sandbox for BB10
-
 ### 0.2.5 (Oct 28, 2013)
 * [CB-5129](https://issues.apache.org/jira/browse/CB-5129): Add a consistent filesystem attribute to FileEntry and DirectoryEntry objects
 * [CB-5128](https://issues.apache.org/jira/browse/CB-5128): added repo + issue tag to plugin.xml for file plugin
 * [CB-5015](https://issues.apache.org/jira/browse/CB-5015) [BlackBerry10] Add missing dependency for File.slice
 * [CB-5010](https://issues.apache.org/jira/browse/CB-5010) Incremented plugin version on dev branch.
-
 ### 0.2.4 (Oct 9, 2013)
 * [CB-5020](https://issues.apache.org/jira/browse/CB-5020) - File plugin should execute on a separate thread
 * [CB-4915](https://issues.apache.org/jira/browse/CB-4915) Incremented plugin version on dev branch.
 * [CB-4504](https://issues.apache.org/jira/browse/CB-4504): Updating FileUtils.java to compensate for Java porting failures in the Android SDK. This fails because Java knows nothing about android_asset not being an actual filesystem
-
 ### 0.2.3 (Sept 25, 2013)
 * [CB-4889](https://issues.apache.org/jira/browse/CB-4889) bumping&resetting version
 * [CB-4903](https://issues.apache.org/jira/browse/CB-4903) File Plugin not loading Windows8
@@ -448,7 +425,6 @@
 * [CB-4763](https://issues.apache.org/jira/browse/CB-4763) Copy FileHelper.java into the plugin.
 * [CB-2901](https://issues.apache.org/jira/browse/CB-2901) [BlackBerry10] Automatically unsandbox filesystem if path is not in app sandbox
 * [CB-4752](https://issues.apache.org/jira/browse/CB-4752) Incremented plugin version on dev branch.
-
 ### 0.2.1 (Sept 5, 2013)
 * [CB-4656](https://issues.apache.org/jira/browse/CB-4656) Don't add newlines in data urls within readAsDataUrl.
 * [CB-4514](https://issues.apache.org/jira/browse/CB-4514) Making DirectoryCopy Recursive

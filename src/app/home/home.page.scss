@@ -1,14 +1,6 @@
-// app-home
-// {	/*background: rgba(157, 160, 138, 0.1607843137254902);*/
-// 	// --background: url('/src/assets/images/background/bg-img-1.jpg');
-// 	background-size: cover;
-//     bottom: 65px;
-//     --background: url('/assets/images/background/bg-img-1.jpg');
-// }
 .bodybg{
     --background: url('../../assets/images/background/bg-img-1.jpg') no-repeat  center fixed;
     background-size: cover;
-
 }
 .bodybg3{
     --background: url('../../assets/images/background/bg-group-3.jpg') no-repeat  center fixed;
@@ -20,13 +12,6 @@ ion-item{
     --background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow: 0 1px 3px #020200;
-    // padding-top: 8px !important;
-    // padding-bottom: 8px !important;
-    //padding-right: 10px;
-    //width: 355px;
-    //margin-left: -15px;
-    // text-align: center;
-
 }
 ion-menu-button{
     color:#fff !important

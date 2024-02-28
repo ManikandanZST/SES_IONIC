@@ -9,17 +9,15 @@
     <ion-title class="center sz">Select Your Courses
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['']">        
+      <ion-button [routerLink]="['']">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="bodybg">
   <p class="pt-15">
     <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="setFilteredLocations() " (ionCancel)="onCancel($event)" [showCancelButton]="false"></ion-searchbar>
-  </p> 
-
+  </p>
   <div *ngIf="!search">
     <div *ngFor="let user of groupusers;let i=index;">
       <ion-grid>
@@ -32,12 +30,11 @@
       </ion-grid>
     <!-- <ion-card class="mb-20" >
       <ion-card-header  class="horizontal-align three-items" >
-        <ion-checkbox  class="item" [checked]="user.checked" [(ngModel)]="user.checked" (click)="checkMultilist(user,$event,infouser,i,info)"  ></ion-checkbox>  
+        <ion-checkbox  class="item" [checked]="user.checked" [(ngModel)]="user.checked" (click)="checkMultilist(user,$event,infouser,i,info)"  ></ion-checkbox>
         <p style="width: 186px;" class="item">{{user.OverName}}</p>
         <p class="item item_bac">$ {{user.Price}}</p>
       </ion-card-header>
     </ion-card> -->
-
     </div>
   </div>
   <div *ngIf="search">
@@ -52,12 +49,11 @@
       </ion-grid>
       <!-- <ion-card class="mb-20" >
       <ion-card-header  class="horizontal-align three-items" >
-        <ion-checkbox  class="item" [checked]="item.isChecked" [(ngModel)]="user.checked" (click)="checkMultilist(user,$event,infouser,i,info)"  ></ion-checkbox>  
+        <ion-checkbox  class="item" [checked]="item.isChecked" [(ngModel)]="user.checked" (click)="checkMultilist(user,$event,infouser,i,info)"  ></ion-checkbox>
         <p style="width: 186px;" class="item">{{user.OverName}}</p>
         <p class="item item_bac">$ {{user.Price}}</p>
       </ion-card-header>
     </ion-card> -->
-
     </div>
   </div>
 </ion-content>

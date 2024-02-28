@@ -4,32 +4,28 @@
       <ion-buttons slot="start">
         <!-- <ion-menu-button></ion-menu-button> -->
         <ion-icon name="arrow-back-outline" (click)="close()"></ion-icon>
-
       </ion-buttons>
     </ion-buttons>
     <ion-title class="center ft">User Report</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="generateTrainingReport(report)" [routerLink]="['']">        
+      <ion-button (click)="generateTrainingReport(report)" [routerLink]="['']">
         <ion-icon name="download" ></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="bodybg">
   <h4>Profile Info</h4>
-
   <ion-item class="usrprof">
     <ion-label>
-        <p><b>User ID/Name : </b> {{report.UserId}} - {{report.UserName}}</p>    
+        <p><b>User ID/Name : </b> {{report.UserId}} - {{report.UserName}}</p>
     </ion-label>
   </ion-item>
   <ion-item class="usrprof">
       <ion-label>
-          <p><b>Proctor ID/Name : </b> {{report.ProctorId}} - {{report.ProctorName}}</p>    
+          <p><b>Proctor ID/Name : </b> {{report.ProctorId}} - {{report.ProctorName}}</p>
       </ion-label>
   </ion-item>
-
   <h4> Completed Training Courses</h4>
     <!-- <div class="list invoice-label" *ngFor="s in report.SectionList">
       <label class="item item-input item-title item-text-wrap" (click)="toggle(s)">
@@ -37,7 +33,6 @@
       <i class="icon ion-arrow-down-b"></i>
       </label>
       <div ng-show="s.toggle">
-       
          <table>
             <tr>
               <th>Module Name</th>
@@ -50,22 +45,17 @@
               <td>{{l.Finished}}</td>
               <td>{{l.Result}}</td>
               <td>{{l.PResult}}</td>
-            </tr>    
+            </tr>
             <tr ng-if="s.length == 0">
               <td></td>
               <td>No records</td>
               <td></td>
               <td></td>
-            </tr>              
+            </tr>
           </table>
-          
       </div>
     </div> -->
-
-
-       
   <div  class="list invoice-label">
-
     <div *ngFor="let s of report.SectionList">
       <ion-accordion-group>
         <ion-accordion class="wt" value="first">
@@ -73,27 +63,23 @@
             <p>{{s[0].ModuleName}}</p>
           </ion-item>
           <div class="" slot="content">
-
             <ion-grid class="ion-text-center">
               <ion-row class="header-row">
                 <ion-col size="5"><ion-text>Module Name</ion-text></ion-col>
-                <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>                        
+                <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>
                 <ion-col><ion-text>Score</ion-text></ion-col>
                 <ion-col><ion-text>P/F</ion-text></ion-col>
               </ion-row>
-  
               <ion-row *ngFor="let l of report.OverAllList">
-                <ion-col size="5"><ion-text>{{l.SectionName}}</ion-text></ion-col>        
-                <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>                    
+                <ion-col size="5"><ion-text>{{l.SectionName}}</ion-text></ion-col>
+                <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>
                 <ion-col><ion-text>{{l.Result}}</ion-text></ion-col>
                 <ion-col><ion-text>{{l.PResult}}</ion-text></ion-col>
               </ion-row>
-  
               <ion-row *ngIf="report.OverAllList.length == 0" class="body-row">
-                <ion-col class="ion-text-center1">No Records</ion-col>                            
+                <ion-col class="ion-text-center1">No Records</ion-col>
               </ion-row>
             </ion-grid>
-
             <!-- <table>
               <tr>
                 <th>Module Name</th>
@@ -106,15 +92,14 @@
                 <td>{{l.Finished}}</td>
                 <td>{{l.Result}}</td>
                 <td>{{l.PResult}}</td>
-              </tr>   
+              </tr>
             <div *ngIf="s.length == 0">
-
               <tr >
                 <td></td>
                 <td>No records</td>
                 <td></td>
                 <td></td>
-              </tr>           
+              </tr>
               </div>
             </table>           -->
           </div>
@@ -126,7 +111,6 @@
       <i class="icon ion-arrow-down-b"></i>
       </label>
       <div ng-show="purchased">
-      
       <table>
             <tr>
               <th>Module Name</th>
@@ -139,18 +123,16 @@
               <td>{{l.Finished}}</td>
               <td>{{l.Result}}</td>
               <td>{{l.PResult}}</td>
-            </tr>   
+            </tr>
             <tr *ngIf="report.OverAllList.length == 0">
               <td></td>
               <td>No records</td>
               <td></td>
               <td></td>
-            </tr>           
+            </tr>
           </table>
-          
       </div> -->
   </div>
-    
   <div class="list invoice-label">
     <ion-accordion-group>
       <ion-accordion class="wt" value="first">
@@ -158,27 +140,23 @@
           <p>Over All Exams</p>
         </ion-item>
         <div class="" slot="content">
-          
           <ion-grid class="ion-text-center">
             <ion-row class="header-row">
               <ion-col size="5"><ion-text>Module Name</ion-text></ion-col>
-              <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>                        
+              <ion-col size="3"><ion-text>Finish Date</ion-text></ion-col>
               <ion-col><ion-text>Score</ion-text></ion-col>
               <ion-col><ion-text>P/F</ion-text></ion-col>
             </ion-row>
-
             <ion-row *ngFor="let l of report.OverAllList">
-              <ion-col size="5"><ion-text>{{l.ModuleName}}</ion-text></ion-col>        
-              <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>                    
+              <ion-col size="5"><ion-text>{{l.ModuleName}}</ion-text></ion-col>
+              <ion-col size="3"><ion-text>{{l.Finished}}</ion-text></ion-col>
               <ion-col><ion-text>{{l.Result}}</ion-text></ion-col>
               <ion-col><ion-text>{{l.PResult}}</ion-text></ion-col>
             </ion-row>
-
             <ion-row *ngIf="report.OverAllList.length == 0" class="body-row">
-              <ion-col class="ion-text-center1">No Records</ion-col>                            
+              <ion-col class="ion-text-center1">No Records</ion-col>
             </ion-row>
           </ion-grid>
-
           <!-- <table>
             <tr>
               <th>Module Name</th>
@@ -191,24 +169,22 @@
               <td>{{l.Finished}}</td>
               <td>{{l.Result}}</td>
               <td>{{l.PResult}}</td>
-            </tr>   
+            </tr>
             <tr *ngIf="report.OverAllList.length == 0">
               <td></td>
               <td>No records</td>
               <td></td>
               <td></td>
-            </tr>           
+            </tr>
           </table> -->
         </div>
       </ion-accordion>
     </ion-accordion-group>
-
        <!-- <label class="item item-input item-title" (click)="toggle_purchased()">
       <p>Over All Exams</p>
       <i class="icon ion-arrow-down-b"></i>
       </label>
       <div ng-show="purchased">
-      
       <table>
             <tr>
               <th>Module Name</th>
@@ -221,15 +197,14 @@
               <td>{{l.Finished}}</td>
               <td>{{l.Result}}</td>
               <td>{{l.PResult}}</td>
-            </tr>   
+            </tr>
             <tr *ngIf="report.OverAllList.length == 0">
               <td></td>
               <td>No records</td>
               <td></td>
               <td></td>
-            </tr>           
+            </tr>
           </table>
-          
       </div> -->
   </div>
   <div class="empty_height1"></div>

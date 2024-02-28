@@ -6,9 +6,7 @@
        to you under the Apache License, Version 2.0 (the
        "License"); you may not use this file except in compliance
        with the License.  You may obtain a copy of the License at
-
          http://www.apache.org/licenses/LICENSE-2.0
-
        Unless required by applicable law or agreed to in writing,
        software distributed under the License is distributed on an
        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -17,12 +15,9 @@
        under the License.
 */
 package org.apache.cordova.file;
-
 import android.os.Environment;
 import android.os.StatFs;
-
 import java.io.File;
-
 /**
  * This class provides file directory utilities.
  * All file operations are performed on the SD card.
@@ -30,10 +25,8 @@ import java.io.File;
  * It is used by the FileUtils class.
  */
 public class DirectoryManager {
-
     @SuppressWarnings("unused")
     private static final String LOG_TAG = "DirectoryManager";
-
     /**
      * Determine if a file or directory exists.
      * @param name				The name of the file to check.
@@ -41,7 +34,6 @@ public class DirectoryManager {
      */
     public static boolean testFileExists(String name) {
         boolean status;
-
         // If SD card exists
         if ((testSaveLocationExists()) && (!name.equals(""))) {
             File path = Environment.getExternalStorageDirectory();
@@ -54,7 +46,6 @@ public class DirectoryManager {
         }
         return status;
     }
-
     /**
      * Get the free space in external storage
      *
@@ -63,7 +54,6 @@ public class DirectoryManager {
     public static long getFreeExternalStorageSpace() {
         String status = Environment.getExternalStorageState();
         long freeSpaceInBytes = 0;
-
         // Check if external storage exists
         if (status.equals(Environment.MEDIA_MOUNTED)) {
             freeSpaceInBytes = getFreeSpaceInBytes(Environment.getExternalStorageDirectory().getPath());
@@ -71,10 +61,8 @@ public class DirectoryManager {
             // If no external storage then return -1
             return -1;
         }
-
         return freeSpaceInBytes / 1024;
     }
-
     /**
      * Given a path return the number of free bytes in the filesystem containing the path.
      *
@@ -92,7 +80,6 @@ public class DirectoryManager {
             return 0;
         }
     }
-
     /**
      * Determine if SD card exists.
      *
@@ -101,19 +88,16 @@ public class DirectoryManager {
     public static boolean testSaveLocationExists() {
         String sDCardStatus = Environment.getExternalStorageState();
         boolean status;
-
         // If SD card is mounted
         if (sDCardStatus.equals(Environment.MEDIA_MOUNTED)) {
             status = true;
         }
-
         // If no SD card
         else {
             status = false;
         }
         return status;
     }
-
     /**
      * Create a new file object from two file paths.
      *

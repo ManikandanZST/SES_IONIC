@@ -18,20 +18,16 @@
  * under the License.
  *
 */
-
 /* global PluginResult */
-
 module.exports = {
     setSandbox : function (success, fail, args, env) {
         require("lib/webview").setSandbox(JSON.parse(decodeURIComponent(args[0])));
         new PluginResult(args, env).ok();
     },
-
     getHomePath: function (success, fail, args, env) {
         var homeDir = window.qnx.webplatform.getApplication().getEnv("HOME");
         new PluginResult(args, env).ok(homeDir);
     },
-
     requestAllPaths: function (success, fail, args, env) {
         var homeDir = 'file://' + window.qnx.webplatform.getApplication().getEnv("HOME").replace('/data', ''),
             paths = {

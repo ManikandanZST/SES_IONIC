@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'root',
 })
 export class CreditCardService {
   constructor() {}
-
   identifyCardBrand(cardNumber: string): string {
     // Define regular expressions for each card brand
     const cardPatterns = {
@@ -19,14 +17,12 @@ export class CreditCardService {
       maestro: /^(5018|5020|5038|6304|6759|6761|6763)[0-9]{8,15}$/,
       unionPay: /^(62[0-9]{14,17})$/,
     };
-
     // Iterate through the card patterns and find a match
     for (const brand in cardPatterns) {
       if (cardPatterns[brand].test(cardNumber)) {
         return brand;
       }
     }
-
     // If no match is found, return 'Unknown' or handle as needed
     return 'Unknown';
   }

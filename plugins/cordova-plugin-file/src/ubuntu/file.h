@@ -11,36 +11,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 #ifndef FILEAPI_H_SDASDASDAS
 #define FILEAPI_H_SDASDASDAS
-
 #include <QNetworkReply>
 #include <QtCore>
-
 #include <cplugin.h>
 #include <cordova.h>
-
 class File: public CPlugin {
     Q_OBJECT
 public:
     explicit File(Cordova *cordova);
-
     virtual const QString fullName() override {
         return File::fullID();
     }
-
     virtual const QString shortName() override {
         return "File";
     }
-
     static const QString fullID() {
         return "File";
     }
     QPair<bool, QFileInfo> resolveURI(const QString &uri);
     QPair<bool, QFileInfo> resolveURI(int ecId, const QString &uri);
     QVariantMap file2map(const QFileInfo &dir);
-
 public slots:
     void requestFileSystem(int scId, int ecId, unsigned short type, unsigned long long size);
     void resolveLocalFileSystemURI(int scId, int ecId, const QString&);
@@ -60,7 +52,6 @@ public slots:
     void readAsArrayBuffer(int scId, int ecId, const QString&, int sliceStart, int sliceEnd);
     void readAsBinaryString(int scId, int ecId, const QString&, int sliceStart, int sliceEnd);
     void truncate(int scId, int ecId, const QString&, unsigned long long size);
-
     void _getLocalFilesystemPath(int scId, int ecId, const QString&);
 private:
     void moveFile(int scId, int ecId,const QString&, const QString&, const QString&);
@@ -69,13 +60,10 @@ private:
     void copyDir(int scId, int ecId, const QString&, const QString&, const QString&);
     bool rmDir(const QDir &dir);
     bool copyFolder(const QString&, const QString&);
-
     QPair<QString, QString> GetRelativePath(const QFileInfo &fileInfo);
     QVariantMap dir2map(const QDir &dir);
-
     QMimeDatabase _db;
     const QDir _persistentDir;
     QNetworkAccessManager _manager;
 };
-
 #endif

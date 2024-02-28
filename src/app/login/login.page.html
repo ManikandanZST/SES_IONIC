@@ -8,12 +8,11 @@
     </ion-buttons>
     <ion-title><img alt="" src="assets/images/logo.png"></ion-title>
     <ion-buttons slot="end">
-      <ion-button>      
+      <ion-button>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content  class="bodybg">
   <div *ngIf="type=='individual'" style="padding: 20px; padding-top: 134px;" class="ion-text-center">
     <h2>User Sign in</h2>
@@ -27,18 +26,16 @@
         <ion-item lines="none">
           <ion-input type="{{inputtype}}" placeholder="Password" [(ngModel)]="ulogin.password"></ion-input>
           <ion-icon slot="end" class="show-option" size="small" (click)="toggleShow()" [hidden]="showPassword" name="eye-off-outline"></ion-icon>
-          <ion-icon slot="end" class="hide-option" size="small" (click)="toggleShow()" [hidden]="!showPassword" name="eye-outline"></ion-icon>            
+          <ion-icon slot="end" class="hide-option" size="small" (click)="toggleShow()" [hidden]="!showPassword" name="eye-outline"></ion-icon>
         </ion-item>
       </div>
     </div>
     <p>
       <ion-button color="medium" expand="block" class="loginbutton" (click)="SignIn(ulogin)">Sign In</ion-button>
-    </p>  
+    </p>
     <p class="ion-text-right"> <a (click)="Forgot()">Forgot Password?</a></p>
-    <p class="center custom_text"><a>New User? </a><span class="text-decoration-none" (click)="modal_popup()">Create an Account </span></p>   
-
+    <p class="center custom_text"><a>New User? </a><span class="text-decoration-none" (click)="modal_popup()">Create an Account </span></p>
   </div>
-
   <div *ngIf="type=='group'"  style="padding: 20px;    padding-top: 134px;" class="ion-text-center">
     <h2 >Group Sign in</h2>
     <div class="ion-text-left">
@@ -51,15 +48,14 @@
         <ion-item lines="none">
           <ion-input type="{{inputtype}}" placeholder="Password" [(ngModel)]="ulogin.password"></ion-input>
           <ion-icon slot="end" class="show-option" size="small" (click)="toggleShow()" [hidden]="showPassword" name="eye-off-outline"></ion-icon>
-          <ion-icon slot="end" class="hide-option" size="small" (click)="toggleShow()" [hidden]="!showPassword" name="eye-outline"></ion-icon>   
-        </ion-item>            
+          <ion-icon slot="end" class="hide-option" size="small" (click)="toggleShow()" [hidden]="!showPassword" name="eye-outline"></ion-icon>
+        </ion-item>
       </div>
     </div>
     <p>
       <ion-button color="dark" expand="block" class="loginbutton" (click)="SignIn(ulogin)">Sign In</ion-button>
-    </p>  
+    </p>
     <p class="ion-text-right"> <a (click)="Forgot()">Forgot Password?</a></p>
-    <p class="center custom_text"><a>New User? </a><span class="text-decoration-none" (click)="modal_popup()"> Create an Account </span></p>   
+    <p class="center custom_text"><a>New User? </a><span class="text-decoration-none" (click)="modal_popup()"> Create an Account </span></p>
   </div>
-
 </ion-content>

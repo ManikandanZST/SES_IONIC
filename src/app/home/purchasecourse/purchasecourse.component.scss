@@ -1,11 +1,6 @@
-
 .horizontal-align {
 	display: inline-block;
 	vertical-align: top;
-	
-	
-	
-	
 	.item {
 		display: inline-block;
 		vertical-align: top;
@@ -14,15 +9,12 @@
 		color: #0f700b;
 		padding-bottom: 0px;
     padding-top: 0px;
-	
 	}
-	
 	.item1 {
 		display: inline-block;
 		vertical-align: top;
 	margin-top: 18px;
 		color: #0f700b;
-	
 	}
 	p{
 		margin-left:10px;
@@ -31,17 +23,13 @@
 .bodybg{
     --background: url('../../../assets/images/background/bg-group-1.jpg') no-repeat center fixed;
     background-size: cover;
-
 }
 ion-grid{
     background: #555558;
-    // border: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow: 0 1px 3px #020200;
     padding-right: 10px;
     margin-top: 32px;
 	padding: 11px;
-	// color: #;
-
 }
 .amount{
 	color: #aaa;
@@ -65,7 +53,6 @@ h2,h1{
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
-    // line-height: 30px !important;
 }
 p{
     padding: 10px !important;
@@ -98,7 +85,7 @@ p{
 .sub{
     background: #555558;
     box-shadow: 0 1px 3px #020200;
-    padding-right: 10px;    
+    padding-right: 10px;
     padding: 11px;
     margin-top: 0px !important;
     border-top: 0.5px solid #fff;

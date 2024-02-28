@@ -9,20 +9,17 @@
     <ion-title class="center sz">Select Your Courses
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['']">        
+      <ion-button [routerLink]="['']">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content  class="bodybg">
   <p class="pt-15">
     <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="setFilteredLocations() " (ionCancel)="onCancel($event)" [showCancelButton]="false"></ion-searchbar>
-  </p> 
-
+  </p>
   <div *ngIf="!search">
     <div *ngFor="let user of groupusers;let i=index;">
-
       <ion-grid>
         <ion-row >
           <ion-col class="name" size="2"><ion-checkbox  class="item"  [(ngModel)]="user.checked" (click)="checkMultilist(user,user.checked,infouser,i,info)"  ></ion-checkbox> </ion-col>
@@ -43,7 +40,6 @@
           </ion-col>
         </ion-row>
       </ion-grid>
- 
    </div>
   </div>
 </ion-content>

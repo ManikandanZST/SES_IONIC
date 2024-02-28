@@ -12,13 +12,10 @@
 #ifndef JSON_USE_SIMPLE_INTERNAL_ALLOCATOR
 # include "json_batchallocator.h"
 #endif // #ifndef JSON_USE_SIMPLE_INTERNAL_ALLOCATOR
-
 #define JSON_ASSERT_UNREACHABLE assert( false )
 #define JSON_ASSERT( condition ) assert( condition );  // @todo <= change this into an exception throw
 #define JSON_ASSERT_MESSAGE( condition, message ) if (!( condition )) throw std::runtime_error( message );
-
 namespace Json {
-
 // QNX is strict about declaring C symbols in the std namespace.
 #ifdef __QNXNTO__
 using std::memcpy;
@@ -26,13 +23,11 @@ using std::strchr;
 using std::strcmp;
 using std::strlen;
 #endif
-
 const Value Value::null;
 const Int Value::minInt = Int( ~(UInt(-1)/2) );
 const Int Value::maxInt = Int( UInt(-1)/2 );
 const UInt Value::maxUInt = UInt(-1);
-
-// A "safe" implementation of strdup. Allow null pointer to be passed. 
+// A "safe" implementation of strdup. Allow null pointer to be passed.
 // Also avoid warning on msvc80.
 //
 //inline char *safeStringDup( const char *czstring )
@@ -59,35 +54,29 @@ const UInt Value::maxUInt = UInt(-1);
 //   }
 //   return 0;
 //}
-
 ValueAllocator::~ValueAllocator()
 {
 }
-
 class DefaultValueAllocator : public ValueAllocator
 {
 public:
    virtual ~DefaultValueAllocator()
    {
    }
-
    virtual char *makeMemberName( const char *memberName )
    {
       return duplicateStringValue( memberName );
    }
-
    virtual void releaseMemberName( char *memberName )
    {
       releaseStringValue( memberName );
    }
-
-   virtual char *duplicateStringValue( const char *value, 
+   virtual char *duplicateStringValue( const char *value,
                                        unsigned int length = unknown )
    {
       //@todo invesgate this old optimization
       //if ( !value  ||  value[0] == 0 )
       //   return 0;
-
       if ( length == unknown )
          length = (unsigned int)strlen(value);
       char *newString = static_cast<char *>( malloc( length + 1 ) );
@@ -95,30 +84,24 @@ public:
       newString[length] = 0;
       return newString;
    }
-
    virtual void releaseStringValue( char *value )
    {
       if ( value )
          free( value );
    }
 };
-
 static ValueAllocator *&valueAllocator()
 {
    static DefaultValueAllocator defaultAllocator;
    static ValueAllocator *valueAllocator = &defaultAllocator;
    return valueAllocator;
 }
-
 static struct DummyValueAllocatorInitializer {
-   DummyValueAllocatorInitializer() 
+   DummyValueAllocatorInitializer()
    {
       valueAllocator();      // ensure valueAllocator() statics are initialized before main().
    }
 } dummyValueAllocatorInitializer;
-
-
-
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -130,10 +113,7 @@ static struct DummyValueAllocatorInitializer {
 # include "json_internalarray.inl"
 # include "json_internalmap.inl"
 #endif // JSON_VALUE_USE_INTERNAL_MAP
-
 # include "json_valueiterator.inl"
-
-
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -141,21 +121,16 @@ static struct DummyValueAllocatorInitializer {
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
-
-
 Value::CommentInfo::CommentInfo()
    : comment_( 0 )
 {
 }
-
 Value::CommentInfo::~CommentInfo()
 {
    if ( comment_ )
       valueAllocator()->releaseStringValue( comment_ );
 }
-
-
-void 
+void
 Value::CommentInfo::setComment( const char *text )
 {
    if ( comment_ )
@@ -165,8 +140,6 @@ Value::CommentInfo::setComment( const char *text )
    // It seems that /**/ style comments are acceptable as well.
    comment_ = valueAllocator()->duplicateStringValue( text );
 }
-
-
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -175,23 +148,19 @@ Value::CommentInfo::setComment( const char *text )
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 # ifndef JSON_VALUE_USE_INTERNAL_MAP
-
 // Notes: index_ indicates if the string was allocated when
 // a string is stored.
-
 Value::CZString::CZString( int index )
    : cstr_( 0 )
    , index_( index )
 {
 }
-
 Value::CZString::CZString( const char *cstr, DuplicationPolicy allocate )
-   : cstr_( allocate == duplicate ? valueAllocator()->makeMemberName(cstr) 
+   : cstr_( allocate == duplicate ? valueAllocator()->makeMemberName(cstr)
                                   : cstr )
    , index_( allocate )
 {
 }
-
 Value::CZString::CZString( const CZString &other )
 : cstr_( other.index_ != noDuplication &&  other.cstr_ != 0
                 ?  valueAllocator()->makeMemberName( other.cstr_ )
@@ -200,20 +169,17 @@ Value::CZString::CZString( const CZString &other )
                          : other.index_ )
 {
 }
-
 Value::CZString::~CZString()
 {
    if ( cstr_  &&  index_ == duplicate )
       valueAllocator()->releaseMemberName( const_cast<char *>( cstr_ ) );
 }
-
-void 
+void
 Value::CZString::swap( CZString &other )
 {
    std::swap( cstr_, other.cstr_ );
    std::swap( index_, other.index_ );
 }
-
 Value::CZString &
 Value::CZString::operator =( const CZString &other )
 {
@@ -221,46 +187,36 @@ Value::CZString::operator =( const CZString &other )
    swap( temp );
    return *this;
 }
-
-bool 
-Value::CZString::operator<( const CZString &other ) const 
+bool
+Value::CZString::operator<( const CZString &other ) const
 {
    if ( cstr_ )
       return strcmp( cstr_, other.cstr_ ) < 0;
    return index_ < other.index_;
 }
-
-bool 
-Value::CZString::operator==( const CZString &other ) const 
+bool
+Value::CZString::operator==( const CZString &other ) const
 {
    if ( cstr_ )
       return strcmp( cstr_, other.cstr_ ) == 0;
    return index_ == other.index_;
 }
-
-
-int 
+int
 Value::CZString::index() const
 {
    return index_;
 }
-
-
 const char *
 Value::CZString::c_str() const
 {
    return cstr_;
 }
-
-bool 
+bool
 Value::CZString::isStaticString() const
 {
    return index_ == noDuplication;
 }
-
 #endif // ifndef JSON_VALUE_USE_INTERNAL_MAP
-
-
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -268,7 +224,6 @@ Value::CZString::isStaticString() const
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
-
 /*! \internal Default constructor initialization must be equivalent to:
  * memset( this, 0, sizeof(Value) )
  * This optimization is used in ValueInternalMap fast allocator.
@@ -315,8 +270,6 @@ Value::Value( ValueType type )
       JSON_ASSERT_UNREACHABLE;
    }
 }
-
-
 Value::Value( Int value )
    : type_( intValue )
    , comments_( 0 )
@@ -326,8 +279,6 @@ Value::Value( Int value )
 {
    value_.int_ = value;
 }
-
-
 Value::Value( UInt value )
    : type_( uintValue )
    , comments_( 0 )
@@ -337,7 +288,6 @@ Value::Value( UInt value )
 {
    value_.uint_ = value;
 }
-
 Value::Value( double value )
    : type_( realValue )
    , comments_( 0 )
@@ -347,7 +297,6 @@ Value::Value( double value )
 {
    value_.real_ = value;
 }
-
 Value::Value( const char *value )
    : type_( stringValue )
    , allocated_( true )
@@ -358,9 +307,7 @@ Value::Value( const char *value )
 {
    value_.string_ = valueAllocator()->duplicateStringValue( value );
 }
-
-
-Value::Value( const char *beginValue, 
+Value::Value( const char *beginValue,
               const char *endValue )
    : type_( stringValue )
    , allocated_( true )
@@ -369,11 +316,9 @@ Value::Value( const char *beginValue,
    , itemIsUsed_( 0 )
 #endif
 {
-   value_.string_ = valueAllocator()->duplicateStringValue( beginValue, 
+   value_.string_ = valueAllocator()->duplicateStringValue( beginValue,
                                                             UInt(endValue - beginValue) );
 }
-
-
 Value::Value( const std::string &value )
    : type_( stringValue )
    , allocated_( true )
@@ -382,11 +327,9 @@ Value::Value( const std::string &value )
    , itemIsUsed_( 0 )
 #endif
 {
-   value_.string_ = valueAllocator()->duplicateStringValue( value.c_str(), 
+   value_.string_ = valueAllocator()->duplicateStringValue( value.c_str(),
                                                             (unsigned int)value.length() );
-
 }
-
 Value::Value( const StaticString &value )
    : type_( stringValue )
    , allocated_( false )
@@ -397,8 +340,6 @@ Value::Value( const StaticString &value )
 {
    value_.string_ = const_cast<char *>( value.c_str() );
 }
-
-
 # ifdef JSON_USE_CPPTL
 Value::Value( const CppTL::ConstString &value )
    : type_( stringValue )
@@ -411,7 +352,6 @@ Value::Value( const CppTL::ConstString &value )
    value_.string_ = valueAllocator()->duplicateStringValue( value, value.length() );
 }
 # endif
-
 Value::Value( bool value )
    : type_( booleanValue )
    , comments_( 0 )
@@ -421,8 +361,6 @@ Value::Value( bool value )
 {
    value_.bool_ = value;
 }
-
-
 Value::Value( const Value &other )
    : type_( other.type_ )
    , comments_( 0 )
@@ -475,8 +413,6 @@ Value::Value( const Value &other )
       }
    }
 }
-
-
 Value::~Value()
 {
    switch ( type_ )
@@ -507,11 +443,9 @@ Value::~Value()
    default:
       JSON_ASSERT_UNREACHABLE;
    }
-
    if ( comments_ )
       delete[] comments_;
 }
-
 Value &
 Value::operator=( const Value &other )
 {
@@ -519,8 +453,7 @@ Value::operator=( const Value &other )
    swap( temp );
    return *this;
 }
-
-void 
+void
 Value::swap( Value &other )
 {
    ValueType temp = type_;
@@ -531,15 +464,12 @@ Value::swap( Value &other )
    allocated_ = other.allocated_;
    other.allocated_ = temp2;
 }
-
-ValueType 
+ValueType
 Value::type() const
 {
    return type_;
 }
-
-
-int 
+int
 Value::compare( const Value &other )
 {
    /*
@@ -547,7 +477,6 @@ Value::compare( const Value &other )
    switch ( type_ )
    {
    case nullValue:
-
       return other.type_ == type_;
    case intValue:
       if ( other.type_.isNumeric()
@@ -568,8 +497,7 @@ Value::compare( const Value &other )
    */
    return 0;  // unreachable
 }
-
-bool 
+bool
 Value::operator <( const Value &other ) const
 {
    int typeDelta = type_ - other.type_;
@@ -589,8 +517,8 @@ Value::operator <( const Value &other ) const
       return value_.bool_ < other.value_.bool_;
    case stringValue:
       return ( value_.string_ == 0  &&  other.value_.string_ )
-             || ( other.value_.string_  
-                  &&  value_.string_  
+             || ( other.value_.string_
+                  &&  value_.string_
                   && strcmp( value_.string_, other.value_.string_ ) < 0 );
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
    case arrayValue:
@@ -612,26 +540,22 @@ Value::operator <( const Value &other ) const
    }
    return 0;  // unreachable
 }
-
-bool 
+bool
 Value::operator <=( const Value &other ) const
 {
    return !(other > *this);
 }
-
-bool 
+bool
 Value::operator >=( const Value &other ) const
 {
    return !(*this < other);
 }
-
-bool 
+bool
 Value::operator >( const Value &other ) const
 {
    return other < *this;
 }
-
-bool 
+bool
 Value::operator ==( const Value &other ) const
 {
    //if ( type_ != other.type_ )
@@ -655,8 +579,8 @@ Value::operator ==( const Value &other ) const
       return value_.bool_ == other.value_.bool_;
    case stringValue:
       return ( value_.string_ == other.value_.string_ )
-             || ( other.value_.string_  
-                  &&  value_.string_  
+             || ( other.value_.string_
+                  &&  value_.string_
                   && strcmp( value_.string_, other.value_.string_ ) == 0 );
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
    case arrayValue:
@@ -674,22 +598,18 @@ Value::operator ==( const Value &other ) const
    }
    return 0;  // unreachable
 }
-
-bool 
+bool
 Value::operator !=( const Value &other ) const
 {
    return !( *this == other );
 }
-
 const char *
 Value::asCString() const
 {
    JSON_ASSERT( type_ == stringValue );
    return value_.string_;
 }
-
-
-std::string 
+std::string
 Value::asString() const
 {
    switch ( type_ )
@@ -711,16 +631,14 @@ Value::asString() const
    }
    return ""; // unreachable
 }
-
 # ifdef JSON_USE_CPPTL
-CppTL::ConstString 
+CppTL::ConstString
 Value::asConstString() const
 {
    return CppTL::ConstString( asString().c_str() );
 }
 # endif
-
-Value::Int 
+Value::Int
 Value::asInt() const
 {
    switch ( type_ )
@@ -746,8 +664,7 @@ Value::asInt() const
    }
    return 0; // unreachable;
 }
-
-Value::UInt 
+Value::UInt
 Value::asUInt() const
 {
    switch ( type_ )
@@ -773,8 +690,7 @@ Value::asUInt() const
    }
    return 0; // unreachable;
 }
-
-double 
+double
 Value::asDouble() const
 {
    switch ( type_ )
@@ -798,8 +714,7 @@ Value::asDouble() const
    }
    return 0; // unreachable;
 }
-
-bool 
+bool
 Value::asBool() const
 {
    switch ( type_ )
@@ -823,9 +738,7 @@ Value::asBool() const
    }
    return false; // unreachable;
 }
-
-
-bool 
+bool
 Value::isConvertibleTo( ValueType other ) const
 {
    switch ( type_ )
@@ -874,10 +787,8 @@ Value::isConvertibleTo( ValueType other ) const
    }
    return false; // unreachable;
 }
-
-
 /// Number of values in array or object
-Value::UInt 
+Value::UInt
 Value::size() const
 {
    switch ( type_ )
@@ -911,9 +822,7 @@ Value::size() const
    }
    return 0; // unreachable;
 }
-
-
-bool 
+bool
 Value::empty() const
 {
    if ( isNull() || isArray() || isObject() )
@@ -921,20 +830,15 @@ Value::empty() const
    else
       return false;
 }
-
-
 bool
 Value::operator!() const
 {
    return isNull();
 }
-
-
-void 
+void
 Value::clear()
 {
    JSON_ASSERT( type_ == nullValue  ||  type_ == arrayValue  || type_ == objectValue );
-
    switch ( type_ )
    {
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
@@ -954,8 +858,7 @@ Value::clear()
       break;
    }
 }
-
-void 
+void
 Value::resize( UInt newSize )
 {
    JSON_ASSERT( type_ == nullValue  ||  type_ == arrayValue );
@@ -977,8 +880,6 @@ Value::resize( UInt newSize )
    value_.array_->resize( newSize );
 #endif
 }
-
-
 Value &
 Value::operator[]( UInt index )
 {
@@ -990,7 +891,6 @@ Value::operator[]( UInt index )
    ObjectValues::iterator it = value_.map_->lower_bound( key );
    if ( it != value_.map_->end()  &&  (*it).first == key )
       return (*it).second;
-
    ObjectValues::value_type defaultValue( key, null );
    it = value_.map_->insert( it, defaultValue );
    return (*it).second;
@@ -998,8 +898,6 @@ Value::operator[]( UInt index )
    return value_.array_->resolveReference( index );
 #endif
 }
-
-
 const Value &
 Value::operator[]( UInt index ) const
 {
@@ -1017,29 +915,24 @@ Value::operator[]( UInt index ) const
    return value ? *value : null;
 #endif
 }
-
-
 Value &
 Value::operator[]( const char *key )
 {
    return resolveReference( key, false );
 }
-
-
 Value &
-Value::resolveReference( const char *key, 
+Value::resolveReference( const char *key,
                          bool isStatic )
 {
    JSON_ASSERT( type_ == nullValue  ||  type_ == objectValue );
    if ( type_ == nullValue )
       *this = Value( objectValue );
 #ifndef JSON_VALUE_USE_INTERNAL_MAP
-   CZString actualKey( key, isStatic ? CZString::noDuplication 
+   CZString actualKey( key, isStatic ? CZString::noDuplication
                                      : CZString::duplicateOnCopy );
    ObjectValues::iterator it = value_.map_->lower_bound( actualKey );
    if ( it != value_.map_->end()  &&  (*it).first == actualKey )
       return (*it).second;
-
    ObjectValues::value_type defaultValue( actualKey, null );
    it = value_.map_->insert( it, defaultValue );
    Value &value = (*it).second;
@@ -1048,25 +941,18 @@ Value::resolveReference( const char *key,
    return value_.map_->resolveReference( key, isStatic );
 #endif
 }
-
-
-Value 
-Value::get( UInt index, 
+Value
+Value::get( UInt index,
             const Value &defaultValue ) const
 {
    const Value *value = &((*this)[index]);
    return value == &null ? defaultValue : *value;
 }
-
-
-bool 
+bool
 Value::isValidIndex( UInt index ) const
 {
    return index < size();
 }
-
-
-
 const Value &
 Value::operator[]( const char *key ) const
 {
@@ -1084,67 +970,51 @@ Value::operator[]( const char *key ) const
    return value ? *value : null;
 #endif
 }
-
-
 Value &
 Value::operator[]( const std::string &key )
 {
    return (*this)[ key.c_str() ];
 }
-
-
 const Value &
 Value::operator[]( const std::string &key ) const
 {
    return (*this)[ key.c_str() ];
 }
-
 Value &
 Value::operator[]( const StaticString &key )
 {
    return resolveReference( key, true );
 }
-
-
 # ifdef JSON_USE_CPPTL
 Value &
 Value::operator[]( const CppTL::ConstString &key )
 {
    return (*this)[ key.c_str() ];
 }
-
-
 const Value &
 Value::operator[]( const CppTL::ConstString &key ) const
 {
    return (*this)[ key.c_str() ];
 }
 # endif
-
-
 Value &
 Value::append( const Value &value )
 {
    return (*this)[size()] = value;
 }
-
-
-Value 
-Value::get( const char *key, 
+Value
+Value::get( const char *key,
             const Value &defaultValue ) const
 {
    const Value *value = &((*this)[key]);
    return value == &null ? defaultValue : *value;
 }
-
-
-Value 
+Value
 Value::get( const std::string &key,
             const Value &defaultValue ) const
 {
    return get( key.c_str(), defaultValue );
 }
-
 Value
 Value::removeMember( const char* key )
 {
@@ -1170,46 +1040,38 @@ Value::removeMember( const char* key )
    }
 #endif
 }
-
 Value
 Value::removeMember( const std::string &key )
 {
    return removeMember( key.c_str() );
 }
-
 # ifdef JSON_USE_CPPTL
-Value 
+Value
 Value::get( const CppTL::ConstString &key,
             const Value &defaultValue ) const
 {
    return get( key.c_str(), defaultValue );
 }
 # endif
-
-bool 
+bool
 Value::isMember( const char *key ) const
 {
    const Value *value = &((*this)[key]);
    return value != &null;
 }
-
-
-bool 
+bool
 Value::isMember( const std::string &key ) const
 {
    return isMember( key.c_str() );
 }
-
-
 # ifdef JSON_USE_CPPTL
-bool 
+bool
 Value::isMember( const CppTL::ConstString &key ) const
 {
    return isMember( key.c_str() );
 }
 #endif
-
-Value::Members 
+Value::Members
 Value::getMemberNames() const
 {
    JSON_ASSERT( type_ == nullValue  ||  type_ == objectValue );
@@ -1247,91 +1109,69 @@ Value::getMemberNames() const
 //}
 //
 //
-//EnumValues 
+//EnumValues
 //Value::enumValues() const
 //{
 //   if ( type_ == objectValue  ||  type_ == arrayValue )
-//      return CppTL::Enum::anyValues( *(value_.map_), 
+//      return CppTL::Enum::anyValues( *(value_.map_),
 //                                     CppTL::Type<const Value &>() );
 //   return EnumValues();
 //}
 //
 //# endif
-
-
 bool
 Value::isNull() const
 {
    return type_ == nullValue;
 }
-
-
-bool 
+bool
 Value::isBool() const
 {
    return type_ == booleanValue;
 }
-
-
-bool 
+bool
 Value::isInt() const
 {
    return type_ == intValue;
 }
-
-
-bool 
+bool
 Value::isUInt() const
 {
    return type_ == uintValue;
 }
-
-
-bool 
+bool
 Value::isIntegral() const
 {
-   return type_ == intValue  
-          ||  type_ == uintValue  
+   return type_ == intValue
+          ||  type_ == uintValue
           ||  type_ == booleanValue;
 }
-
-
-bool 
+bool
 Value::isDouble() const
 {
    return type_ == realValue;
 }
-
-
-bool 
+bool
 Value::isNumeric() const
 {
    return isIntegral() || isDouble();
 }
-
-
-bool 
+bool
 Value::isString() const
 {
    return type_ == stringValue;
 }
-
-
-bool 
+bool
 Value::isArray() const
 {
    return type_ == nullValue  ||  type_ == arrayValue;
 }
-
-
-bool 
+bool
 Value::isObject() const
 {
    return type_ == nullValue  ||  type_ == objectValue;
 }
-
-
-void 
+void
 Value::setComment( const char *comment,
                    CommentPlacement placement )
 {
@@ -1339,40 +1179,31 @@ Value::setComment( const char *comment,
       comments_ = new CommentInfo[numberOfCommentPlacement];
    comments_[placement].setComment( comment );
 }
-
-
-void 
+void
 Value::setComment( const std::string &comment,
                    CommentPlacement placement )
 {
    setComment( comment.c_str(), placement );
 }
-
-
-bool 
+bool
 Value::hasComment( CommentPlacement placement ) const
 {
    return comments_ != 0  &&  comments_[placement].comment_ != 0;
 }
-
-std::string 
+std::string
 Value::getComment( CommentPlacement placement ) const
 {
    if ( hasComment(placement) )
       return comments_[placement].comment_;
    return "";
 }
-
-
-std::string 
+std::string
 Value::toStyledString() const
 {
    StyledWriter writer;
    return writer.write( *this );
 }
-
-
-Value::const_iterator 
+Value::const_iterator
 Value::begin() const
 {
    switch ( type_ )
@@ -1406,8 +1237,7 @@ Value::begin() const
    }
    return const_iterator();
 }
-
-Value::const_iterator 
+Value::const_iterator
 Value::end() const
 {
    switch ( type_ )
@@ -1441,9 +1271,7 @@ Value::end() const
    }
    return const_iterator();
 }
-
-
-Value::iterator 
+Value::iterator
 Value::begin()
 {
    switch ( type_ )
@@ -1477,8 +1305,7 @@ Value::begin()
    }
    return iterator();
 }
-
-Value::iterator 
+Value::iterator
 Value::end()
 {
    switch ( type_ )
@@ -1512,40 +1339,29 @@ Value::end()
    }
    return iterator();
 }
-
-
 // class PathArgument
 // //////////////////////////////////////////////////////////////////
-
 PathArgument::PathArgument()
    : kind_( kindNone )
 {
 }
-
-
 PathArgument::PathArgument( Value::UInt index )
    : index_( index )
    , kind_( kindIndex )
 {
 }
-
-
 PathArgument::PathArgument( const char *key )
    : key_( key )
    , kind_( kindKey )
 {
 }
-
-
 PathArgument::PathArgument( const std::string &key )
    : key_( key.c_str() )
    , kind_( kindKey )
 {
 }
-
 // class Path
 // //////////////////////////////////////////////////////////////////
-
 Path::Path( const std::string &path,
             const PathArgument &a1,
             const PathArgument &a2,
@@ -1561,9 +1377,7 @@ Path::Path( const std::string &path,
    in.push_back( &a5 );
    makePath( path, in );
 }
-
-
-void 
+void
 Path::makePath( const std::string &path,
                 const InArgs &in )
 {
@@ -1605,12 +1419,10 @@ Path::makePath( const std::string &path,
       }
    }
 }
-
-
-void 
-Path::addPathInArg( const std::string &path, 
-                    const InArgs &in, 
-                    InArgs::const_iterator &itInArg, 
+void
+Path::addPathInArg( const std::string &path,
+                    const InArgs &in,
+                    InArgs::const_iterator &itInArg,
                     PathArgument::Kind kind )
 {
    if ( itInArg == in.end() )
@@ -1626,16 +1438,12 @@ Path::addPathInArg( const std::string &path,
       args_.push_back( **itInArg );
    }
 }
-
-
-void 
-Path::invalidPath( const std::string &path, 
+void
+Path::invalidPath( const std::string &path,
                    int location )
 {
    // Error: invalid path.
 }
-
-
 const Value &
 Path::resolve( const Value &root ) const
 {
@@ -1666,10 +1474,8 @@ Path::resolve( const Value &root ) const
    }
    return *node;
 }
-
-
-Value 
-Path::resolve( const Value &root, 
+Value
+Path::resolve( const Value &root,
                const Value &defaultValue ) const
 {
    const Value *node = &root;
@@ -1693,8 +1499,6 @@ Path::resolve( const Value &root,
    }
    return *node;
 }
-
-
 Value &
 Path::make( Value &root ) const
 {
@@ -1721,6 +1525,4 @@ Path::make( Value &root ) const
    }
    return *node;
 }
-
-
 } // namespace Json

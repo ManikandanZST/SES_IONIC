@@ -28,6 +28,7 @@
     "@ionic-native/social-sharing": "^5.36.0",
     "@ionic/angular": "^6.1.9",
     "@ionic/cordova-builders": "^6.1.0",
+    "@stripe/stripe-js": "^3.0.6",
     "angular-captcha": "^3.7.4",
     "cordova": "^11.0.0",
     "cordova-plugin-x-socialsharing": "^6.0.4",

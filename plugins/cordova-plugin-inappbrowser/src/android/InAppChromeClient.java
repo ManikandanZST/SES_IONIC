@@ -6,9 +6,7 @@
        to you under the Apache License, Version 2.0 (the
        "License"); you may not use this file except in compliance
        with the License.  You may obtain a copy of the License at
-
          http://www.apache.org/licenses/LICENSE-2.0
-
        Unless required by applicable law or agreed to in writing,
        software distributed under the License is distributed on an
        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -17,13 +15,11 @@
        under the License.
 */
 package org.apache.cordova.inappbrowser;
-
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.LOG;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Message;
@@ -34,13 +30,10 @@ import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.GeolocationPermissions.Callback;
-
 public class InAppChromeClient extends WebChromeClient {
-
     private CordovaWebView webView;
     private String LOG_TAG = "InAppChromeClient";
     private long MAX_QUOTA = 100 * 1024 * 1024;
-
     public InAppChromeClient(CordovaWebView webView) {
         super();
         this.webView = webView;
@@ -62,7 +55,6 @@ public class InAppChromeClient extends WebChromeClient {
         LOG.d(LOG_TAG, "onExceededDatabaseQuota estimatedSize: %d  currentQuota: %d  totalUsedQuota: %d", estimatedSize, currentQuota, totalUsedQuota);
         quotaUpdater.updateQuota(MAX_QUOTA);
     }
-
     /**
      * Instructs the client to show a prompt to ask the user to set the Geolocation permission state for the specified origin.
      *
@@ -74,7 +66,6 @@ public class InAppChromeClient extends WebChromeClient {
         super.onGeolocationPermissionsShowPrompt(origin, callback);
         callback.invoke(origin, true, false);
     }
-
     /**
      * Tell the client to display a prompt dialog to the user.
      * If the client returns true, WebView will assume that the client will
@@ -131,14 +122,13 @@ public class InAppChromeClient extends WebChromeClient {
             }
             else {
                 // Anything else with a gap: prefix should get this message
-                LOG.w(LOG_TAG, "InAppBrowser does not support Cordova API calls: " + url + " " + defaultValue); 
+                LOG.w(LOG_TAG, "InAppBrowser does not support Cordova API calls: " + url + " " + defaultValue);
                 result.cancel();
                 return true;
             }
         }
         return false;
     }
-
     /**
      * The InAppWebBrowser WebView is configured to MultipleWindow mode to mitigate a security
      * bug found in Chromium prior to version 83.0.4103.106.
@@ -162,21 +152,17 @@ public class InAppChromeClient extends WebChromeClient {
                         inAppWebView.loadUrl(request.getUrl().toString());
                         return true;
                     }
-
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
                         inAppWebView.loadUrl(url);
                         return true;
                     }
                 };
-
         final WebView newWebView = new WebView(view.getContext());
         newWebView.setWebViewClient(webViewClient);
-
         final WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
         transport.setWebView(newWebView);
         resultMsg.sendToTarget();
-
         return true;
     }
 }

@@ -1,6 +1,5 @@
 // included by json_value.cpp
 // everything is within Json namespace
-
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
@@ -8,7 +7,6 @@
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
-
 /** \internal MUST be safely initialized using memset( this, 0, sizeof(ValueInternalLink) );
    * This optimization is used by the fast allocator.
    */
@@ -17,9 +15,8 @@ ValueInternalLink::ValueInternalLink()
    , next_( 0 )
 {
 }
-
 ValueInternalLink::~ValueInternalLink()
-{ 
+{
    for ( int index =0; index < itemPerLink; ++index )
    {
       if ( !items_[index].isItemAvailable() )
@@ -31,13 +28,9 @@ ValueInternalLink::~ValueInternalLink()
          break;
    }
 }
-
-
-
 ValueMapAllocator::~ValueMapAllocator()
 {
 }
-
 #ifdef JSON_USE_SIMPLE_INTERNAL_ALLOCATOR
 class DefaultValueMapAllocator : public ValueMapAllocator
 {
@@ -46,32 +39,26 @@ public: // overridden from ValueMapAllocator
    {
       return new ValueInternalMap();
    }
-
    virtual ValueInternalMap *newMapCopy( const ValueInternalMap &other )
    {
       return new ValueInternalMap( other );
    }
-
    virtual void destructMap( ValueInternalMap *map )
    {
       delete map;
    }
-
    virtual ValueInternalLink *allocateMapBuckets( unsigned int size )
    {
       return new ValueInternalLink[size];
    }
-
    virtual void releaseMapBuckets( ValueInternalLink *links )
    {
       delete [] links;
    }
-
    virtual ValueInternalLink *allocateMapLink()
    {
       return new ValueInternalLink();
    }
-
    virtual void releaseMapLink( ValueInternalLink *link )
    {
       delete link;
@@ -88,14 +75,12 @@ public: // overridden from ValueMapAllocator
       new (map) ValueInternalMap(); // placement new
       return map;
    }
-
    virtual ValueInternalMap *newMapCopy( const ValueInternalMap &other )
    {
       ValueInternalMap *map = mapsAllocator_.allocate();
       new (map) ValueInternalMap( other ); // placement new
       return map;
    }
-
    virtual void destructMap( ValueInternalMap *map )
    {
       if ( map )
@@ -104,24 +89,20 @@ public: // overridden from ValueMapAllocator
          mapsAllocator_.release( map );
       }
    }
-
    virtual ValueInternalLink *allocateMapBuckets( unsigned int size )
    {
       return new ValueInternalLink[size];
    }
-
    virtual void releaseMapBuckets( ValueInternalLink *links )
    {
       delete [] links;
    }
-
    virtual ValueInternalLink *allocateMapLink()
    {
       ValueInternalLink *link = linksAllocator_.allocate();
       memset( link, 0, sizeof(ValueInternalLink) );
       return link;
    }
-
    virtual void releaseMapLink( ValueInternalLink *link )
    {
       link->~ValueInternalLink();
@@ -132,33 +113,25 @@ private:
    BatchAllocator<ValueInternalLink,1> linksAllocator_;
 };
 #endif
-
 static ValueMapAllocator *&mapAllocator()
 {
    static DefaultValueMapAllocator defaultAllocator;
    static ValueMapAllocator *mapAllocator = &defaultAllocator;
    return mapAllocator;
 }
-
 static struct DummyMapAllocatorInitializer {
-   DummyMapAllocatorInitializer() 
+   DummyMapAllocatorInitializer()
    {
       mapAllocator();      // ensure mapAllocator() statics are initialized before main().
    }
 } dummyMapAllocatorInitializer;
-
-
-
 // h(K) = value * K >> w ; with w = 32 & K prime w.r.t. 2^32.
-
 /*
-use linked list hash map. 
+use linked list hash map.
 buckets array is a container.
 linked list element contains 6 key/values. (memory = (16+4) * 6 + 4 = 124)
 value have extra state: valid, available, deleted
 */
-
-
 ValueInternalMap::ValueInternalMap()
    : buckets_( 0 )
    , tailLink_( 0 )
@@ -166,8 +139,6 @@ ValueInternalMap::ValueInternalMap()
    , itemCount_( 0 )
 {
 }
-
-
 ValueInternalMap::ValueInternalMap( const ValueInternalMap &other )
    : buckets_( 0 )
    , tailLink_( 0 )
@@ -187,8 +158,6 @@ ValueInternalMap::ValueInternalMap( const ValueInternalMap &other )
       resolveReference(memberName, isStatic) = aValue;
    }
 }
-
-
 ValueInternalMap &
 ValueInternalMap::operator =( const ValueInternalMap &other )
 {
@@ -196,8 +165,6 @@ ValueInternalMap::operator =( const ValueInternalMap &other )
    swap( dummy );
    return *this;
 }
-
-
 ValueInternalMap::~ValueInternalMap()
 {
    if ( buckets_ )
@@ -215,9 +182,7 @@ ValueInternalMap::~ValueInternalMap()
       mapAllocator()->releaseMapBuckets( buckets_ );
    }
 }
-
-
-void 
+void
 ValueInternalMap::swap( ValueInternalMap &other )
 {
    ValueInternalLink *tempBuckets = buckets_;
@@ -233,29 +198,23 @@ ValueInternalMap::swap( ValueInternalMap &other )
    itemCount_ = other.itemCount_;
    other.itemCount_ = tempItemCount;
 }
-
-
-void 
+void
 ValueInternalMap::clear()
 {
    ValueInternalMap dummy;
    swap( dummy );
 }
-
-
-ValueInternalMap::BucketIndex 
+ValueInternalMap::BucketIndex
 ValueInternalMap::size() const
 {
    return itemCount_;
 }
-
-bool 
+bool
 ValueInternalMap::reserveDelta( BucketIndex growth )
 {
    return reserve( itemCount_ + growth );
 }
-
-bool 
+bool
 ValueInternalMap::reserve( BucketIndex newItemCount )
 {
    if ( !buckets_  &&  newItemCount > 0 )
@@ -267,8 +226,6 @@ ValueInternalMap::reserve( BucketIndex newItemCount )
 //   BucketIndex idealBucketCount = (newItemCount + ValueInternalLink::itemPerLink) / ValueInternalLink::itemPerLink;
    return true;
 }
-
-
 const Value *
 ValueInternalMap::find( const char *key ) const
 {
@@ -276,8 +233,8 @@ ValueInternalMap::find( const char *key ) const
       return 0;
    HashKey hashedKey = hash( key );
    BucketIndex bucketIndex = hashedKey % bucketsSize_;
-   for ( const ValueInternalLink *current = &buckets_[bucketIndex]; 
-         current != 0; 
+   for ( const ValueInternalLink *current = &buckets_[bucketIndex];
+         current != 0;
          current = current->next_ )
    {
       for ( BucketIndex index=0; index < ValueInternalLink::itemPerLink; ++index )
@@ -290,16 +247,12 @@ ValueInternalMap::find( const char *key ) const
    }
    return 0;
 }
-
-
 Value *
 ValueInternalMap::find( const char *key )
 {
    const ValueInternalMap *constThis = this;
    return const_cast<Value *>( constThis->find( key ) );
 }
-
-
 Value &
 ValueInternalMap::resolveReference( const char *key,
                                     bool isStatic )
@@ -310,8 +263,8 @@ ValueInternalMap::resolveReference( const char *key,
       BucketIndex bucketIndex = hashedKey % bucketsSize_;
       ValueInternalLink **previous = 0;
       BucketIndex index;
-      for ( ValueInternalLink *current = &buckets_[bucketIndex]; 
-            current != 0; 
+      for ( ValueInternalLink *current = &buckets_[bucketIndex];
+            current != 0;
             previous = &current->next_, current = current->next_ )
       {
          for ( index=0; index < ValueInternalLink::itemPerLink; ++index )
@@ -323,21 +276,18 @@ ValueInternalMap::resolveReference( const char *key,
          }
       }
    }
-
    reserveDelta( 1 );
    return unsafeAdd( key, isStatic, hashedKey );
 }
-
-
-void 
+void
 ValueInternalMap::remove( const char *key )
 {
    HashKey hashedKey = hash( key );
    if ( !bucketsSize_ )
       return;
    BucketIndex bucketIndex = hashedKey % bucketsSize_;
-   for ( ValueInternalLink *link = &buckets_[bucketIndex]; 
-         link != 0; 
+   for ( ValueInternalLink *link = &buckets_[bucketIndex];
+         link != 0;
          link = link->next_ )
    {
       BucketIndex index;
@@ -353,9 +303,8 @@ ValueInternalMap::remove( const char *key )
       }
    }
 }
-
-void 
-ValueInternalMap::doActualRemove( ValueInternalLink *link, 
+void
+ValueInternalMap::doActualRemove( ValueInternalLink *link,
                                   BucketIndex index,
                                   BucketIndex bucketIndex )
 {
@@ -364,14 +313,13 @@ ValueInternalMap::doActualRemove( ValueInternalLink *link,
    // if last page only contains 'available' items, then desallocate it (it's empty)
    ValueInternalLink *&lastLink = getLastLinkInBucket( index );
    BucketIndex lastItemIndex = 1; // a link can never be empty, so start at 1
-   for ( ;   
-         lastItemIndex < ValueInternalLink::itemPerLink; 
+   for ( ;
+         lastItemIndex < ValueInternalLink::itemPerLink;
          ++lastItemIndex ) // may be optimized with dicotomic search
    {
       if ( lastLink->items_[lastItemIndex].isItemAvailable() )
          break;
    }
-   
    BucketIndex lastUsedIndex = lastItemIndex - 1;
    Value *valueToDelete = &link->items_[index];
    Value *valueToPreserve = &lastLink->items_[lastUsedIndex];
@@ -395,8 +343,6 @@ ValueInternalMap::doActualRemove( ValueInternalLink *link,
    }
    --itemCount_;
 }
-
-
 ValueInternalLink *&
 ValueInternalMap::getLastLinkInBucket( BucketIndex bucketIndex )
 {
@@ -407,12 +353,10 @@ ValueInternalMap::getLastLinkInBucket( BucketIndex bucketIndex )
       previous = &buckets_[bucketIndex];
    return previous;
 }
-
-
 Value &
-ValueInternalMap::setNewItem( const char *key, 
+ValueInternalMap::setNewItem( const char *key,
                               bool isStatic,
-                              ValueInternalLink *link, 
+                              ValueInternalLink *link,
                               BucketIndex index )
 {
    char *duplicatedKey = valueAllocator()->makeMemberName( key );
@@ -422,11 +366,9 @@ ValueInternalMap::setNewItem( const char *key,
    link->items_[index].setMemberNameIsStatic( isStatic );
    return link->items_[index]; // items already default constructed.
 }
-
-
 Value &
-ValueInternalMap::unsafeAdd( const char *key, 
-                             bool isStatic, 
+ValueInternalMap::unsafeAdd( const char *key,
+                             bool isStatic,
                              HashKey hashedKey )
 {
    JSON_ASSERT_MESSAGE( bucketsSize_ > 0, "ValueInternalMap::unsafeAdd(): internal logic error." );
@@ -449,9 +391,7 @@ ValueInternalMap::unsafeAdd( const char *key,
    }
    return setNewItem( key, isStatic, link, index );
 }
-
-
-ValueInternalMap::HashKey 
+ValueInternalMap::HashKey
 ValueInternalMap::hash( const char *key ) const
 {
    HashKey hash = 0;
@@ -459,9 +399,7 @@ ValueInternalMap::hash( const char *key ) const
       hash += *key++ * 37;
    return hash;
 }
-
-
-int 
+int
 ValueInternalMap::compare( const ValueInternalMap &other ) const
 {
    int sizeDiff( itemCount_ - other.itemCount_ );
@@ -477,7 +415,6 @@ ValueInternalMap::compare( const ValueInternalMap &other ) const
       if ( !other.find( key( it ) ) )
          return 1;
    }
-
    // All keys are equals, let's compare values
    makeBeginIterator( it );
    for ( ; !equals(it,itEnd); increment(it) )
@@ -489,9 +426,7 @@ ValueInternalMap::compare( const ValueInternalMap &other ) const
    }
    return 0;
 }
-
-
-void 
+void
 ValueInternalMap::makeBeginIterator( IteratorState &it ) const
 {
    it.map_ = const_cast<ValueInternalMap *>( this );
@@ -499,9 +434,7 @@ ValueInternalMap::makeBeginIterator( IteratorState &it ) const
    it.itemIndex_ = 0;
    it.link_ = buckets_;
 }
-
-
-void 
+void
 ValueInternalMap::makeEndIterator( IteratorState &it ) const
 {
    it.map_ = const_cast<ValueInternalMap *>( this );
@@ -509,19 +442,15 @@ ValueInternalMap::makeEndIterator( IteratorState &it ) const
    it.itemIndex_ = 0;
    it.link_ = 0;
 }
-
-
-bool 
+bool
 ValueInternalMap::equals( const IteratorState &x, const IteratorState &other )
 {
-   return x.map_ == other.map_  
-          &&  x.bucketIndex_ == other.bucketIndex_  
+   return x.map_ == other.map_
+          &&  x.bucketIndex_ == other.bucketIndex_
           &&  x.link_ == other.link_
           &&  x.itemIndex_ == other.itemIndex_;
 }
-
-
-void 
+void
 ValueInternalMap::incrementBucket( IteratorState &iterator )
 {
    ++iterator.bucketIndex_;
@@ -533,9 +462,7 @@ ValueInternalMap::incrementBucket( IteratorState &iterator )
       iterator.link_ = &(iterator.map_->buckets_[iterator.bucketIndex_]);
    iterator.itemIndex_ = 0;
 }
-
-
-void 
+void
 ValueInternalMap::increment( IteratorState &iterator )
 {
    JSON_ASSERT_MESSAGE( iterator.map_, "Attempting to iterator using invalid iterator." );
@@ -553,9 +480,7 @@ ValueInternalMap::increment( IteratorState &iterator )
       incrementBucket( iterator );
    }
 }
-
-
-void 
+void
 ValueInternalMap::decrement( IteratorState &iterator )
 {
    if ( iterator.itemIndex_ == 0 )
@@ -570,15 +495,12 @@ ValueInternalMap::decrement( IteratorState &iterator )
       iterator.itemIndex_ = ValueInternalLink::itemPerLink - 1;
    }
 }
-
-
 const char *
 ValueInternalMap::key( const IteratorState &iterator )
 {
    JSON_ASSERT_MESSAGE( iterator.link_, "Attempting to iterate using invalid iterator." );
    return iterator.link_->keys_[iterator.itemIndex_];
 }
-
 const char *
 ValueInternalMap::key( const IteratorState &iterator, bool &isStatic )
 {
@@ -586,17 +508,13 @@ ValueInternalMap::key( const IteratorState &iterator, bool &isStatic )
    isStatic = iterator.link_->items_[iterator.itemIndex_].isMemberNameStatic();
    return iterator.link_->keys_[iterator.itemIndex_];
 }
-
-
 Value &
 ValueInternalMap::value( const IteratorState &iterator )
 {
    JSON_ASSERT_MESSAGE( iterator.link_, "Attempting to iterate using invalid iterator." );
    return iterator.link_->items_[iterator.itemIndex_];
 }
-
-
-int 
+int
 ValueInternalMap::distance( const IteratorState &x, const IteratorState &y )
 {
    int offset = 0;

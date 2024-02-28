@@ -6,9 +6,7 @@
        to you under the Apache License, Version 2.0 (the
        "License"); you may not use this file except in compliance
        with the License.  You may obtain a copy of the License at
-
          http://www.apache.org/licenses/LICENSE-2.0
-
        Unless required by applicable law or agreed to in writing,
        software distributed under the License is distributed on an
        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -17,36 +15,28 @@
        under the License.
  */
 package org.apache.cordova.file;
-
 import android.content.res.AssetManager;
 import android.net.Uri;
-
 import org.apache.cordova.CordovaResourceApi;
 import org.apache.cordova.LOG;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 public class AssetFilesystem extends Filesystem {
-
     private final AssetManager assetManager;
-
     // A custom gradle hook creates the cdvasset.manifest file, which speeds up asset listing a tonne.
     // See: http://stackoverflow.com/questions/16911558/android-assetmanager-list-incredibly-slow
     private static Object listCacheLock = new Object();
     private static boolean listCacheFromFile;
     private static Map<String, String[]> listCache;
     private static Map<String, Long> lengthCache;
-
     private static final String LOG_TAG = "AssetFilesystem";
-
     private void lazyInitCaches() {
         synchronized (listCacheLock) {
             if (listCache == null) {
@@ -76,7 +66,6 @@ public class AssetFilesystem extends Filesystem {
             }
         }
     }
-
     private String[] listAssets(String assetPath) throws IOException {
         if (assetPath.startsWith("/")) {
             assetPath = assetPath.substring(1);
@@ -96,7 +85,6 @@ public class AssetFilesystem extends Filesystem {
         }
         return ret;
     }
-
     private long getAssetSize(String assetPath) throws FileNotFoundException {
         if (assetPath.startsWith("/")) {
             assetPath = assetPath.substring(1);
@@ -132,17 +120,14 @@ public class AssetFilesystem extends Filesystem {
             }
         }
     }
-
     public AssetFilesystem(AssetManager assetManager, CordovaResourceApi resourceApi) {
         super(Uri.parse("file:///android_asset/"), "assets", resourceApi);
         this.assetManager = assetManager;
 	}
-
     @Override
     public Uri toNativeUri(LocalFilesystemURL inputURL) {
         return nativeUriForFullPath(inputURL.path);
     }
-
     @Override
     public LocalFilesystemURL toLocalUri(Uri inputURL) {
         if (!"file".equals(inputURL.getScheme())) {
@@ -174,7 +159,6 @@ public class AssetFilesystem extends Filesystem {
         }
         return LocalFilesystemURL.parse(b.build());
     }
-
     private boolean isDirectory(String assetPath) {
         try {
             return listAssets(assetPath).length != 0;
@@ -182,14 +166,12 @@ public class AssetFilesystem extends Filesystem {
             return false;
         }
     }
-
     @Override
     public LocalFilesystemURL[] listChildren(LocalFilesystemURL inputURL) throws FileNotFoundException {
         String pathNoSlashes = inputURL.path.substring(1);
         if (pathNoSlashes.endsWith("/")) {
             pathNoSlashes = pathNoSlashes.substring(0, pathNoSlashes.length() - 1);
         }
-
         String[] files;
         try {
             files = listAssets(pathNoSlashes);
@@ -198,14 +180,12 @@ public class AssetFilesystem extends Filesystem {
             fnfe.initCause(e);
             throw fnfe;
         }
-
         LocalFilesystemURL[] entries = new LocalFilesystemURL[files.length];
         for (int i = 0; i < files.length; ++i) {
             entries[i] = localUrlforFullPath(new File(inputURL.path, files[i]).getPath());
         }
         return entries;
 	}
-
     @Override
     public JSONObject getFileForLocalURL(LocalFilesystemURL inputURL,
                                          String path, JSONObject options, boolean directory)
@@ -213,33 +193,27 @@ public class AssetFilesystem extends Filesystem {
         if (options != null && options.optBoolean("create")) {
             throw new UnsupportedOperationException("Assets are read-only");
         }
-
         // Check whether the supplied path is absolute or relative
         if (directory && !path.endsWith("/")) {
             path += "/";
         }
-
         LocalFilesystemURL requestedURL;
         if (path.startsWith("/")) {
             requestedURL = localUrlforFullPath(normalizePath(path));
         } else {
             requestedURL = localUrlforFullPath(normalizePath(inputURL.path + "/" + path));
         }
-
         // Throws a FileNotFoundException if it doesn't exist.
         getFileMetadataForLocalURL(requestedURL);
-
         boolean isDir = isDirectory(requestedURL.path);
         if (directory && !isDir) {
             throw new TypeMismatchException("path doesn't exist or is file");
         } else if (!directory && isDir) {
             throw new TypeMismatchException("path doesn't exist or is directory");
         }
-
         // Return the directory
         return makeEntryForURL(requestedURL);
     }
-
     @Override
 	public JSONObject getFileMetadataForLocalURL(LocalFilesystemURL inputURL) throws FileNotFoundException {
         JSONObject metadata = new JSONObject();
@@ -255,40 +229,32 @@ public class AssetFilesystem extends Filesystem {
         }
         return metadata;
 	}
-
 	@Override
 	public boolean canRemoveFileAtLocalURL(LocalFilesystemURL inputURL) {
 		return false;
 	}
-
     @Override
     long writeToFileAtURL(LocalFilesystemURL inputURL, String data, int offset, boolean isBinary) throws NoModificationAllowedException, IOException {
         throw new NoModificationAllowedException("Assets are read-only");
     }
-
     @Override
     long truncateFileAtURL(LocalFilesystemURL inputURL, long size) throws IOException, NoModificationAllowedException {
         throw new NoModificationAllowedException("Assets are read-only");
     }
-
     @Override
     String filesystemPathForURL(LocalFilesystemURL url) {
         return new File(rootUri.getPath(), url.path).toString();
     }
-
     @Override
     LocalFilesystemURL URLforFilesystemPath(String path) {
         return null;
     }
-
     @Override
     boolean removeFileAtLocalURL(LocalFilesystemURL inputURL) throws InvalidModificationException, NoModificationAllowedException {
         throw new NoModificationAllowedException("Assets are read-only");
     }
-
     @Override
     boolean recursiveRemoveFileAtLocalURL(LocalFilesystemURL inputURL) throws NoModificationAllowedException {
         throw new NoModificationAllowedException("Assets are read-only");
     }
-
 }

@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import { CommonService } from './common.service';
-
 @Injectable()
-
 export class LoginService {
   public headers:any;
 //   public uri = "http://constructionmarket.info/zerosoftzst/talev/newrestapi/weblogin";
@@ -13,17 +11,14 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
 // serviceBase: String = "http://localhost:26368/action";
 // serviceBase1: String = "http://localhost:26368/Pay/";
 // serviceBase2: String = "http://localhost:26368/action";
-
   constructor(public http: HttpClient,
     private _httpClient: HttpClient,public _commonService: CommonService) {
   }
-
   /**
      * Sign Up
      *
      * @returns {Promise<any>}
   */
-
   Signup(params: any,sendPass:any): Promise<any> {
     return new Promise((resolve, reject) => {
         this._httpClient.post(`${this.serviceBase2}/NormalReg/?Sendpass=`+sendPass, params, {
@@ -74,9 +69,7 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
      *
      * @returns {Promise<any>}
   */
-
  Signin(params: any): Promise<any> {
-   
     return new Promise((resolve, reject) => {
         this._httpClient.post(`${this.serviceBase2}/NormalLogin`, params, {
             headers:
@@ -92,7 +85,6 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
     });
   }
   Signin_group(params: any): Promise<any> {
-    
      return new Promise((resolve, reject) => {
          this._httpClient.post(`${this.serviceBase2}/GroupLogin`, params, {
              headers:
@@ -107,10 +99,7 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
          }, reject);
      });
    }
-
-   //proctor login
    Signin_proctor(params: any): Promise<any> {
-    
      return new Promise((resolve, reject) => {
          this._httpClient.post(`${this.serviceBase2}/ProctorLogin`, params, {
              headers:
@@ -125,9 +114,7 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
          }, reject);
      });
    }
-
    profile_group(params: any): Promise<any> {
-    
      return new Promise((resolve, reject) => {
          this._httpClient.post(`${this.serviceBase2}UpdateGroupUser`, params, {
              headers:
@@ -142,10 +129,7 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
          }, reject);
      });
    }
-
-
    profile_individual(params: any): Promise<any> {
-    
      return new Promise((resolve, reject) => {
          this._httpClient.post(`${this.serviceBase2}UpdateNormalUser`, params, {
              headers:
@@ -161,7 +145,6 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
      });
    }
    changepassword_individual(params: any): Promise<any> {
-    
      return new Promise((resolve, reject) => {
          this._httpClient.post(`${this.serviceBase2}UpdateNormalUserPass`, params, {
              headers:
@@ -177,7 +160,6 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
      });
    }
    changepassword_group(params: any): Promise<any> {
-    
      return new Promise((resolve, reject) => {
          this._httpClient.post(`${this.serviceBase2}UpdateGroupUserPass`, params, {
              headers:
@@ -192,10 +174,7 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
          }, reject);
      });
    }
-
-   //data with url
    postdata(params: any,url:any): Promise<any> {
-
      return new Promise((resolve, reject) => {
          this._httpClient.post(`${this.serviceBase2}`+url, params, {
              headers:
@@ -215,7 +194,6 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
      *
      * @returns {Promise<any>}
   */
-
  Forgotpass(params: any): Promise<any> {
     return new Promise((resolve, reject) => {
         this._httpClient.post(`${this.serviceBase2}/forgotpass`, {...params}, {
@@ -231,13 +209,11 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
         }, reject);
     });
   }
-
  /**
      * Change password
      *
      * @returns {Promise<any>}
   */
-
  Changepass(params: any): Promise<any> {
   return new Promise((resolve, reject) => {
     this._httpClient.post(`${this.serviceBase2}/changepass`, {...params}, {
@@ -253,8 +229,6 @@ serviceBase2: String = "https://shawneerct.com/API/action/";
     }, reject);
 });
 }
-
-
 getData(controller:any): Promise<any> {
   return new Promise((resolve, reject) => {
     this._httpClient.get(`${this.serviceBase2}/`+controller, {
@@ -265,14 +239,12 @@ getData(controller:any): Promise<any> {
               }
           )}).subscribe((response: any) => {
             if(response.status=="authentication_error"){
-              // this.auth.logout();
             }
             else{
               resolve(response);
             }
     }, (response1: any) => {
       if(response1.error.status=="authentication_error"){
-        // this.auth.logout();
       }
       else{
         reject(response1);
@@ -281,7 +253,6 @@ getData(controller:any): Promise<any> {
   });
 }
 postData(controller:any, data: any): Promise<any> {
-
   return new Promise((resolve, reject) => {
     this._httpClient.post(`${this.serviceBase2}`+controller, {...data}, {
       headers:
@@ -289,21 +260,16 @@ postData(controller:any, data: any): Promise<any> {
               {
                 'Content-Type': 'application/x-www-form-urlencoded',
               }
-
           ),
-          // responseType: 'text'
-
     })
         .subscribe((response: any) => {
           if(response.status=="authentication_error"){
-            // this.auth.logout();
           }
           else{
             resolve(response);
           }
         }, (response1: any) => {
           if(response1.error.status=="authentication_error"){
-            // this.auth.logout();
           }
           else{
             reject(response1);
@@ -311,10 +277,8 @@ postData(controller:any, data: any): Promise<any> {
         });
   });
 }
-
 //payment grioup
 paymentcourse_group(params: any): Promise<any> {
-  
    return new Promise((resolve, reject) => {
        this._httpClient.post(`${this.serviceBase1}MakeGroupPayment`, params, {
            headers:
@@ -329,24 +293,7 @@ paymentcourse_group(params: any): Promise<any> {
        }, reject);
    });
  }
-//  paymentcourse_single(params: any): Promise<any> {
-
-//    return new Promise((resolve, reject) => {
-//        this._httpClient.post(`${this.serviceBase1}MakePayment1/`, params, {
-//            headers:
-//              new HttpHeaders(
-//                {
-//                  'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-//                }
-//              )
-//          })
-//            .subscribe((response: any) => {
-//                resolve(response);
-//        }, reject);
-//    });
-//  }
 paymentcourse_single(params: any): Promise<any> {
-
    return new Promise((resolve, reject) => {
        this._httpClient.post(`${this.serviceBase1}CreateCustomer/`, params, {
            headers:
@@ -361,7 +308,6 @@ paymentcourse_single(params: any): Promise<any> {
        }, reject);
    });
  }
-
   forgetPassiUsers(params: any,linkPath:any): Promise<any> {
     return new Promise((resolve, reject) => {
       this._httpClient.post(`${this.serviceBase2}`+linkPath, params, {
@@ -377,9 +323,7 @@ paymentcourse_single(params: any): Promise<any> {
       }, reject);
     });
   }
-
   forgetPassPUsers(params: any): Promise<any> {
-
     return new Promise((resolve, reject) => {
       this._httpClient.post(`${this.serviceBase2}ProctorForgotPass/`, params, {
         headers:

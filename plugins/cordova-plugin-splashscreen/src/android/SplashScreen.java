@@ -6,9 +6,7 @@
        to you under the Apache License, Version 2.0 (the
        "License"); you may not use this file except in compliance
        with the License.  You may obtain a copy of the License at
-
          http://www.apache.org/licenses/LICENSE-2.0
-
        Unless required by applicable law or agreed to in writing,
        software distributed under the License is distributed on an
        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -16,9 +14,7 @@
        specific language governing permissions and limitations
        under the License.
 */
-
 package org.apache.cordova.splashscreen;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -40,13 +36,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
-
 public class SplashScreen extends CordovaPlugin {
     private static final String LOG_TAG = "SplashScreen";
     // Cordova 3.x.x has a copy of this plugin bundled with it (SplashScreenInternal.java).
@@ -58,17 +52,14 @@ public class SplashScreen extends CordovaPlugin {
     private static ProgressDialog spinnerDialog;
     private static boolean firstShow = true;
     private static boolean lastHideAfterDelay; // https://issues.apache.org/jira/browse/CB-9094
-
     /**
      * Displays the splash drawable.
      */
     private ImageView splashImageView;
-
     /**
      * Remember last device orientation to detect orientation changes.
      */
     private int orientation;
-
     // Helper to be compile-time compatible with both Cordova 3.x and 4.x.
     private View getView() {
         try {
@@ -77,7 +68,6 @@ public class SplashScreen extends CordovaPlugin {
             return (View)webView;
         }
     }
-
     private int getSplashId() {
         int drawableId = 0;
         String splashResource = preferences.getString("SplashScreen", "screen");
@@ -89,7 +79,6 @@ public class SplashScreen extends CordovaPlugin {
         }
         return drawableId;
     }
-
     @Override
     protected void pluginInitialize() {
         if (HAS_BUILT_IN_SPLASH_SCREEN) {
@@ -104,40 +93,32 @@ public class SplashScreen extends CordovaPlugin {
             }
         });
         int drawableId = getSplashId();
-
         // Save initial orientation.
         orientation = cordova.getActivity().getResources().getConfiguration().orientation;
-
         if (firstShow) {
             boolean autoHide = preferences.getBoolean("AutoHideSplashScreen", true);
             showSplashScreen(autoHide);
         }
-
         if (preferences.getBoolean("SplashShowOnlyFirstTime", true)) {
             firstShow = false;
         }
     }
-
     /**
      * Shorter way to check value of "SplashMaintainAspectRatio" preference.
      */
     private boolean isMaintainAspectRatio () {
         return preferences.getBoolean("SplashMaintainAspectRatio", false);
     }
-
     private int getFadeDuration () {
         int fadeSplashScreenDuration = preferences.getBoolean("FadeSplashScreen", true) ?
             preferences.getInteger("FadeSplashScreenDuration", DEFAULT_FADE_DURATION) : 0;
-
         if (fadeSplashScreenDuration < 30) {
             // [CB-9750] This value used to be in decimal seconds, so we will assume that if someone specifies 10
             // they mean 10 seconds, and not the meaningless 10ms
             fadeSplashScreenDuration *= 1000;
         }
-
         return fadeSplashScreenDuration;
     }
-
     @Override
     public void onPause(boolean multitasking) {
         if (HAS_BUILT_IN_SPLASH_SCREEN) {
@@ -146,7 +127,6 @@ public class SplashScreen extends CordovaPlugin {
         // hide the splash screen to avoid leaking a window
         this.removeSplashScreen(true);
     }
-
     @Override
     public void onDestroy() {
         if (HAS_BUILT_IN_SPLASH_SCREEN) {
@@ -157,7 +137,6 @@ public class SplashScreen extends CordovaPlugin {
         // If we set this to true onDestroy, we lose track when we go from page to page!
         //firstShow = true;
     }
-
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("hide")) {
@@ -175,11 +154,9 @@ public class SplashScreen extends CordovaPlugin {
         } else {
             return false;
         }
-
         callbackContext.success();
         return true;
     }
-
     @Override
     public Object onMessage(String id, Object data) {
         if (HAS_BUILT_IN_SPLASH_SCREEN) {
@@ -200,12 +177,10 @@ public class SplashScreen extends CordovaPlugin {
         }
         return null;
     }
-
     // Don't add @Override so that plugin still compiles on 3.x.x for a while
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.orientation != orientation) {
             orientation = newConfig.orientation;
-
             // Splash drawable may change with orientation, so reload it.
             if (splashImageView != null) {
                 int drawableId = getSplashId();
@@ -215,7 +190,6 @@ public class SplashScreen extends CordovaPlugin {
             }
         }
     }
-
     private void removeSplashScreen(final boolean forceHideImmediately) {
         cordova.getActivity().runOnUiThread(new Runnable() {
             public void run() {
@@ -226,16 +200,13 @@ public class SplashScreen extends CordovaPlugin {
                         AlphaAnimation fadeOut = new AlphaAnimation(1, 0);
                         fadeOut.setInterpolator(new DecelerateInterpolator());
                         fadeOut.setDuration(fadeSplashScreenDuration);
-
                         splashImageView.setAnimation(fadeOut);
                         splashImageView.startAnimation(fadeOut);
-
                         fadeOut.setAnimationListener(new Animation.AnimationListener() {
                             @Override
                             public void onAnimationStart(Animation animation) {
                                 spinnerStop();
                             }
-
                             @Override
                             public void onAnimationEnd(Animation animation) {
                                 if (splashDialog != null && splashImageView != null && splashDialog.isShowing()) {//check for non-null splashImageView, see https://issues.apache.org/jira/browse/CB-12277
@@ -244,7 +215,6 @@ public class SplashScreen extends CordovaPlugin {
                                     splashImageView = null;
                                 }
                             }
-
                             @Override
                             public void onAnimationRepeat(Animation animation) {
                             }
@@ -259,7 +229,6 @@ public class SplashScreen extends CordovaPlugin {
             }
         });
     }
-
     /**
      * Shows the splash screen over the full Activity
      */
@@ -267,12 +236,9 @@ public class SplashScreen extends CordovaPlugin {
     private void showSplashScreen(final boolean hideAfterDelay) {
         final int splashscreenTime = preferences.getInteger("SplashScreenDelay", DEFAULT_SPLASHSCREEN_DURATION);
         final int drawableId = getSplashId();
-
         final int fadeSplashScreenDuration = getFadeDuration();
         final int effectiveSplashDuration = Math.max(0, splashscreenTime - fadeSplashScreenDuration);
-
         lastHideAfterDelay = hideAfterDelay;
-
         // Prevent to show the splash dialog if the activity is in the process of finishing
         if (cordova.getActivity().isFinishing()) {
             return;
@@ -284,25 +250,20 @@ public class SplashScreen extends CordovaPlugin {
         if (drawableId == 0 || (splashscreenTime <= 0 && hideAfterDelay)) {
             return;
         }
-
         cordova.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 // Get reference to display
                 Display display = cordova.getActivity().getWindowManager().getDefaultDisplay();
                 Context context = webView.getContext();
-
                 // Use an ImageView to render the image because of its flexible scaling options.
                 splashImageView = new ImageView(context);
                 splashImageView.setImageResource(drawableId);
                 LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                 splashImageView.setLayoutParams(layoutParams);
-
                 splashImageView.setMinimumHeight(display.getHeight());
                 splashImageView.setMinimumWidth(display.getWidth());
-
                 // TODO: Use the background color of the webView's parent instead of using the preference.
                 splashImageView.setBackgroundColor(preferences.getInteger("backgroundColor", Color.BLACK));
-
                 if (isMaintainAspectRatio()) {
                     // CENTER_CROP scale mode is equivalent to CSS "background-size:cover"
                     splashImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -311,7 +272,6 @@ public class SplashScreen extends CordovaPlugin {
                     // FIT_XY scales image non-uniformly to fit into image view.
                     splashImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 }
-
                 // Create and show the dialog
                 splashDialog = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar);
                 // check to see if the splash screen should be full screen
@@ -323,11 +283,9 @@ public class SplashScreen extends CordovaPlugin {
                 splashDialog.setContentView(splashImageView);
                 splashDialog.setCancelable(false);
                 splashDialog.show();
-
                 if (preferences.getBoolean("ShowSplashScreenSpinner", true)) {
                     spinnerStart();
                 }
-
                 // Set Runnable to remove splash screen just in case
                 if (hideAfterDelay) {
                     final Handler handler = new Handler();
@@ -342,32 +300,26 @@ public class SplashScreen extends CordovaPlugin {
             }
         });
     }
-
     // Show only spinner in the center of the screen
     private void spinnerStart() {
         cordova.getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 spinnerStop();
-
                 spinnerDialog = new ProgressDialog(webView.getContext());
                 spinnerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     public void onCancel(DialogInterface dialog) {
                         spinnerDialog = null;
                     }
                 });
-
                 spinnerDialog.setCancelable(false);
                 spinnerDialog.setIndeterminate(true);
-
                 RelativeLayout centeredLayout = new RelativeLayout(cordova.getActivity());
                 centeredLayout.setGravity(Gravity.CENTER);
                 centeredLayout.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
                 ProgressBar progressBar = new ProgressBar(webView.getContext());
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                 layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                 progressBar.setLayoutParams(layoutParams);
-
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     String colorName = preferences.getString("SplashScreenSpinnerColor", null);
                     if(colorName != null){
@@ -388,18 +340,14 @@ public class SplashScreen extends CordovaPlugin {
                         progressBar.setIndeterminateTintList(colorStateList);
                     }
                 }
-
                 centeredLayout.addView(progressBar);
-
                 spinnerDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                 spinnerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
                 spinnerDialog.show();
                 spinnerDialog.setContentView(centeredLayout);
             }
         });
     }
-
     private void spinnerStop() {
         cordova.getActivity().runOnUiThread(new Runnable() {
             public void run() {

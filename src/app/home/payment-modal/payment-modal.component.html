@@ -4,7 +4,6 @@
       <ion-buttons slot="start">
         <!-- <ion-menu-button></ion-menu-button> -->
         <ion-icon name="arrow-back-outline" (click)="close()"></ion-icon>
-
       </ion-buttons>
     </ion-buttons>
     <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
@@ -13,7 +12,6 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="bodybg">
   <h2>Payment Using Credit/Debit Card</h2>
   <h4 *ngIf="total && total != '0'">Amount to Paid <span>$ {{total}}</span></h4>
@@ -21,34 +19,30 @@
   <h4 *ngIf="payInfoamount">Amount to Paid <span>$ {{payInfoamount}}</span></h4>
   <h4 *ngIf="ValueAmount">Amount to Paid <span>$ {{ValueAmount}}</span></h4>
   <h4 *ngIf="coursePrice">Amount to Paid <span>$ {{coursePrice}}</span></h4>
-
-
   <div  class="ion-text-center">
       <div class="ion-text-left">
     <div style="margin-bottom:10px;">
-      <ion-input type="text" placeholder="Card Holder" [(ngModel)]="usign.cardholder_name" >      <ion-icon name="person-outline"></ion-icon>
+      <ion-input type="text" placeholder="Card Holder Name" [(ngModel)]="usign.cardholder_name" >      <ion-icon name="person-outline"></ion-icon>
       </ion-input>
     </div>
+    <!-- <div style="margin-bottom:10px;">
+      <ion-input type="number" placeholder="Card Number" [(ngModel)]="usign.ccNumber" max="16"  ><ion-icon name="card-outline"></ion-icon></ion-input>
+    </div> -->
     <div style="margin-bottom:10px;">
-      <ion-input type="text" placeholder="Card Number" [(ngModel)]="usign.ccNumber" ><ion-icon name="card-outline"></ion-icon></ion-input>
+      <ion-input type="text" placeholder="Card Number" [(ngModel)]="usign.ccNumber" (input)="validateNumberInput()" maxlength="16"><ion-icon name="card-outline"></ion-icon></ion-input>
     </div>
     <div style="margin-bottom:10px;">
-      <ion-input type="text" placeholder="MM" [(ngModel)]="usign.ccExpMonth"><ion-icon name="calendar-outline"></ion-icon></ion-input>
+      <ion-input type="text" placeholder="MM" maxlength="2" (input)="validateExpMonthInput()" [(ngModel)]="usign.ccExpMonth"><ion-icon name="calendar-outline"></ion-icon></ion-input>
     </div><div style="margin-bottom:10px;">
-      <ion-input type="text" placeholder="yyyy" [(ngModel)]="usign.ccExpYear"><ion-icon name="calendar-clear-outline"></ion-icon></ion-input>
+      <ion-input type="text" placeholder="yyyy"  maxlength="4" (input)="validateExpYearInput()" [(ngModel)]="usign.ccExpYear"><ion-icon name="calendar-clear-outline"></ion-icon></ion-input>
     </div><div style="margin-bottom:10px;">
-      <ion-input type="text" placeholder="CVC" [(ngModel)]="usign.ccCvc"><ion-icon name="lock-closed-outline"></ion-icon></ion-input>
+      <ion-input type="text" placeholder="CVC" (input)="validateCvcInput()" [(ngModel)]="usign.ccCvc" maxlength="4"><ion-icon name="lock-closed-outline"></ion-icon></ion-input>
     </div>
-
-    <ion-button color="white" *ngIf="total && total != '0'" expand="block" class="create" (click)="purchaseModule(total,usign,groupuser_NAMEs)">Proceed to Pay</ion-button>
-    <ion-button color="white" *ngIf="amount" expand="block" class="create" (click)="singlePurchase(amount,usign,valueS,'-1','-1',nid)">Proceed to Pay</ion-button>
-    <ion-button color="white" *ngIf="coursePrice" expand="block" class="create" (click)="singlePurchase(coursePrice,usign,valueS,'','-1',-1)">Proceed to Pay</ion-button>
-    <ion-button color="white" *ngIf="payInfoamount" expand="block" class="create" (click)="singlePurchase(payInfoamount,usign,valueS,'','-1',-1)">Proceed to Pay</ion-button>
-    <ion-button color="white" *ngIf="ValueAmount && !total" expand="block" class="create" (click)="purchaseModule_trainingcenter(ValueAmount,usign,ValueId)">Proceed to Pay</ion-button>
-
-
-    <!-- coursePrice,card,type,valInfo,sectionId,'-1','-1' -->
-
+    <ion-button color="white" [disabled]="processing" *ngIf="total && total != '0'" expand="block" class="create" (click)="purchaseModule(total,usign,groupuser_NAMEs)">Proceed to Pay</ion-button>
+    <ion-button color="white" [disabled]="processing" *ngIf="amount" expand="block" class="create" (click)="singlePurchase(amount,usign,valueS,'-1','-1',nid)">Proceed to Pay</ion-button>
+    <ion-button color="white" [disabled]="processing" *ngIf="coursePrice" expand="block" class="create" (click)="singlePurchase(coursePrice,usign,valueS,'','-1',-1)">Proceed to Pay</ion-button>
+    <ion-button color="white"  [disabled]="processing" *ngIf="payInfoamount" expand="block" class="create" (click)="singlePurchase(payInfoamount,usign,valueS,'','-1',-1)">Proceed to Pay</ion-button>
+    <ion-button color="white" [disabled]="processing" *ngIf="ValueAmount && !total" expand="block" class="create" (click)="purchaseModule_trainingcenter(ValueAmount,usign,ValueId)">Proceed to Pay</ion-button>
   <div class="center">
    <p> For Your Transaction will be Secure&Safe by Stripe Payment </p>
    <img src="assets/images/stripe.png">
@@ -56,5 +50,4 @@
   </div>
   </div>
 </div>
-
 </ion-content>

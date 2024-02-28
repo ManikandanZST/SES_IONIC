@@ -4,17 +4,15 @@
       <ion-buttons slot="start">
         <!-- <ion-menu-button></ion-menu-button> -->
         <ion-icon name="arrow-back-outline" (click)="close()"></ion-icon>
-
       </ion-buttons>
     </ion-buttons>
     <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['']">        
+      <ion-button [routerLink]="['']">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="bodybg">
   <h2 class="ion-text-center">Add New User</h2>
   <ion-list  lines="none" class="ion-text-left" >
@@ -32,6 +30,6 @@
     </p>
     <p>
       <ion-button expand="block" color="medium" class="submit" (click)="AddnewUser(usign,false)">submit</ion-button>
-    </p> 
+    </p>
   </ion-list>
 </ion-content>

@@ -6,9 +6,7 @@
        to you under the Apache License, Version 2.0 (the
        "License"); you may not use this file except in compliance
        with the License.  You may obtain a copy of the License at
-
          http://www.apache.org/licenses/LICENSE-2.0
-
        Unless required by applicable law or agreed to in writing,
        software distributed under the License is distributed on an
        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -17,7 +15,6 @@
        under the License.
  */
 package org.apache.cordova.file;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,45 +28,36 @@ import java.nio.channels.FileChannel;
 import org.apache.cordova.CordovaResourceApi;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.os.Build;
 import android.os.Environment;
 import android.util.Base64;
 import android.net.Uri;
 import android.content.Context;
 import android.content.Intent;
-
 import java.nio.charset.Charset;
-
 public class LocalFilesystem extends Filesystem {
     private final Context context;
-
     public LocalFilesystem(String name, Context context, CordovaResourceApi resourceApi, File fsRoot) {
         super(Uri.fromFile(fsRoot).buildUpon().appendEncodedPath("").build(), name, resourceApi);
         this.context = context;
     }
-
     public String filesystemPathForFullPath(String fullPath) {
 	    return new File(rootUri.getPath(), fullPath).toString();
 	}
-
 	@Override
 	public String filesystemPathForURL(LocalFilesystemURL url) {
 		return filesystemPathForFullPath(url.path);
 	}
-
 	private String fullPathForFilesystemPath(String absolutePath) {
 		if (absolutePath != null && absolutePath.startsWith(rootUri.getPath())) {
 			return absolutePath.substring(rootUri.getPath().length() - 1);
 		}
 		return null;
 	}
-
     @Override
     public Uri toNativeUri(LocalFilesystemURL inputURL) {
         return nativeUriForFullPath(inputURL.path);
     }
-
     @Override
     public LocalFilesystemURL toLocalUri(Uri inputURL) {
         if (!"file".equals(inputURL.getScheme())) {
@@ -101,32 +89,26 @@ public class LocalFilesystem extends Filesystem {
         }
         return LocalFilesystemURL.parse(b.build());
     }
-
 	@Override
 	public LocalFilesystemURL URLforFilesystemPath(String path) {
 	    return localUrlforFullPath(fullPathForFilesystemPath(path));
 	}
-
 	@Override
 	public JSONObject getFileForLocalURL(LocalFilesystemURL inputURL,
 			String path, JSONObject options, boolean directory) throws FileExistsException, IOException, TypeMismatchException, EncodingException, JSONException {
         boolean create = false;
         boolean exclusive = false;
-
         if (options != null) {
             create = options.optBoolean("create");
             if (create) {
                 exclusive = options.optBoolean("exclusive");
             }
         }
-
         // Check for a ":" character in the file to line up with BB and iOS
         if (path.contains(":")) {
             throw new EncodingException("This path has an invalid \":\" in it.");
         }
-
         LocalFilesystemURL requestedURL;
-
         // Check whether the supplied path is absolute or relative
         if (directory && !path.endsWith("/")) {
             path += "/";
@@ -136,9 +118,7 @@ public class LocalFilesystem extends Filesystem {
         } else {
         	requestedURL = localUrlforFullPath(normalizePath(inputURL.path + "/" + path));
         }
-
         File fp = new File(this.filesystemPathForURL(requestedURL));
-
         if (create) {
             if (exclusive && fp.exists()) {
                 throw new FileExistsException("create/exclusive fails");
@@ -166,64 +146,51 @@ public class LocalFilesystem extends Filesystem {
                 }
             }
         }
-
         // Return the directory
         return makeEntryForURL(requestedURL);
 	}
-
 	@Override
 	public boolean removeFileAtLocalURL(LocalFilesystemURL inputURL) throws InvalidModificationException {
-
         File fp = new File(filesystemPathForURL(inputURL));
-
         // You can't delete a directory that is not empty
         if (fp.isDirectory() && fp.list().length > 0) {
             throw new InvalidModificationException("You can't delete a directory that is not empty.");
         }
-
         return fp.delete();
 	}
-
     @Override
     public boolean exists(LocalFilesystemURL inputURL) {
         File fp = new File(filesystemPathForURL(inputURL));
         return fp.exists();
     }
-
     @Override
     public long getFreeSpaceInBytes() {
         return DirectoryManager.getFreeSpaceInBytes(rootUri.getPath());
     }
-
     @Override
 	public boolean recursiveRemoveFileAtLocalURL(LocalFilesystemURL inputURL) throws FileExistsException {
         File directory = new File(filesystemPathForURL(inputURL));
     	return removeDirRecursively(directory);
 	}
-
 	protected boolean removeDirRecursively(File directory) throws FileExistsException {
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
                 removeDirRecursively(file);
             }
         }
-
         if (!directory.delete()) {
             throw new FileExistsException("could not delete: " + directory.getName());
         } else {
             return true;
         }
 	}
-
     @Override
     public LocalFilesystemURL[] listChildren(LocalFilesystemURL inputURL) throws FileNotFoundException {
         File fp = new File(filesystemPathForURL(inputURL));
-
         if (!fp.exists()) {
             // The directory we are listing doesn't exist so we should fail.
             throw new FileNotFoundException();
         }
-
         File[] files = fp.listFiles();
         if (files == null) {
             // inputURL is a directory
@@ -233,18 +200,14 @@ public class LocalFilesystem extends Filesystem {
         for (int i = 0; i < files.length; i++) {
             entries[i] = URLforFilesystemPath(files[i].getPath());
         }
-
         return entries;
 	}
-
 	@Override
 	public JSONObject getFileMetadataForLocalURL(LocalFilesystemURL inputURL) throws FileNotFoundException {
         File file = new File(filesystemPathForURL(inputURL));
-
         if (!file.exists()) {
             throw new FileNotFoundException("File at " + inputURL.uri + " does not exist.");
         }
-
         JSONObject metadata = new JSONObject();
         try {
             // Ensure that directories report a size of 0
@@ -258,7 +221,6 @@ public class LocalFilesystem extends Filesystem {
         }
         return metadata;
 	}
-
     private void copyFile(Filesystem srcFs, LocalFilesystemURL srcURL, File destFile, boolean move) throws IOException, InvalidModificationException, NoModificationAllowedException {
         if (move) {
             String realSrcPath = srcFs.filesystemPathForURL(srcURL);
@@ -270,15 +232,12 @@ public class LocalFilesystem extends Filesystem {
                 // Trying to rename the file failed.  Possibly because we moved across file system on the device.
             }
         }
-
         CordovaResourceApi.OpenForReadResult offr = resourceApi.openForRead(srcFs.toNativeUri(srcURL));
         copyResource(offr, new FileOutputStream(destFile));
-
         if (move) {
             srcFs.removeFileAtLocalURL(srcURL);
         }
     }
-
     private void copyDirectory(Filesystem srcFs, LocalFilesystemURL srcURL, File dstDir, boolean move) throws IOException, NoModificationAllowedException, InvalidModificationException, FileExistsException {
         if (move) {
             String realSrcPath = srcFs.filesystemPathForURL(srcURL);
@@ -298,7 +257,6 @@ public class LocalFilesystem extends Filesystem {
                 // Trying to rename the file failed.  Possibly because we moved across file system on the device.
             }
         }
-
         if (dstDir.exists()) {
             if (dstDir.list().length > 0) {
                 throw new InvalidModificationException("directory is not empty");
@@ -309,7 +267,6 @@ public class LocalFilesystem extends Filesystem {
                 throw new NoModificationAllowedException("Couldn't create the destination directory");
             }
         }
-
         LocalFilesystemURL[] children = srcFs.listChildren(srcURL);
         for (LocalFilesystemURL childLocalUrl : children) {
             File target = new File(dstDir, new File(childLocalUrl.path).getName());
@@ -319,16 +276,13 @@ public class LocalFilesystem extends Filesystem {
                 copyFile(srcFs, childLocalUrl, target, false);
             }
         }
-
         if (move) {
             srcFs.recursiveRemoveFileAtLocalURL(srcURL);
         }
     }
-
 	@Override
 	public JSONObject copyFileToURL(LocalFilesystemURL destURL, String newName,
 			Filesystem srcFs, LocalFilesystemURL srcURL, boolean move) throws IOException, InvalidModificationException, JSONException, NoModificationAllowedException, FileExistsException {
-
 		// Check to see if the destination directory exists
         String newParent = this.filesystemPathForURL(destURL);
         File destinationDir = new File(newParent);
@@ -336,21 +290,17 @@ public class LocalFilesystem extends Filesystem {
             // The destination does not exist so we should fail.
             throw new FileNotFoundException("The source does not exist");
         }
-
         // Figure out where we should be copying to
         final LocalFilesystemURL destinationURL = makeDestinationURL(newName, srcURL, destURL, srcURL.isDirectory);
-
         Uri dstNativeUri = toNativeUri(destinationURL);
         Uri srcNativeUri = srcFs.toNativeUri(srcURL);
         // Check to see if source and destination are the same file
         if (dstNativeUri.equals(srcNativeUri)) {
             throw new InvalidModificationException("Can't copy onto itself");
         }
-
         if (move && !srcFs.canRemoveFileAtLocalURL(srcURL)) {
             throw new InvalidModificationException("Source URL is read-only (cannot move)");
         }
-
         File destFile = new File(dstNativeUri.getPath());
         if (destFile.exists()) {
             if (!srcURL.isDirectory && destFile.isDirectory()) {
@@ -359,7 +309,6 @@ public class LocalFilesystem extends Filesystem {
                 throw new InvalidModificationException("Can't copy/move a directory to an existing file");
             }
         }
-
         if (srcURL.isDirectory) {
             // E.g. Copy /sdcard/myDir to /sdcard/myDir/backup
             if (dstNativeUri.toString().startsWith(srcNativeUri.toString() + '/')) {
@@ -371,17 +320,14 @@ public class LocalFilesystem extends Filesystem {
         }
         return makeEntryForURL(destinationURL);
 	}
-
 	@Override
 	public long writeToFileAtURL(LocalFilesystemURL inputURL, String data,
 			int offset, boolean isBinary) throws IOException, NoModificationAllowedException {
-
         boolean append = false;
         if (offset > 0) {
             this.truncateFileAtURL(inputURL, offset);
             append = true;
         }
-
         byte[] rawData;
         if (isBinary) {
             rawData = Base64.decode(data, Base64.DEFAULT);
@@ -413,10 +359,8 @@ public class LocalFilesystem extends Filesystem {
             realException.initCause(e);
             throw realException;
         }
-
         return rawData.length;
 	}
-
     private boolean isPublicDirectory(String absolutePath) {
         // TODO: should expose a way to scan app's private files (maybe via a flag).
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -427,11 +371,9 @@ public class LocalFilesystem extends Filesystem {
                 }
             }
         }
-
         String extPath = Environment.getExternalStorageDirectory().getAbsolutePath();
         return absolutePath.startsWith(extPath);
     }
-
      /**
      * Send broadcast of new file so files appear over MTP
      */
@@ -439,15 +381,12 @@ public class LocalFilesystem extends Filesystem {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, nativeUri);
         context.sendBroadcast(intent);
     }
-
 	@Override
 	public long truncateFileAtURL(LocalFilesystemURL inputURL, long size) throws IOException {
         File file = new File(filesystemPathForURL(inputURL));
-
         if (!file.exists()) {
             throw new FileNotFoundException("File at " + inputURL.uri + " does not exist.");
         }
-
         RandomAccessFile raf = new RandomAccessFile(filesystemPathForURL(inputURL), "rw");
         try {
             if (raf.length() >= size) {
@@ -455,22 +394,17 @@ public class LocalFilesystem extends Filesystem {
                 channel.truncate(size);
                 return size;
             }
-
             return raf.length();
         } finally {
             raf.close();
         }
-
-
 	}
-
 	@Override
 	public boolean canRemoveFileAtLocalURL(LocalFilesystemURL inputURL) {
 		String path = filesystemPathForURL(inputURL);
 		File file = new File(path);
 		return file.exists();
 	}
-
     // This is a copy & paste from CordovaResource API that is required since CordovaResourceApi
     // has a bug pre-4.0.0.
     // TODO: Once cordova-android@4.0.0 is released, delete this copy and make the plugin depend on
@@ -493,10 +427,8 @@ public class LocalFilesystem extends Filesystem {
             } else {
                 final int BUFFER_SIZE = 8192;
                 byte[] buffer = new byte[BUFFER_SIZE];
-
                 for (;;) {
                     int bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE);
-
                     if (bytesRead <= 0) {
                         break;
                     }

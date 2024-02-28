@@ -6,13 +6,11 @@ import { ModalpopupComponent } from 'src/app/modalpopup/modalpopup.component';
 import { CommonService } from 'src/providers/common.service';
 import { LoginService } from 'src/providers/login.service';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
-
 @Component({
   selector: 'app-purchasecourse',
   templateUrl: './purchasecourse.component.html',
   styleUrls: ['./purchasecourse.component.scss'],
 })
-
 export class PurchasecourseComponent implements OnInit {
   selectcourse:any={};
   GroupId: string;
@@ -38,15 +36,11 @@ export class PurchasecourseComponent implements OnInit {
       this.type=params['type'];
     });
   }
-
   ngOnInit() {
-    
     this.GroupId=localStorage.getItem("loginuserid")
-
     this.GetGroupUser();
     this.GetGroupUserModules()
   }
-
   GetGroupUser(){
     var lnk =  'GetGroupUser?GroupId='+this.GroupId;
     this.loginService.getData(lnk).then(
@@ -55,15 +49,12 @@ export class PurchasecourseComponent implements OnInit {
         {
         this.info=Response.UserList;
         }else{
-
         }
       },
       err => {
-
       }
     );
   }
-
   GetGroupUserModules(){
    var lnk =  'GetGroupUserModules?GroupId='+this.GroupId;
    this.loginService.getData(lnk).then(
@@ -87,29 +78,23 @@ export class PurchasecourseComponent implements OnInit {
             localStorage.setItem("totalAmountChoosen",'0');
           }
         }else{
-
         }
       },
       err => {
-
       }
     );
   }
-
   setFilteredLocations(){
     this.search=true;
     this.filterData = this.groupuser_NAMEs.filter((location) => {
       return location.User.fullName.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
     });
   }
-
   onCancel($event){
     this.search=false;
     this.filterData=this.groupuser_NAMEs
     $event.target.value = '';
-
   }
-
   async showCourse(lst, index){
     localStorage.setItem("selecteduser",index)
     this.indexValue = index;
@@ -142,7 +127,6 @@ export class PurchasecourseComponent implements OnInit {
     setTimeout(function(){
       this.multipleLists = templas;
     },600)
-
     const modal = await this.modalCtrl.create({
       component: ModalpopupComponent,
       componentProps: {
@@ -152,37 +136,35 @@ export class PurchasecourseComponent implements OnInit {
       cssClass: 'my-custom-modal-css',
       swipeToClose: true,
     });
-
     modal.onDidDismiss().then((result) => {
       this.total=result.data.data3;
       this.selectcourse[result.data.data2]=result.data.data;
-      this.totalAmounts[result.data.data2]=result.data.data4;
-      
-      
-      
+      // this.totalAmounts[result.data.data2]=result.data.data4;
+      let T =0;
+      let arr = result.data.data
+      arr.map((location) => {
+        T=T+parseInt(location.ModulePrice
+          );
+      });
+
+      this.totalAmounts[result.data.data2]=T;
     })
     return await modal.present();
   }
-
   async showPayment(){
-    
     const modal = await this.modalCtrl.create({
       component: PaymentModalComponent,
       componentProps: {
-
       },
       cssClass: 'my-custom-modal-css',
       swipeToClose: true,
     });
     modal.onDidDismiss().then((result) => {
-
     })
     return await modal.present();
   }
-
   back(){
     this.router.navigate([`home/${this.type}`]).then(() => {
-      //window.location.reload();
     });
   }
 }

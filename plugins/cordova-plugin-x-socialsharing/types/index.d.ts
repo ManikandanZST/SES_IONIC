@@ -1,19 +1,15 @@
 // Type definitions for PhoneGap / Cordova Social Sharing plugin
 // Project: https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
 // Licensed under the MIT license.
-
 interface Window {
 	plugins: Plugins
 }
-
 interface Plugins {
 	socialsharing: SocialSharing
 }
-
 interface Navigator {
 	share: SocialSharingW3C
 }
-
 declare class SocialSharing {
 	iPadPopupCoordinates: () => string
 	setIPadPopupCoordinates: (coords: string) => void
@@ -35,15 +31,12 @@ declare class SocialSharing {
 	shareVia: (via: string, message?: string, subject?: string, fileOrFileArray?: string | ArrayLike<string>, url?: string, successCallback?: SocialSharingSuccessCallback<boolean>, errorCallback?: SocialSharingErrorCallback) => void
 	saveToPhotoAlbum: (fileOrFileArray?: string | ArrayLike<string>, successCallback?: SocialSharingSuccessCallback<never>, errorCallback?: SocialSharingErrorCallback) => void
 }
-
 type SocialSharingW3C = (shareData: SocialSharingW3CData) => Promise<SocialSharingResult>
-
 interface SocialSharingW3CData {
 	title?: string
 	text?: string
 	url?: string
 }
-
 interface SocialSharingOptions {
 	message?: string
 	subject?: string
@@ -52,10 +45,8 @@ interface SocialSharingOptions {
 	chooserTitle?: string
 	appPackageName?: string
 }
-
 type SocialSharingSuccessCallback<T> = (result: T) => void
 type SocialSharingErrorCallback = (msg?: string) => void
-
 interface SocialSharingResult {
 	completed: boolean
 	app?: string

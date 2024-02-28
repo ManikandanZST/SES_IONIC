@@ -4,22 +4,20 @@
       <ion-buttons slot="start">
         <!-- <ion-menu-button></ion-menu-button> -->
         <ion-icon name="arrow-back-outline" (click)="back()"></ion-icon>
-
       </ion-buttons>
     </ion-buttons>
     <h2 class="sz">Purchase Course Modules</h2>
     <!-- <ion-title class="center"><img alt="" src="assets/images/logo.png"></ion-title> -->
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['']">        
+      <ion-button [routerLink]="['']">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content  class="bodybg">
   <p class="pt-15">
     <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="setFilteredLocations() " (ionCancel)="onCancel($event)" [showCancelButton]="false"></ion-searchbar>
-  </p> 
+  </p>
 <div *ngIf="search">
   <div *ngFor="let u of filterData;let i=index;">
     <ion-grid>
@@ -37,10 +35,6 @@
   <div *ngFor="let u of groupuser_NAMEs;let i=index;">
     <!-- {{groupuser_NAMEs | json}} -->
     <!-- <ion-card-header> -->
-
-
-     
-      
     <div >
       <ion-grid>
         <ion-row  (click)="showCourse(u,i)">
@@ -51,18 +45,14 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-
       <div *ngIf="selectcourse[i]">
         <div class="test" *ngFor="let ls of selectcourse[i]">
           <ion-grid class="sub">
             <ion-row >
               <ion-col class="subname" size="9">{{ls.ModuleName }}</ion-col>
               <ion-col class="amount_inner bd" size="3">$ {{ls.ModulePrice | json}}</ion-col>
-             
             </ion-row>
           </ion-grid>
-
-          
         </div>
       </div>
     </div>
@@ -77,6 +67,5 @@
 </div>
 <p >
   <ion-button color="dark" *ngIf="total" expand="block" class="loginbutton" (click)="showPayment()">Purchase ${{total}}</ion-button>
-
 </p>
 </ion-content>

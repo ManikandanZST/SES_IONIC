@@ -3,14 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/providers/common.service';
 import { LoginService } from 'src/providers/login.service';
 import { AlertController } from '@ionic/angular';
-
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
-
   question = {
     options: ["Individual Rate Email Quote", "Group Rate Email Quote"]
   };
@@ -25,14 +23,11 @@ export class SignupPage implements OnInit {
   rand_num1: any;
   rand_num2: any;
   result: any;
-
   constructor(private commonService:CommonService, private router: Router, private loginService: LoginService,    public alertController: AlertController,    private activatedRoute: ActivatedRoute,) {
     this.activatedRoute.params.subscribe(params => {
-      
       this.type=params['id'];
  });
   }
-
   ngOnInit() {
     var randNumber1 = Math.floor(Math.random() * (10 - 1 + 1) + 1);
     var randNumber2 = Math.floor(Math.random() * (10 - 1 + 1) + 1);
@@ -43,22 +38,13 @@ export class SignupPage implements OnInit {
  onChange(item) {
     if(this.checkedItems.includes(item)) {
       this.checkedItems = this.checkedItems.filter((value)=>value!=item);
-      
-
     } else {
       this.checkedItems.push(item)
-      
     }
-    
-
   }
-
-
   async SignUp(usign)
   {
    if(this.type=="register"){
-
-    
     if (usign.fullname == "" || usign.fullname == undefined){
       this.commonService.presentToast("Enter Name");
     }
@@ -83,7 +69,6 @@ export class SignupPage implements OnInit {
     else if (usign.password != usign.cpassword) {
        this.commonService.presentToast("Password and Confirm Password should be same");
     }
-
     else if (usign.answer  == "" || usign.answer == undefined){
       this.commonService.presentToast("Enter an answer");
     }
@@ -101,30 +86,21 @@ export class SignupPage implements OnInit {
         sendPass=1;
       }else{
         sendPass=0;
-
       }
       if(this.checkedItems[0]=="Individual Rate Email Quote"){
         usign.individual=1;
         usign.groupRate=0;
-
       }else{
         usign.individual=0;
         usign.groupRate=1;
       }
-      
       var data = 'fullName='+usign.fullname+'&company='+usign.company+'&SSN='+usign.SSN+'&email='+usign.email+'&password='+usign.password+'&groupRate='+usign.groupRate+'&individual='+usign.individual+'&comment='+usign.comments+'&question='+usign.question+'&answer='+usign.answer+'&Phone='+usign.phone;
       this.commonService.presentLoading();
       this.loginService.Signup(data,sendPass).then((Response: any) => {
         this.type_user="individual";
-         
          if(Response.Status == 'Success'){
-          
-
            this.formstatus = 2;
            this.commonService.closeLoading();
-              // this.signupdetails = Response.data[0];
-              
-          //  this.commonService.presentToast(Response.Message);
            this.presentAlert(Response.Message,this.type_user);
          }else{
           this.commonService.presentToast(Response.Message);
@@ -139,9 +115,6 @@ export class SignupPage implements OnInit {
     }
   }
   else if(this.type=="proctorregister"){
-    
-
-    
     if (usign.fullname == "" || usign.fullname == undefined){
       this.commonService.presentToast("Enter Name");
     }
@@ -185,21 +158,15 @@ export class SignupPage implements OnInit {
       this.commonService.presentLoading();
       this.loginService.Signup_ProctorReg(data).then((Response: any) => {
         this.type_user="proctorregister";
-         
          if(Response.Status == 'Success'){
-          
            this.commonService.closeLoading();
            this.presentAlert(Response.Message,this.type_user);
          }else{
-          
-
            this.commonService.closeLoading();
            this.commonService.presentToast(Response.Message);
          }
        },
        err => {
-        
-
          this.commonService.closeLoading();
          this.commonService.presentToast(`Connection error`);
        }
@@ -212,7 +179,6 @@ export class SignupPage implements OnInit {
     else if (usign.lastname == "" || usign.lastname == undefined){
       this.commonService.presentToast("Enter Last Name");
     }
-
     else if (usign.company == "" || usign.company == undefined){
       this.commonService.presentToast("Enter Company");
     }
@@ -245,21 +211,18 @@ export class SignupPage implements OnInit {
     else if (usign.answer  == "" || usign.answer == undefined){
       this.commonService.presentToast("Enter an answer");
     }
-
     else if (usign.firstname1 == "" || usign.firstname1 == undefined){
       this.commonService.presentToast("Enter First Name");
     }
     else if (usign.lastname1 == "" || usign.lastname1 == undefined){
       this.commonService.presentToast("Enter Last Name");
     }
-
     else if (usign.email1 == "" || usign.email1 == undefined){
       this.commonService.presentToast("Enter Email");
     }
     else if ((await this.commonService.validateEmail(usign.email1)) == false){
        this.commonService.presentToast("Enter Valid Email");
     }
-
     else if(usign.password1 == "" || usign.password1 == undefined) {
       this.commonService.presentToast("Enter Password");
     }else if (usign.firstname2 == "" || usign.firstname2 == undefined){
@@ -268,47 +231,34 @@ export class SignupPage implements OnInit {
     else if (usign.lastname2 == "" || usign.lastname2 == undefined){
       this.commonService.presentToast("Enter Last Name");
     }
-
     else if (usign.email2 == "" || usign.email2 == undefined){
       this.commonService.presentToast("Enter Email");
     }
     else if ((await this.commonService.validateEmail(usign.email2)) == false){
        this.commonService.presentToast("Enter Valid Email");
     }
-
     else if(usign.password2 == "" || usign.password2 == undefined) {
       this.commonService.presentToast("Enter Password");
     }
-
     else if(usign.captcha == "" || usign.captcha == undefined){
       this.commonService.presentToast("Incorrect Captcha. Enter Valid Number!");
     }
-
     else if(this.result != usign.captcha){
       this.commonService.presentToast("Incorrect Captcha. Enter Valid Number!");
     }
-
     else {
       var sendPass=usign.sendPass;
       if(sendPass=true){
         sendPass=1;
       }else{
         sendPass=0;
-
       }
-      
       var data = 'First_Name='+usign.firstname+'&Last_Name='+usign.lastname+'&Company_Name='+usign.company+'&Email='+usign.email+'&EIN='+usign.ein+'&Phone='+usign.phone+'&Password='+usign.password+'&Hint_Question='+usign.question+'&Hint_Answer='+usign.answer+'&FirstName1='+usign.firstname1+'&LastName1='+usign.lastname1+'&Password1='+usign.password1+'&Email1='+usign.email1+'&FirstName2='+usign.firstname2+'&LastName2='+usign.lastname2+'&Password2='+usign.password2+'&Email2='+usign.email2;
       this.commonService.presentLoading();
       this.loginService.Signup_group(data,sendPass).then((Response: any) => {
         this.type_user="groupregister";
-         
          if(Response.Status == 'Success'){
-          
-
            this.commonService.closeLoading();
-              // this.signupdetails = Response.data[0];
-              
-          //  this.commonService.presentToast(Response.Message);
            this.presentAlert(Response.Message,this.type_user);
          }else{
           this.commonService.presentToast(Response.Message);
@@ -323,11 +273,7 @@ export class SignupPage implements OnInit {
     }
   }
   }
-
-
-
   async presentAlert(response,type) {
-    
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: '',
@@ -355,43 +301,3 @@ export class SignupPage implements OnInit {
     this.router.navigate(['home/common'])
   }
 }
-
-  // sumbitSignup(usign:any)
-  // {
-  //   var sendPass=usign.sendPass;
-  //   if(sendPass=true){
-  //     sendPass=1;
-  //   }else{
-  //     sendPass=0;
-
-  //   }
-  //   if(this.checkedItems[0]=="Individual Rate Email Quote"){
-  //     usign.individual=1;
-  //     usign.groupRate=0;
-
-  //   }else{
-  //     usign.individual=0;
-  //     usign.groupRate=1;
-  //   }
-  
-  //   var data = 'fullName='+usign.fullname+'&company='+usign.company+'&SSN='+usign.SSN+'&email='+usign.email+'&password='+usign.password+'&groupRate='+usign.groupRate+'&individual='+usign.individual+'&comment='+usign.comments+'&question='+usign.question+'&answer='+usign.answer+'&Phone='+usign.phone;
-  //   this.commonService.presentLoading();
-  //   this.loginService.Signup(data,sendPass).then((Response: any) => {
-  
-  //      if(Response.status == 'success'){
-  //        this.formstatus = 2;
-  //        this.commonService.closeLoading();
-  //           this.signupdetails = Response.data[0];
-  
-  //        this.commonService.presentToast(Response.Message);
-  //      }else{
-  //        this.commonService.closeLoading();
-  //        this.commonService.presentToast(Response.Message);
-  //      }
-  //    },
-  //    err => {
-  //      this.commonService.closeLoading();
-  //      this.commonService.presentToast(`Connection error`);
-  //    }
-  //  );
-  // }

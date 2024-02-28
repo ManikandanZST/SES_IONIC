@@ -8,35 +8,30 @@
  * For more information on global stylesheets, visit the documentation:
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
-
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
-
 /* Basic CSS for apps built with Ionic */
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
 @import '~@ionic/angular/css/display.css';
-
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-
 ion-menu-button{
     color: #fff;
 }
 ion-header{
-    
-    --background:-moz-linear-gradient(top, #025600 0%, #27a120 100%); 
-    --background: -webkit-linear-gradient(top, #025600 0%,#27a120 100%); 
+    --background:-moz-linear-gradient(top, #025600 0%, #27a120 100%);
+    --background: -webkit-linear-gradient(top, #025600 0%,#27a120 100%);
     --background: linear-gradient(to bottom, #025600 0%,#a742c6 100%);
 }
 ion-toolbar{
-    // --background:-moz-linear-gradient(top, #025600 0%, #27a120 100%); 
-    // --background: -webkit-linear-gradient(top, #025600 0%,#27a120 100%); 
+    // --background:-moz-linear-gradient(top, #025600 0%, #27a120 100%);
+    // --background: -webkit-linear-gradient(top, #025600 0%,#27a120 100%);
     // --background: linear-gradient(to bottom, #025600 0%,#27a120 100%);
     --background:transparent;
     color: #fff;
@@ -54,9 +49,6 @@ ion-content {
     --padding-start:15px;
     --padding-end:15px;
   }
-    
-
-
 //   ion-content p {
 //     padding: 10px !important;
 //     color: #ccc !important;
@@ -65,8 +57,7 @@ ion-content {
 //     font: inherit !important;
 //     font-size: 15px !important;
 //     text-align: justify !important;
-//     font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif; 
-  
+//     font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
 //   }
   .submit{
     --ion-color-base:rgba(74, 255, 0, 0.3)!important;
@@ -76,18 +67,15 @@ ion-content {
     padding: 10px;
     text-align: center;
     color: #f2f2f2;
-    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;  
-
+    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
   }
   ion-icon{
     font-size: 28px;
-
   }
   h1 {
       color:#0d6a01;
     //   font-family: roboto;
-    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;  
-
+    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
       font-weight: bold;
       font-size: 22px;
       margin-top: 10px;
@@ -105,8 +93,7 @@ ion-content {
   h2 {
     // color:#0d6a01;
     // // font-family: roboto;
-    // font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;  
-
+    // font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
     // font-weight: bold;
     // font-size: 20px;
     // margin-top: 10px;
@@ -116,17 +103,15 @@ ion-content {
 h3 {
     color:#0d6a01;
     // font-family: roboto;
-    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;  
-
+    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
     font-weight: bold;
     font-size: 16px;
 }
 ion-input{
     border: 1px solid #c3c3c3;
     background-color: #fff;
-    // font-family: open sans;  
-    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;  
-
+    // font-family: open sans;
+    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
     padding: 10px;
     font-size: 15px;
     color: #4e4e4e;
@@ -137,9 +122,8 @@ ion-input{
 ion-textarea{
     border: 1px solid #c3c3c3;
     background-color: #fff;
-    // font-family: open sans;  
-    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;  
-
+    // font-family: open sans;
+    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
     font-size: 15px;
     color: #4e4e4e;
     border-radius: 5px;
@@ -160,20 +144,13 @@ ion-card-title {
     padding-bottom: 0px !important;
     font-size: 18px;
 }
-
 :host ion-popover {
     --max-height: 30% !important;
   }
-  
-  
-  
   ion-popover {
     --max-height: 30% !important; /* set the maximum height to 50% of the viewport height */
     --min-height: 200px !important; /* set the minimum height to 200 pixels */
   }
-
-
-
   #container a {
     text-decoration: none;
   }
@@ -200,9 +177,8 @@ ion-card-title {
     color: #4e4e4e;
     font-size: 15px;
     margin-bottom: 10px;
-    // font-family: open sans;  
-    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;  
-
+    // font-family: open sans;
+    font-family:"-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
     font-weight: 400;
     line-height: 20px;
 }
@@ -259,11 +235,9 @@ ol {
 list-style: none;
 padding: 10px 0px;
 }
-
 ion-content::part(background){
     background-repeat: unset;
 }
-
 .bar-header{
     background-repeat:  unset !important;
 }

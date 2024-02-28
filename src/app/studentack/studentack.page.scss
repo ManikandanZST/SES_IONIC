@@ -1,6 +1,6 @@
 .bodybg{
     --background: url('../../assets/images/background/bg-exam-guide.jpg') no-repeat  center fixed;
-    background-size: cover;    
+    background-size: cover;
 }
 .bar-header {
     background: rgba(6,2,1,255) !important;
@@ -10,13 +10,13 @@
     font-size: 16px !important;
     padding: 0px 0px 10px 0px !important;
     text-align: center;
-    color: #ffffff;    
+    color: #ffffff;
     font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
 }
 .student-ack h3{
     font-size: 14px;
     text-decoration: underline;
-    color: #fff;    
+    color: #fff;
     font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
     line-height: 1.25rem;
 }
@@ -26,7 +26,7 @@
     color: #fff;
     text-align: justify;
     vertical-align: baseline;
-    line-height: 1.2rem;        
+    line-height: 1.2rem;
     font-family: Helvetica, Arial, Sans-Serif;
 }
 .ref-text p{
@@ -35,18 +35,15 @@
     color: #fff;
     text-align: justify;
     vertical-align: baseline;
-    line-height: 1.2rem;        
+    line-height: 1.2rem;
     font-family: Helvetica, Arial, Sans-Serif;
 }
 .footer-bg{
-    // background: rgba(6,2,1,255) !important;
-    // border: rgba(6,2,1,255) !important;
-    background: rgba(28,14,5,255) !important;    
+    background: rgba(28,14,5,255) !important;
     border: rgba(28,14,5,255) !important;
     padding: 0px 10px 25px 10px;
 }
 .stdackbutton{
-    //--ion-color-base: rgba(0, 0, 0, 0.67)!important;
     --ion-color-base: #306d17 !important;
     --ion-color-contrast: none !important;
     color: #ffffff;

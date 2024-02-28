@@ -6,9 +6,7 @@
  to you under the Apache License, Version 2.0 (the
  "License"); you may not use this file except in compliance
  with the License.  You may obtain a copy of the License at
-
  http://www.apache.org/licenses/LICENSE-2.0
-
  Unless required by applicable law or agreed to in writing,
  software distributed under the License is distributed on an
  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -16,29 +14,20 @@
  specific language governing permissions and limitations
  under the License.
  */
-
 #include <sys/sysctl.h>
-
 #import <Availability.h>
-
 #import "CDVDevice.h"
-
 #define SYSTEM_VERSION_PLIST    @"/System/Library/CoreServices/SystemVersion.plist"
-
 @implementation Device
-
 - (NSString*) modelVersion {
     size_t size;
-
     sysctlbyname("hw.machine", NULL, &size, NULL, 0);
     char* machine = malloc(size);
     sysctlbyname("hw.machine", machine, &size, NULL, 0);
     NSString* modelVersion = [NSString stringWithUTF8String:machine];
     free(machine);
-
     return modelVersion;
 }
-
 - (NSString*) getSerialNr {
     NSString* serialNr;
     io_service_t platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPlatformExpertDevice"));
@@ -54,46 +43,34 @@
     }
     return serialNr;
 }
-
 - (NSString*) uniqueAppInstanceIdentifier {
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
     static NSString* UUID_KEY = @"CDVUUID";
-
     NSString* app_uuid = [userDefaults stringForKey:UUID_KEY];
-
     if (app_uuid == nil) {
         CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
         CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
-
         app_uuid = [NSString stringWithString:(__bridge NSString*) uuidString];
         [userDefaults setObject:app_uuid forKey:UUID_KEY];
         [userDefaults synchronize];
-
         CFRelease(uuidString);
         CFRelease(uuidRef);
     }
-
     return app_uuid;
 }
-
 - (NSString*) platform {
     return [NSDictionary dictionaryWithContentsOfFile:SYSTEM_VERSION_PLIST][@"ProductName"];
 }
-
 - (NSString*) systemVersion {
     return [NSDictionary dictionaryWithContentsOfFile:SYSTEM_VERSION_PLIST][@"ProductVersion"];
 }
-
 - (void) getDeviceInfo:(CDVInvokedUrlCommand*) command {
     NSDictionary* deviceProperties = [self deviceProperties];
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:deviceProperties];
-
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
 - (NSDictionary*) deviceProperties {
     NSMutableDictionary* devProps = [NSMutableDictionary dictionaryWithCapacity:4];
-
     devProps[@"manufacturer"] = @"Apple";
     devProps[@"model"] = [self modelVersion];
     devProps[@"platform"] = [self platform];
@@ -103,15 +80,12 @@
     devProps[@"serial"] = [self getSerialNr];
     devProps[@"isVirtual"] = @NO;
     devProps[@"isiOSAppOnMac"]: [self isiOSAppOnMac];
-
     NSDictionary* devReturn = [NSDictionary dictionaryWithDictionary:devProps];
     return devReturn;
 }
-
 + (NSString*) cordovaVersion {
     return CDV_VERSION;
 }
-
 - (BOOL) isiOSAppOnMac
 {
     #if __IPHONE_14_0
@@ -119,8 +93,6 @@
         return [[NSProcessInfo processInfo] isiOSAppOnMac];
     }
     #endif
-
     return false;
 }
-
 @end

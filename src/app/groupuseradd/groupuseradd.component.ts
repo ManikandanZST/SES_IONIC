@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-
 @Component({
   selector: 'app-groupuseradd',
   templateUrl: './groupuseradd.component.html',
@@ -10,12 +9,9 @@ import { ModalController } from '@ionic/angular';
 export class GroupuseraddComponent implements OnInit {
   type: string;
   createuser: any;
-
   constructor(public router:Router,public modalController:ModalController) { }
-
   ngOnInit() {
     this.type=localStorage.getItem("type");
-
   }
   addnewuser(type){
     this.createuser=type;
@@ -24,7 +20,6 @@ export class GroupuseraddComponent implements OnInit {
     this.router.navigate([`/home/${this.type}/newuser`]);
      }else{
       this.router.navigate([`/home/${this.type}/existuser`]);
-
      }
   }
   async close() {
