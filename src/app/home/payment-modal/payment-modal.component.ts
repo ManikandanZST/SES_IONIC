@@ -82,11 +82,11 @@ export class PaymentModalComponent implements OnInit {
       this.processing = false;
     }
     else if(usign.ccExpYear == "" || usign.ccExpYear == undefined) {
-      this.commonService.presentToast("Enter card expire year.d");
+      this.commonService.presentToast("Enter card expire year.");
       this.processing = false;
     }
     else if(usign.ccCvc == "" || usign.ccCvc == undefined) {
-      this.commonService.presentToast("Enter card ccv number.");
+      this.commonService.presentToast("Enter card cvc number.");
       this.processing = false;
     }
     else {
@@ -241,11 +241,11 @@ export class PaymentModalComponent implements OnInit {
         this.processing = false;
       }
       else if(usign.ccExpYear == "" || usign.ccExpYear == undefined) {
-        this.commonService.presentToast("Enter card expire year.d");
+        this.commonService.presentToast("Enter card expire year.");
         this.processing = false;
       }
       else if(usign.ccCvc == "" || usign.ccCvc == undefined) {
-        this.commonService.presentToast("Enter card ccv number.");
+        this.commonService.presentToast("Enter card cvc number.");
         this.processing = false;
       }
      else{
@@ -311,11 +311,11 @@ export class PaymentModalComponent implements OnInit {
           this.processing = false;
         }
         else if(usign.ccExpYear == "" || usign.ccExpYear == undefined) {
-          this.commonService.presentToast("Enter card expire year.d");
+          this.commonService.presentToast("Enter card expire year.");
           this.processing = false;
         }
         else if(usign.ccCvc == "" || usign.ccCvc == undefined) {
-          this.commonService.presentToast("Enter card ccv number.");
+          this.commonService.presentToast("Enter card cvc number.");
           this.processing = false;
         }
         else {
