@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController } from '@ionic/angular';
 import { LoginService } from 'src/providers/login.service';
 import { EmployeereportComponent } from '../employeereport/employeereport.component';
 import { PopoverComponent } from '../popover/popover.component';
+import { CommonService } from 'src/providers/common.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -21,7 +22,8 @@ export class HomePage implements OnInit {
   messageSuccess: boolean=false;
   IndividualUserId: string;
   courselist: any={};
-  constructor(private activatedRoute: ActivatedRoute,public router:Router,public popOver: PopoverController,private loginService: LoginService,public modalCtrl:ModalController) {
+  id: string;
+  constructor(private activatedRoute: ActivatedRoute,private commonService: CommonService, public alertController: AlertController, private popoverController: PopoverController,public router:Router,public popOver: PopoverController,private loginService: LoginService,public modalCtrl:ModalController) {
     this.activatedRoute.params.subscribe(params => {
       this.type=params['type'];
     });
@@ -114,5 +116,96 @@ export class HomePage implements OnInit {
           window.location.reload();
         });
       }
+    }
+
+    async presentAlertConfirmdelete() {
+      await this.popoverController.dismiss();
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class1',
+        header: 'Are you sure to delete your account?',
+        // message: 'Message <strong>text</strong>!!!',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'button_ok',
+            id: 'cancel-button',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Ok',
+            cssClass: 'button_cancel',
+            handler: ()=>{
+              this.delete_user();
+              setTimeout(() => {
+                this.router.navigate(['/login'])
+                window.localStorage.setItem("username", '');
+                window.localStorage.setItem("password'",'');
+                localStorage.setItem("UserId", '');
+                localStorage.setItem("password", '');
+                localStorage.setItem("email", '');
+
+              }, 400);
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }
+
+    async delete_user(){
+
+      // let data = {
+      //   web_id: this.id,
+      //   // email:this.email
+      // }
+      if(this.type=="individual"){
+        this.id =  localStorage.getItem('Userid');;
+        var data = "userId="+this.id;
+
+        this.loginService.deleteuser(data).then(res => {
+          console.log(res,"assinn")
+        if (res.Status == 'Success') {
+          // console.log(res),"assin";
+          this.commonService.presentToast("Account deleted suceessfully");
+          setTimeout(() => {
+            this.logout();
+            localStorage.clear();
+
+          }, 400);
+
+        }else {
+          // this.common.presentToast(res.error)
+          this.commonService.presentToast("Try again later!");
+
+        }
+      })
+     }
+     if(this.type=="group"){
+      this.id =  localStorage.getItem('loginuserid');;
+      var data = "Group_Id="+this.id;
+
+      this.loginService.deletegroupuser(data).then(res => {
+        console.log(res,"assinn")
+      if (res.Status == 'Success') {
+        // console.log(res),"assin";
+        this.commonService.presentToast("Account deleted suceessfully");
+        setTimeout(() => {
+          this.logout();
+          localStorage.clear();
+
+        }, 400);
+
+      }else {
+        // this.common.presentToast(res.error)
+        this.commonService.presentToast("Try again later!");
+
+      }
+    })
+     }
+
+
     }
   }
