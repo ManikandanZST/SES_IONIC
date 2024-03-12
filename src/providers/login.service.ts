@@ -353,7 +353,6 @@ paymentcourse_single(params: any): Promise<any> {
         }, reject);
     });
   }
-
   deletegroupuser(params: any): Promise<any> {
     return new Promise((resolve, reject) => {
         this._httpClient.post(`${this.serviceBase2}DeleteGroupUser`, params, {
