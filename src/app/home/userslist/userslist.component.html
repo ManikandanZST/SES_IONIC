@@ -83,26 +83,7 @@
   <div *ngIf="!search">
     <div *ngFor="let u of userlist;let i=index;">
      <ion-card class="mb-20" *ngIf="u.locked == 0" >
-      <!-- <div class="horizontal-align three-items">
-        <h3 class="item">{{u.fullName}} </h3>
-        <ion-icon class="item" name="create-outline"></ion-icon>
-      </div> -->
-      <!-- <div class="row">
-        <div style="margin-left:5%;float:left;width:35%;" class="col-3">
-          <img alt="" src="assets/images/user.png">
-        </div>
-        <div style="float:right;margin:4%;" class="col-9">
-          <ion-icon size="small" (click)="showModalUEdit(u.userId)" name="create-outline"></ion-icon>
-          <ion-icon size="small" style="color: #d21e10;" (click)="deleteUser(u.userId,u.locked)" name="remove-circle-outline"></ion-icon>
-         </div>
-        <div style="float:left;margin-left:5%;"  class="col-9">
-          <h2 style="font-size:15px!important;width: 84px;">{{u.fullName}}</h2>
-          <p style="width: 100px;">{{u.email}}</p>
-          <p>EIN - {{u.EIN}}</p>
-          <p>UserId - {{u.userId}}</p>
-          <p>Password - {{u.password}}</p>
-        </div>
-      </div> -->
+
       <div class="row flx">
         <div class="col-3 cl3">
           <img alt="" src="assets/images/user.png">

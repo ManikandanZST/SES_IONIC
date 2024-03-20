@@ -36,17 +36,23 @@ export class OverallvalueComponent implements OnInit {
  });
    }
   ngOnInit() {
+
+  }
+  ionViewWillEnter(){
     this.GroupId=localStorage.getItem("loginuserid")
     this.GetGroupUser();
     this.GetGroupUserModules()
   }
+
   GetGroupUser(){
       var lnk =  'GetGroupUser?GroupId='+this.GroupId;
     this.loginService.getData(lnk).then(
       (Response: any) => {
         if(Response)
         {
-        this.info=Response.UserList;
+                // this.info=Response.UserList;
+        this.info = Response.UserList.filter((u:any) => u.locked == 0);
+        // this.info=Response.UserList;
         }else{
         }
       },
@@ -60,6 +66,8 @@ export class OverallvalueComponent implements OnInit {
     (Response: any) => {
       if(Response)
       {
+         // filer active user
+         Response = Response.filter((u:any) => u.User.locked == 0);
       this.groupuser_NAMEs=Response;
       this.groupusers=Response[0].OverValuePackList      ;
       var templs   = [];

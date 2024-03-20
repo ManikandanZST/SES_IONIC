@@ -7,7 +7,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { CreditCardService } from 'src/providers/creditCard.service';
 import { WebService } from 'src/providers/web.service';
 
-
 @Component({
   selector: 'app-payment-modal',
   templateUrl: './payment-modal.component.html',

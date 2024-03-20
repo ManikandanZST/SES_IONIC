@@ -38,6 +38,7 @@ export class UserslistComponent implements OnInit {
       if(Response)
       {
       this.userlist=Response.UserList;
+      console.log(this.userlist);
       }else{
       }
     },
