@@ -54,6 +54,7 @@ showPurchasedCourse(){
 this.Outstanding=true
 }
 click_label(SL){
+
   localStorage.setItem("pgtrain", '1');
 if(SL.Proctor_Login == false && SL.Isgroup){
   this.trainingcourse(SL.sid)

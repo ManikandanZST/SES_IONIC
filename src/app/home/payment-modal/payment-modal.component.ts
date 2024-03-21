@@ -172,9 +172,9 @@ export class PaymentModalComponent implements OnInit {
            this.processing = false;
          }
        },
-       err => {
+       (err) => {
          this.commonService.closeLoading();
-         this.commonService.presentToast(`Connection error`);
+         this.commonService.presentToast(`Connection error ${err}`);
          this.processing = false;
        }
      );

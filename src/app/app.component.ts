@@ -6,6 +6,8 @@ import { MenuController } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SignUpDetailComponent } from './sign-up-detail/sign-up-detail.component';
 import { LoginService } from './../providers/login.service';
+
+import { Network } from '@ionic-native/network/ngx';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -21,7 +23,8 @@ export class AppComponent {
   info: any={};
   FullName: any;
   ses_login_session: string;
-  constructor(private modalCtrl:ModalController,private inAppBrowser: InAppBrowser, public platform: Platform,private menu: MenuController,private iab: InAppBrowser,private router: Router, private loginService: LoginService)
+  networkStatus:boolean = true;
+  constructor(private network: Network,private modalCtrl:ModalController,private inAppBrowser: InAppBrowser, public platform: Platform,private menu: MenuController,private iab: InAppBrowser,private router: Router, private loginService: LoginService)
   {
     this.initializeApp();
     this.userid=localStorage.getItem('Userid');
@@ -81,6 +84,23 @@ export class AppComponent {
     });
   }
   ngOnInit() {
+
+      // Watch for network status changes
+      this.network.onConnect().subscribe(() => {
+        console.log('Connected to the internet!');
+        this.networkStatus = true;
+      });
+
+      this.network.onDisconnect().subscribe(() => {
+        console.log('Disconnected from the internet!');
+        this.networkStatus = false;
+      });
+
+      // Initial network status
+      console.log('Initial network type:', this.network.type);
+
+
+
     this.userid=localStorage.getItem('Userid');
     this.GroupId=localStorage.getItem("loginuserid");
     if(this.userid != null){
@@ -120,6 +140,10 @@ export class AppComponent {
       localStorage.setItem('type',"common");
     }
     this.type=localStorage.getItem('type');
+
+
+
+
   }
   closeMenu(){
     this.menu.close();

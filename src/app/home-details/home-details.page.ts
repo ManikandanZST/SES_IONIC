@@ -6,6 +6,8 @@ import { PurchaseEntirePackageComponent } from '../individual-user/purchase-enti
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { PurchaseinformationformComponent } from '../individual-user/purchaseinformationform/purchaseinformationform.component';
 import { CommonService } from 'src/providers/common.service';
+import { ProctorLoginComponent } from '../training-center/proctor-login/proctor-login.component';
+import { PurchaseinfoProctorComponent } from '../training-center/purchaseinfo-proctor/purchaseinfo-proctor.component';
 @Component({
   selector: 'app-home-details',
   templateUrl: './home-details.page.html',
@@ -30,6 +32,9 @@ export class HomeDetailsPage implements OnInit {
   titleCourse: any;
   coursePrice: any;
   sectionId: any;
+
+  info: any;
+  LoginProctID: string;
   constructor(private activatedRoute: ActivatedRoute,private commonService: CommonService,public loginService:LoginService,private modalCtrl:ModalController,public router:Router,public alertController: AlertController,private iab: InAppBrowser) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.back_id=params['back'];
@@ -38,6 +43,8 @@ export class HomeDetailsPage implements OnInit {
   }
   ngOnInit() {
     this.getcourse_detail();
+
+    this.LoginProctID=localStorage.getItem('ProctID')
   }
 getcourse_detail(){
   this.commonService.presentLoading();
@@ -154,20 +161,25 @@ commonManual(val)
   }
  async checkTest (sVal,mtype)
   {
+
     if(sVal.UserStatus == '2' || sVal.UserStatus == '1')
     {
-      if(localStorage.loginProctid == null || localStorage.loginProctid == undefined)
+
+
+      //localStorage.loginProctid change to this.LoginProctID
+      if(this.LoginProctID == null || this.LoginProctID == undefined)
       {
         this.showModalPLogin(sVal,mtype);
       }else
       {
-        if(localStorage.loginProctid == '')
+        if(this.LoginProctID == '')
         {
           this.showModalPLogin(sVal,mtype);
         }else
         {
-          if(sVal.IsPay)
+          if(!sVal.IsPay)
           {
+            this.openPage7(sVal);
           }else{
             this.overallRedirect(sVal)
           }
@@ -191,22 +203,60 @@ commonManual(val)
       await alert.present();
       }
   }
-async showModalPLogin(SL,mtype)
-  {
-      if(SL.UserStatus == '2' || SL.UserStatus == '1')
-      {
-       this.SLVal = SL;
-        this.Mtype = mtype;
-      }else{
-        const alert = await this.alertController.create({
-          cssClass: 'my-custom-class',
-          header: '',
-          subHeader: 'Alert Message!',
-          message: '<p>This course is suspended to your account.</br> Please contact Shawneerct Admin.</p>',
-        });
-        await alert.present();
-      }
-  }
+// async showModalPLogin(SL,mtype)
+//   {
+//       if(SL.UserStatus == '2' || SL.UserStatus == '1')
+//       {
+//        this.SLVal = SL;
+//         this.Mtype = mtype;
+//         console.log("showModalPLogin", true)
+//       }else{
+//         const alert = await this.alertController.create({
+//           cssClass: 'my-custom-class',
+//           header: '',
+//           subHeader: 'Alert Message!',
+//           message: '<p>This course is suspended to your account.</br> Please contact Shawneerct Admin.</p>',
+//         });
+//         await alert.present();
+//       }
+//   }
+
+async showModalPLogin(SL:any,mtype:any)
+{
+    if(SL.UserStatus == '2' || SL.UserStatus == '1')
+    {
+      this.SLVal = SL;
+      this.Mtype = mtype;
+      const modal = await this.modalCtrl.create({
+        component: ProctorLoginComponent,
+        componentProps: {
+          "SLVal": this.SLVal,
+          "Mtype":this.Mtype,
+          "ttP":'training'
+        },
+        cssClass: 'my-custom-modal-css',
+        swipeToClose: true,
+      })
+      return await modal.present();
+    }else{
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: '',
+        subHeader: 'Alert Pages!',
+        message: '<p>This course is suspended to your account.</br> Please contact Shawneerct Admin.</p>',
+        buttons: [
+          {
+            text: "Okay",
+            handler: () => {
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+}
+
+
   async overallRedirect(val)
   {
     if(val.UserStatus == '2' || val.UserStatus == '1')
@@ -257,32 +307,94 @@ async commonOverallTest(val)
         this.openPage7(val);
     }else
     {
-    }
-  }
- openPage7(val)
-  {
-    this.myActiveSlide = 0;
-    var id =localStorage.getItem('Userid');
-    var userType = localStorage.getItem('type');
-    if(userType == 'group')
-      {
-          var lnk =  'GetGroupUser?GroupId='+id;
-      }else
-      {
-          var lnk =  'GetUser/'+id;
-      }
-      this.loginService.getData(lnk).then(
-        (Response: any) => {
-          if(Response)
-          {
-            this.modulelist=Response;
-          }else{
+      var tT = this.countdownTime( val.timelimit, 0 );
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Total Time Duration of Exam Overall!',
+      subHeader: '',
+      message: ''+tT+'',
+      buttons: [
+        {
+          text: "Not Now",
+          cssClass: 'alert-button-cancel',
+          handler: () => {
+            this.modalCtrl.dismiss();
           }
         },
-        err => {
+        {
+          text: "Continue",
+          cssClass: 'alert-button-confirm',
+          handler: () => {
+            this.router.navigate([`/questionsall/${val.testId}/${val.OverId}/${val.timelimit}`]);
+                 }
         }
-      );
+      ],
+    });
+    await alert.present();
+    }
   }
+//  openPage7(val)
+//   {
+//     console.log(val)
+//     this.myActiveSlide = 0;
+//     var id =localStorage.getItem('Userid');
+//     var userType = localStorage.getItem('type');
+//     if(userType == 'group')
+//       {
+//           var lnk =  'GetGroupUser?GroupId='+id;
+//       }else
+//       {
+//           var lnk =  'GetUser/'+id;
+//       }
+//       this.loginService.getData(lnk).then(
+//         (Response: any) => {
+//           if(Response)
+//           {
+//             this.modulelist=Response;
+//           }else{
+//           }
+//         },
+//         err => {
+//         }
+//       );
+//   }
+
+openPage7(val)
+{
+  this.myActiveSlide = 0;
+  var id = localStorage.getItem("Userid");
+  var userType =localStorage.getItem("type");
+  if(userType == 'group')
+    {
+        var lnk =  'GetGroupUser?GroupId='+id;
+    }else
+    {
+        var lnk =  'GetUser/'+id;
+    }
+    this.loginService.getData(lnk).then(
+     async (Response: any) => {
+        this.valInfo = val;
+        this.type = 'overall';
+        this.titleCourse = val.Module_Name;
+        this.coursePrice = val.Price;
+        this.sectionId = val.sid;
+        this.info=Response;
+        const modal = await this.modalCtrl.create({
+          component: PurchaseinfoProctorComponent,
+          componentProps: {
+            "titleCourse": this.titleCourse,
+            "coursePrice": this.coursePrice,
+            "OverId": this.valInfo.OverId
+          },
+          cssClass: 'my-custom-modal-css',
+          swipeToClose: true,
+        })
+        return await modal.present();
+      },
+      err => {
+      }
+    );
+}
  async videoRedirect(val)
   {
     if(val.sectionName == '2.10 Demonstration & Rad Worker Study Guide' || val.sectionName == '1.08 Demonstration & Rad Worker Study Guide'){ //rad worker Demonstration & Rad Worker Study Guide is free for all users

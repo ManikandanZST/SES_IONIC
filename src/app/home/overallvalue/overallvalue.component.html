@@ -19,7 +19,7 @@
   </p>
 <div *ngIf="search">
   <div *ngFor="let u of filterData;let i=index;">
-    <div >
+    <div *ngIf="u.User.locked == 0">
       <ion-grid>
         <ion-row  (click)="showCourse(u,i)">
           <ion-col class="name" size="8">{{u.User.fullName}}</ion-col>
@@ -52,7 +52,7 @@
 </div>
 <div *ngIf="!search">
   <div *ngFor="let u of groupuser_NAMEs;let i=index;">
-    <div >
+    <div *ngIf="u.User.locked == 0">
       <ion-grid>
         <ion-row  (click)="showCourse(u,i)">
           <ion-col class="name" size="8">{{u.User.fullName}}</ion-col>

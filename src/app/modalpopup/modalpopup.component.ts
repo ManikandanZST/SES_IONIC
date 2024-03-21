@@ -154,6 +154,7 @@ export class ModalpopupComponent implements OnInit {
         {
             var totalAmt = 'total'+listsS[k].userId;
             tt = tt + parseFloat(localStorage.getItem(totalAmt));
+            console.log("amount --> ",listsS[k].userId)
             localStorage.setItem("totalAmountChoosen",tt.toString());
           // this.totalAmountChoosen = tt;
           if( k == listsS.length - 1){

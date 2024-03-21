@@ -4,7 +4,7 @@ import { Key } from 'protractor';
 import { CommonService } from 'src/providers/common.service';
 import { LoginService } from '../../providers/login.service';
 import { WebService } from '../../providers/web.service';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, NavController } from '@ionic/angular';
 @Component({
     selector: 'app-questionsall',
     templateUrl: './questionsall.page.html',
@@ -30,7 +30,7 @@ export class QuestionsAllPage implements OnInit {
     quesList: any;
     isShown: boolean = true;
     @ViewChild('mySlider') slides: IonSlides;
-    constructor(public router:Router, private commonService: CommonService, private loginService: LoginService, private activatedRoute: ActivatedRoute, private webService: WebService) {
+    constructor(public router:Router, private commonService: CommonService, private navCtrl: NavController,private loginService: LoginService, private activatedRoute: ActivatedRoute, private webService: WebService) {
         this.activatedRoute.params.subscribe(params => {
             this.testID=params['testID'];
             localStorage.setItem("testID",this.testID);
@@ -164,7 +164,8 @@ export class QuestionsAllPage implements OnInit {
         });
     }
     close(){
-        this.router.navigate([`/trainingcenter/`])
+        // this.router.navigate([`/trainingcenter/`])
+        this.navCtrl.back();
     }
     answerCheckALL(questionsOver,sectinoID){
         this.qInfo = questionsOver;

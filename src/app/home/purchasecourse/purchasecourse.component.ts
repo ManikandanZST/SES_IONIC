@@ -37,9 +37,14 @@ export class PurchasecourseComponent implements OnInit {
     });
   }
   ngOnInit() {
+setTimeout(() => {
+ console.log(this.groupuser_NAMEs[0].User.locked
 
+  );
+}, 3000);
   }
   ionViewWillEnter(){
+    console.log("ngoninit")
     this.GroupId=localStorage.getItem("loginuserid")
     this.GetGroupUser();
     this.GetGroupUserModules()
@@ -51,8 +56,8 @@ export class PurchasecourseComponent implements OnInit {
         if(Response)
         {
         // this.info=Response.UserList;
-  // filer active user
-  this.info = Response.UserList.filter((u:any) => u.locked == 0);
+  // // filer active user
+  // this.info = Response.UserList.filter((u:any) => u.locked == 0);
 
         }else{
         }
@@ -69,7 +74,7 @@ export class PurchasecourseComponent implements OnInit {
 
         if(Response)
         {     // filer active user
-          Response = Response.filter((u:any) => u.User.locked == 0);
+          // Response = Response.filter((u:any) => u.User.locked == 0);
 
           this.groupuser_NAMEs=Response;
 
@@ -161,6 +166,12 @@ export class PurchasecourseComponent implements OnInit {
       });
 
       this.totalAmounts[result.data.data2]=T;
+
+      console.log("result ==>" ,result);
+
+      console.log("total ==>" ,this.total);
+
+      console.log("selectcourse ==>" ,this.selectcourse);
     })
     return await modal.present();
   }

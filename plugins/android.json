@@ -36,6 +36,9 @@
     },
     "ionic-plugin-keyboard": {
       "PACKAGE_NAME": "com.shawneerct.app"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.shawneerct.app"
     }
   },
   "dependent_plugins": {

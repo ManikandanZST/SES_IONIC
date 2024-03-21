@@ -89,7 +89,7 @@ export class PurchaseinfoProctorComponent implements OnInit {
   }
   close(){
     this.modalCtrl.dismiss().then(()=>{
-      window.location.reload();
+      // window.location.reload();
     });
   }
 }

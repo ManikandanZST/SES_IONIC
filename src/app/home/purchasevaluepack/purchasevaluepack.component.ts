@@ -36,14 +36,15 @@ export class PurchasevaluepackComponent implements OnInit {
  });
    }
   ngOnInit() {
-
-  }
-
-  ionViewWillEnter(){
+    console.log("ngoninit")
     this.GroupId=localStorage.getItem("loginuserid")
     this.GetGroupUser();
     this.GetGroupUserModules()
   }
+
+  // ionViewWillEnter(){
+
+  // }
   GetGroupUser(){
       var lnk =  'GetGroupUser?GroupId='+this.GroupId;
       this.loginService.getData(lnk).then(
@@ -51,7 +52,7 @@ export class PurchasevaluepackComponent implements OnInit {
         if(Response)
         {
         // this.info=Response.UserList;
-        this.info = Response.UserList.filter((u:any) => u.locked == 0);
+        // this.info = Response.UserList.filter((u:any) => u.locked == 0);
         }else{
         }
       },
@@ -66,7 +67,7 @@ export class PurchasevaluepackComponent implements OnInit {
       if(Response)
       {
         // filer active user
-        Response = Response.filter((u:any) => u.User.locked == 0);
+        // Response = Response.filter((u:any) => u.User.locked == 0);
       this.groupuser_NAMEs=Response;
       this.groupusers=Response[0].OverAllList;
       var templs   = [];

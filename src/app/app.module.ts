@@ -33,8 +33,11 @@ import { PurchaseinfoProctorComponent } from './training-center/purchaseinfo-pro
 import { EmployeereportComponent } from './employeereport/employeereport.component';
 import { LoginDetailsComponent } from './login-details/login-details.component';
 import { SignUpDetailComponent } from './sign-up-detail/sign-up-detail.component';
+import { Network } from '@ionic-native/network/ngx';
+import { NetworkComponent } from './network/network.component';
+import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
 @NgModule({
-  declarations: [AppComponent,ModalpopupComponent,PaymentModalComponent,PurchaseexamComponent,
+  declarations: [AppComponent,NetworkComponent,ModalpopupComponent,PaymentModalComponent,PurchaseexamComponent,
     OverallexamComponent,PurchasevaluepackComponent,ValuepackComponent,OverallvalueComponent,
     SectionoverallvalueComponent,UserslistComponent,EditgroupuserComponent,GroupuseraddComponent,PurchaseEntirePackageComponent,
     GroupuseraddComponent,AddexistuserComponent,AddnewuserComponent,PurchaseinformationformComponent,TrainingCenterComponent,ValuePackComponent,ProctorLoginComponent,PurchaseinfoProctorComponent,EmployeereportComponent,LoginDetailsComponent,SignUpDetailComponent],
@@ -46,6 +49,7 @@ import { SignUpDetailComponent } from './sign-up-detail/sign-up-detail.component
     CommonService,
     LoginService,
     InAppBrowser,SocialSharing,
+    Network,OpenNativeSettings,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

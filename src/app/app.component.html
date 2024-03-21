@@ -1,5 +1,6 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
+
+  <ion-split-pane contentId="main-content" *ngIf="networkStatus; else offlineMessage">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content class="bodybg" *ngIf="type != 'group'">
          <ion-refresher slot="fixed" (ionRefresh)="refreshing($event)">
@@ -70,4 +71,10 @@
     </ion-menu>
     <ion-router-outlet id="main-content" (refresher)="ngOnInit()"></ion-router-outlet>
   </ion-split-pane>
+
+
+  <ng-template #offlineMessage>
+    <app-network></app-network>
+  </ng-template>
+  
 </ion-app>
