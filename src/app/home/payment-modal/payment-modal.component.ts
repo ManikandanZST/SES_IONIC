@@ -173,8 +173,9 @@ export class PaymentModalComponent implements OnInit {
          }
        },
        (err) => {
+        console.log("err ==>", err)
          this.commonService.closeLoading();
-         this.commonService.presentToast(`Connection error ${err}`);
+         this.commonService.presentToast(`Connection error - ${err}`);
          this.processing = false;
        }
      );
@@ -280,7 +281,7 @@ export class PaymentModalComponent implements OnInit {
            },
            err => {
              this.commonService.closeLoading();
-             this.commonService.presentToast(`Connection error`);
+             this.commonService.presentToast(`Connection error - ${err}`);
              this.processing = false;
            }
          );
@@ -354,7 +355,7 @@ export class PaymentModalComponent implements OnInit {
            },
            err => {
              this.commonService.closeLoading();
-             this.commonService.presentToast(`Connection error`);
+             this.commonService.presentToast(`Connection error - ${err}`);
              this.processing = false;
            }
          );
@@ -405,5 +406,17 @@ export class PaymentModalComponent implements OnInit {
           this.usign.ccCvc= this.usign.ccCvc.replace(/[^0-9]/g, '');
         }, 300);
 
+      }
+
+
+      // 
+      async redirectToTrainingReport() {
+        // Replace 'training-report' with the actual route path of your Training Report page
+
+      this.router.navigateByUrl('/trainingreport');
+      await  this.modalController.dismiss({
+          dismissed: true
+        });
+      
       }
     }

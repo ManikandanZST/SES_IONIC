@@ -13,7 +13,44 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="bodybg">
-  <h2>Payment Using Credit/Debit Card</h2>
+
+  <div class="message-container">
+    <h1 class="message">
+      We thank you for allowing Shawnee Environmental Services to serve you for the last 22 years.
+    </h1>
+    <p class="message">
+      No additional training can be purchased and taken at this time.
+    </p>
+
+    <p class="message">
+      <b>
+      Please download your pdf Training Report for your records.</b>
+    </p>
+    <ion-button color="white" expand="block" class="create"  (click)="redirectToTrainingReport()">
+      Go to Training Report
+    </ion-button>
+
+  
+
+  </div>
+
+  <!-- Images -->
+  <div class="images-container">
+    <!-- Client photos -->
+    <div class="client-photos">
+      <ion-img src="../../../assets/images/client-photo1.jpg"></ion-img>
+      <ion-img src="../../../assets/images/client-photo2.jpg"></ion-img>
+      <ion-img src="assets/images/client-photo3.jpg"></ion-img>
+    </div>
+    <!-- Logo image -->
+    <!-- <div class="logo">
+      
+    </div> -->
+  </div>
+
+  <!-- Temperorly hide the payment option -->
+
+  <!-- <h2>Payment Using Credit/Debit Card</h2>
   <h4 *ngIf="total && total != '0'">Amount to Paid <span>$ {{total}}</span></h4>
   <h4 *ngIf="amount">Amount to Paid <span>$ {{amount}}</span></h4>
   <h4 *ngIf="payInfoamount">Amount to Paid <span>$ {{payInfoamount}}</span></h4>
@@ -25,9 +62,6 @@
       <ion-input type="text" placeholder="Card Holder Name" [(ngModel)]="usign.cardholder_name" >      <ion-icon name="person-outline"></ion-icon>
       </ion-input>
     </div>
-    <!-- <div style="margin-bottom:10px;">
-      <ion-input type="number" placeholder="Card Number" [(ngModel)]="usign.ccNumber" max="16"  ><ion-icon name="card-outline"></ion-icon></ion-input>
-    </div> -->
     <div style="margin-bottom:10px;">
       <ion-input type="text" placeholder="Card Number" [(ngModel)]="usign.ccNumber" (input)="validateNumberInput()" maxlength="16"><ion-icon name="card-outline"></ion-icon></ion-input>
     </div>
@@ -49,5 +83,5 @@
    <p> Stripe <span (click)="getlink('https://stripe.com/in/privacy')">Privacy Policy</span></p>
   </div>
   </div>
-</div>
+</div> -->
 </ion-content>

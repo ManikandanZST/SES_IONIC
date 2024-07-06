@@ -280,6 +280,7 @@ postData(controller:any, data: any): Promise<any> {
 //payment grioup
 paymentcourse_group(params: any): Promise<any> {
    return new Promise((resolve, reject) => {
+
        this._httpClient.post(`${this.serviceBase1}MakeGroupPaymentUpdated`, params, {
            headers:
              new HttpHeaders(
@@ -290,7 +291,16 @@ paymentcourse_group(params: any): Promise<any> {
          })
            .subscribe((response: any) => {
                resolve(response);
-       }, reject);
+       }, (err: any) => {
+        console.log("err promise ==>", err)
+        // reject(err);
+        if (err.status === 0) {
+
+          reject(`Network error:  ${err.message}`);
+      } else {
+          reject(`HTTP error: ${err.status} ${err.statusText} - ${err.message}`);
+      }
+    });
    });
  }
 paymentcourse_single(params: any): Promise<any> {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import {  ModalController, Platform } from '@ionic/angular';
 import { Network } from '@ionic-native/network/ngx';
 import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
 @Component({
@@ -9,10 +9,18 @@ import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-setting
 })
 export class NetworkComponent implements OnInit {
 
-  constructor(private nativeSettings: OpenNativeSettings,private platform: Platform, private network: Network) {}
+  constructor(private network: Network,private nativeSettings: OpenNativeSettings,private platform: Platform, private modalController:ModalController ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.network.onConnect().subscribe(() => {
+      console.log('Connected to the internet!');
+      this.close()
+    });
+  }
 
+  async close(){
+    await    this.modalController.dismiss();
+    }
 
   openNetworkSettings() {
     if (this.platform.is('cordova')) {

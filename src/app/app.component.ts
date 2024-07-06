@@ -8,6 +8,7 @@ import { SignUpDetailComponent } from './sign-up-detail/sign-up-detail.component
 import { LoginService } from './../providers/login.service';
 
 import { Network } from '@ionic-native/network/ngx';
+import { NetworkComponent } from './network/network.component';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -94,6 +95,7 @@ export class AppComponent {
       this.network.onDisconnect().subscribe(() => {
         console.log('Disconnected from the internet!');
         this.networkStatus = false;
+        this.showNetwork();
       });
 
       // Initial network status
@@ -145,6 +147,22 @@ export class AppComponent {
 
 
   }
+
+  async showNetwork(){
+    const modal = await this.modalCtrl.create({
+      component: NetworkComponent,
+      componentProps: {
+      },
+      cssClass: 'my-custom-modal-css',
+      swipeToClose: true,
+    });
+    modal.onDidDismiss().then((result:any) => {
+      if (result && result.data && result.data.dismissed) {
+      }
+    });
+    return await modal.present();
+  }
+
   closeMenu(){
     this.menu.close();
   }
